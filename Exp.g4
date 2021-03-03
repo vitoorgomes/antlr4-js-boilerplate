@@ -4,12 +4,11 @@ grammar Exp;
 
 @parser::header
 {
-    // import java.util.ArrayList;
+    // var symbol_table = Array();
 }
 
 @parser::members
 {
-    // private static ArrayList<String> symbol_table;
 }
 
 /*---------------- LEXER RULES ----------------*/
@@ -27,52 +26,51 @@ SPACE : (' '|'\t'|'\r'|'\n')+ -> skip ;
 
 program:
     {
-/*        System.out.println(".source Test.src");
-        System.out.println(".class  public Test");
-        System.out.println(".super  java/lang/Object\n");
-        System.out.println(".method public <init>()V");
-        System.out.println("    aload_0");
-        System.out.println("    invokenonvirtual java/lang/Object/<init>()V");
-        System.out.println("    return");
-        System.out.println(".end method\n"); */
+        console.log(".source Test.src");
+        console.log(".class  public Test");
+        console.log(".super  java/lang/Object\n");
+        console.log(".method public <init>()V");
+        console.log("    aload_0");
+        console.log("    invokenonvirtual java/lang/Object/<init>()V");
+        console.log("    return");
+        console.log(".end method\n");
     }
     main ;
 
 main:
     {
-/*        System.out.println(".method public static main([Ljava/lang/String;)V\n");
-        System.out.println("    getstatic java/lang/System/out Ljava/io/PrintStream;");
-        // symbol_table = new ArrayList<String>(); */
+        console.log(".method public static main([Ljava/lang/String;)V\n");
+        console.log("    getstatic java/lang/System/out Ljava/io/PrintStream;");
     }
     expression
     {
-/*        System.out.println("    invokevirtual java/io/PrintStream/println(I)V\n");
-        System.out.println("    return");
-        System.out.println(".limit stack 10");
-        System.out.println(".end method"); */
-        // System.out.println("\n; symbol_table: " + symbol_table);
+        console.log("    invokevirtual java/io/PrintStream/println(I)V\n");
+        console.log("    return");
+        console.log(".limit stack 10");
+        console.log(".end method");
+        // console.log("\n; symbol_table: " + symbol_table);
     }
     ;
 
 expression:
     term ( op = PLUS expression
     {
-//        System.out.println("    iadd");
+        console.log("    iadd");
     }
     )? ;
 
 term:
     factor ( op = TIMES term
     {
-//        System.out.println("    imul");
+        console.log("    imul");
     }
     )? ;
 
 factor:
     NUMBER
     {
-//        System.out.println("    ldc " + $NUMBER.text);
-        // symbol_table.add($NUMBER.text);
+        console.log("    ldc " + $NUMBER.text);
+        // symbol_table.push($NUMBER.text);
     }
     | OP_PAR expression CL_PAR ;
 

@@ -1,9 +1,8 @@
 // Generated from Exp.g4 by ANTLR 4.9.1
 // jshint ignore: start
 import antlr4 from 'antlr4';
-import ExpListener from './ExpListener.js';
 
-    // import java.util.ArrayList;
+    // var symbol_table = Array();
 
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
@@ -55,7 +54,6 @@ export default class ExpParser extends antlr4.Parser {
         this.literalNames = ExpParser.literalNames;
         this.symbolicNames = ExpParser.symbolicNames;
 
-            // private static ArrayList<String> symbol_table;
 
     }
 
@@ -71,14 +69,14 @@ export default class ExpParser extends antlr4.Parser {
 	    try {
 	        this.enterOuterAlt(localctx, 1);
 
-	        /*        System.out.println(".source Test.src");
-	                System.out.println(".class  public Test");
-	                System.out.println(".super  java/lang/Object\n");
-	                System.out.println(".method public <init>()V");
-	                System.out.println("    aload_0");
-	                System.out.println("    invokenonvirtual java/lang/Object/<init>()V");
-	                System.out.println("    return");
-	                System.out.println(".end method\n"); */
+	                console.log(".source Test.src");
+	                console.log(".class  public Test");
+	                console.log(".super  java/lang/Object\n");
+	                console.log(".method public <init>()V");
+	                console.log("    aload_0");
+	                console.log("    invokenonvirtual java/lang/Object/<init>()V");
+	                console.log("    return");
+	                console.log(".end method\n");
 	            
 	        this.state = 11;
 	        this.main();
@@ -104,18 +102,17 @@ export default class ExpParser extends antlr4.Parser {
 	    try {
 	        this.enterOuterAlt(localctx, 1);
 
-	        /*        System.out.println(".method public static main([Ljava/lang/String;)V\n");
-	                System.out.println("    getstatic java/lang/System/out Ljava/io/PrintStream;");
-	                // symbol_table = new ArrayList<String>(); */
+	                console.log(".method public static main([Ljava/lang/String;)V\n");
+	                console.log("    getstatic java/lang/System/out Ljava/io/PrintStream;");
 	            
 	        this.state = 14;
 	        this.expression();
 
-	        /*        System.out.println("    invokevirtual java/io/PrintStream/println(I)V\n");
-	                System.out.println("    return");
-	                System.out.println(".limit stack 10");
-	                System.out.println(".end method"); */
-	                // System.out.println("\n; symbol_table: " + symbol_table);
+	                console.log("    invokevirtual java/io/PrintStream/println(I)V\n");
+	                console.log("    return");
+	                console.log(".limit stack 10");
+	                console.log(".end method");
+	                // console.log("\n; symbol_table: " + symbol_table);
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -150,7 +147,7 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 19;
 	            this.expression();
 
-	            //        System.out.println("    iadd");
+	                    console.log("    iadd");
 	                
 	        }
 
@@ -187,7 +184,7 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 26;
 	            this.term();
 
-	            //        System.out.println("    imul");
+	                    console.log("    imul");
 	                
 	        }
 
@@ -219,8 +216,8 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 31;
 	            localctx._NUMBER = this.match(ExpParser.NUMBER);
 
-	            //        System.out.println("    ldc " + (localctx._NUMBER===null ? null : localctx._NUMBER.text));
-	                    // symbol_table.add((localctx._NUMBER===null ? null : localctx._NUMBER.text));
+	                    console.log("    ldc " + (localctx._NUMBER===null ? null : localctx._NUMBER.text));
+	                    // symbol_table.push((localctx._NUMBER===null ? null : localctx._NUMBER.text));
 	                
 	            break;
 	        case ExpParser.OP_PAR:
@@ -284,18 +281,6 @@ class ProgramContext extends antlr4.ParserRuleContext {
 	    return this.getTypedRuleContext(MainContext,0);
 	};
 
-	enterRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.enterProgram(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.exitProgram(this);
-		}
-	}
-
 
 }
 
@@ -318,18 +303,6 @@ class MainContext extends antlr4.ParserRuleContext {
 	expression() {
 	    return this.getTypedRuleContext(ExpressionContext,0);
 	};
-
-	enterRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.enterMain(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.exitMain(this);
-		}
-	}
 
 
 }
@@ -363,18 +336,6 @@ class ExpressionContext extends antlr4.ParserRuleContext {
 	    return this.getToken(ExpParser.PLUS, 0);
 	};
 
-	enterRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.enterExpression(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.exitExpression(this);
-		}
-	}
-
 
 }
 
@@ -406,18 +367,6 @@ class TermContext extends antlr4.ParserRuleContext {
 	TIMES() {
 	    return this.getToken(ExpParser.TIMES, 0);
 	};
-
-	enterRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.enterTerm(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.exitTerm(this);
-		}
-	}
 
 
 }
@@ -454,18 +403,6 @@ class FactorContext extends antlr4.ParserRuleContext {
 	CL_PAR() {
 	    return this.getToken(ExpParser.CL_PAR, 0);
 	};
-
-	enterRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.enterFactor(this);
-		}
-	}
-
-	exitRule(listener) {
-	    if(listener instanceof ExpListener ) {
-	        listener.exitFactor(this);
-		}
-	}
 
 
 }

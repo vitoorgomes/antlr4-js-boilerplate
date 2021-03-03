@@ -27,6 +27,10 @@ If you want to change it, just remove the `postant` from script and run manually
 - `yarn ant`
 - `node ./compiler.js`
 
+After that, a `Test.j` will be generated and to run this another script is ready to use:
+- `yarn jasmin`
+
+Running this command will get the result logged into the console
 
 ## License
 
