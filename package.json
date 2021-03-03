@@ -1,0 +1,19 @@
+{
+  "name": "antlr4-js-boilerplate",
+  "version": "1.0.0",
+  "main": "compiler.js",
+  "license": "MIT",
+  "type": "module",
+  "author": {
+    "email": "vitorgomes2007@hotmail.com",
+    "name": "Vitor Gomes",
+    "url": "https://github.com/vitoorgomes"
+  },
+  "scripts": {
+    "ant": "java -jar antlr-4.9.1-complete.jar -Dlanguage=JavaScript -listener Exp.g4",
+    "postant": "node ./compiler.js"
+  },
+  "dependencies": {
+    "antlr4": "^4.9.1"
+  }
+}

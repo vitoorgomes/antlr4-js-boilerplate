@@ -1,0 +1,10 @@
+PLUS=1
+TIMES=2
+OP_PAR=3
+CL_PAR=4
+NUMBER=5
+SPACE=6
+'+'=1
+'*'=2
+'('=3
+')'=4
