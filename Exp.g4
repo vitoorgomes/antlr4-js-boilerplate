@@ -12,15 +12,20 @@ grammar Exp;
 }
 
 /*---------------- LEXER RULES ----------------*/
+COMMENT: '#' ~('\n')*         -> skip ;
+SPACE : (' '|'\t'|'\r'|'\n')+ -> skip ;
 
 PLUS  : '+' ;
+MINUS : '-' ;
 TIMES : '*' ;
+OVER  : '/' ;
+REM   : '%' ;
 OP_PAR: '(' ;
 CL_PAR: ')' ;
 
-NUMBER: '0'..'9'+ ;
+PRINT : 'print' ;
 
-SPACE : (' '|'\t'|'\r'|'\n')+ -> skip ;
+NUMBER: '0'..'9'+ ;
 
 /*---------------- PARSER RULES ----------------*/
 
@@ -37,14 +42,12 @@ program:
     }
     main ;
 
-main:
+main: 
     {
         console.log(".method public static main([Ljava/lang/String;)V\n");
-        console.log("    getstatic java/lang/System/out Ljava/io/PrintStream;");
     }
-    expression
+    ( statement )+
     {
-        console.log("    invokevirtual java/io/PrintStream/println(I)V\n");
         console.log("    return");
         console.log(".limit stack 10");
         console.log(".end method");
@@ -52,19 +55,33 @@ main:
     }
     ;
 
-expression:
-    term ( op = PLUS expression
+statement: st_print ;
+
+st_print: PRINT OP_PAR
     {
-        console.log("    iadd");
+        console.log("    getstatic java/lang/System/out Ljava/io/PrintStream;");
     }
-    )? ;
+    expression CL_PAR
+    {
+        console.log("    invokevirtual java/io/PrintStream/println(I)V\n");
+    };
+
+expression:
+    term ( op = ( PLUS | MINUS ) term
+    {
+        if ($op.type === ExpParser.PLUS) console.log("    iadd")
+        if ($op.type === ExpParser.MINUS) console.log("    isub")
+    }
+    )* ;
 
 term:
-    factor ( op = TIMES term
+    factor ( op = ( TIMES | OVER | REM ) factor
     {
-        console.log("    imul");
+        if ($op.type == ExpParser.TIMES) console.log("    imul")
+        if ($op.type == ExpParser.OVER) console.log("    idiv")
+        if ($op.type == ExpParser.REM) console.log("    irem")
     }
-    )? ;
+    )* ;
 
 factor:
     NUMBER
