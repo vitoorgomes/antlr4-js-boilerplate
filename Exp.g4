@@ -4,7 +4,8 @@ grammar Exp;
 
 @parser::header
 {
-    // var symbol_table = Array();
+    const symbol_table = [];
+    const used_symbols = [];
 }
 
 @parser::members
@@ -16,6 +17,7 @@ COMMENT: '#' ~('\n')*         -> skip ;
 SPACE : (' '|'\t'|'\r'|'\n')+ -> skip ;
 
 PLUS  : '+' ;
+ATTRIB: '=' ;
 MINUS : '-' ;
 TIMES : '*' ;
 OVER  : '/' ;
@@ -26,6 +28,7 @@ CL_PAR: ')' ;
 PRINT : 'print' ;
 
 NUMBER: '0'..'9'+ ;
+NAME  : 'a'..'z'+ ;
 
 /*---------------- PARSER RULES ----------------*/
 
@@ -45,17 +48,25 @@ program:
 main: 
     {
         console.log(".method public static main([Ljava/lang/String;)V\n");
+        symbol_table.push('args');
     }
     ( statement )+
     {
         console.log("    return");
         console.log(".limit stack 10");
+        console.log(`.limit locals ${symbol_table.length}`);
         console.log(".end method");
-        // console.log("\n; symbol_table: " + symbol_table);
-    }
-    ;
+        symbol_table.filter(v => !used_symbols.includes(v)).map(u => {
+            let message;  
+            if (u !== 'args') { 
+                message = `\n; # error: '${u}' is defined but never used`
+            }
+            return message;
+        }).map(el => el ? console.log(el) : '');
+        console.log("\n; symbol_table: ", symbol_table);
+    };
 
-statement: st_print ;
+statement: st_print | st_attrib ;
 
 st_print: PRINT OP_PAR
     {
@@ -64,6 +75,15 @@ st_print: PRINT OP_PAR
     expression CL_PAR
     {
         console.log("    invokevirtual java/io/PrintStream/println(I)V\n");
+    };
+
+st_attrib: NAME ATTRIB expression 
+    {
+        const variable = $NAME.text;
+        if (!symbol_table.find(symbol => symbol === variable)) symbol_table.push(variable)
+
+        const index = symbol_table.findIndex(symbol => symbol === variable);
+        console.log(`    istore ${index} \n`);
     };
 
 expression:
@@ -87,7 +107,13 @@ factor:
     NUMBER
     {
         console.log("    ldc " + $NUMBER.text);
-        // symbol_table.push($NUMBER.text);
     }
-    | OP_PAR expression CL_PAR ;
+    | OP_PAR expression CL_PAR 
+    | NAME 
+    {
+        const variable = $NAME.text;
+        const index = symbol_table.findIndex(symbol => symbol === variable);
+        used_symbols.push(variable);
+        console.log(`    iload ${index}`);
+    };
 

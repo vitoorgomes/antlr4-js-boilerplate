@@ -1,0 +1,12 @@
+# error for unused variables
+
+a = 2
+b = a * 3
+print(a)
+
+# error: 'b' is defined but never used
+
+# number of locals: 2
+# symbol table: ['a', 'b']
+# used vars: [True, False]
+
