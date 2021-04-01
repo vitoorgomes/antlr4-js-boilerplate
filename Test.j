@@ -13,20 +13,15 @@
     ldc 2
     istore 1 
 
-    iload 1
-    ldc 3
-    imul
-    istore 2 
-
     getstatic java/lang/System/out Ljava/io/PrintStream;
     iload 1
+    ldc 4
+    iadd
     invokevirtual java/io/PrintStream/println(I)V
 
     return
 .limit stack 10
-.limit locals 3
+.limit locals 2
 .end method
 
-; # error: 'b' is defined but never used
-
-; symbol_table:  [ 'args', 'a', 'b' ]
+; symbol_table:  [ 'args', 'a' ]

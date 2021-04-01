@@ -141,14 +141,16 @@ export default class ExpParser extends antlr4.Parser {
 	                console.log(".limit stack 10");
 	                console.log(`.limit locals ${symbol_table.length}`);
 	                console.log(".end method");
-	                symbol_table.filter(v => !used_symbols.includes(v)).map(u => {
+	                console.log("\n; symbol_table: ", symbol_table);
+	                symbol_table.filter(v => !used_symbols.includes(v))
+	                .map(u => {
 	                    let message;  
 	                    if (u !== 'args') { 
-	                        message = `\n; # error: '${u}' is defined but never used`
+	                      console.error(`ERROR: '${u}' is defined but never used`);
+	                      process.exit(1);
 	                    }
 	                    return message;
-	                }).map(el => el ? console.log(el) : '');
-	                console.log("\n; symbol_table: ", symbol_table);
+	                });
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -399,8 +401,13 @@ export default class ExpParser extends antlr4.Parser {
 
 	                    const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 	                    const index = symbol_table.findIndex(symbol => symbol === variable);
-	                    used_symbols.push(variable);
-	                    console.log(`    iload ${index}`);
+	                    if (index === -1) {
+	                        console.error(`ERROR: Variable '${variable}' is not defined`);
+	                        process.exit(1);
+	                    } else {
+	                        used_symbols.push(variable);
+	                        console.log(`    iload ${index}`);
+	                    }
 	                
 	            break;
 	        default:

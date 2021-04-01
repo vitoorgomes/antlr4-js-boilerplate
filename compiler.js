@@ -11,8 +11,8 @@ const compile = async () => {
   // const fileName = 'test-02-left-associativity.exp';
   // const fileName = 'test-03-variables.exp';
   // const fileName = 'error-01-undefined-variables.exp';
-  const fileName = 'error-02-unused-variables.exp';
-  // const fileName = 'VarSum.exp';
+  // const fileName = 'error-02-unused-variables.exp';
+  const fileName = 'VarSum.exp';
   if (fileName) {
     const input = fs.readFileSync(`./testsFiles/${fileName}`, 'utf-8')
     if (input) {
