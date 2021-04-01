@@ -4,25 +4,37 @@ import antlr4 from 'antlr4';
 
     const symbol_table = [];
     const used_symbols = [];
+    let current_stack = 0;
+    let max_stack = 0;
+
+    function stackCounter(bytecode, value) {
+        current_stack += value;
+        if (current_stack > max_stack) {
+            max_stack = current_stack;
+        }
+        console.log(`    ${bytecode}`)
+    }
 
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
-    "\u5964\u0003\u000fL\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u5964\u0003\u0011[\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0003\u0002\u0003\u0003",
     "\u0003\u0003\u0006\u0003\u0018\n\u0003\r\u0003\u000e\u0003\u0019\u0003",
     "\u0003\u0003\u0003\u0003\u0004\u0003\u0004\u0005\u0004 \n\u0004\u0003",
     "\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003",
-    "\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003",
-    "\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0007\u00073",
-    "\n\u0007\f\u0007\u000e\u00076\u000b\u0007\u0003\b\u0003\b\u0003\b\u0003",
-    "\b\u0003\b\u0007\b=\n\b\f\b\u000e\b@\u000b\b\u0003\t\u0003\t\u0003\t",
-    "\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0005\tJ\n\t\u0003\t\u0002",
-    "\u0002\n\u0002\u0004\u0006\b\n\f\u000e\u0010\u0002\u0004\u0004\u0002",
-    "\u0005\u0005\u0007\u0007\u0003\u0002\b\n\u0002I\u0002\u0012\u0003\u0002",
-    "\u0002\u0002\u0004\u0015\u0003\u0002\u0002\u0002\u0006\u001f\u0003\u0002",
-    "\u0002\u0002\b!\u0003\u0002\u0002\u0002\n(\u0003\u0002\u0002\u0002\f",
-    "-\u0003\u0002\u0002\u0002\u000e7\u0003\u0002\u0002\u0002\u0010I\u0003",
+    "\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0007\u0005,\n\u0005\f\u0005",
+    "\u000e\u0005/\u000b\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003",
+    "\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007\u0003",
+    "\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0007\u0007>\n\u0007\f\u0007",
+    "\u000e\u0007A\u000b\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0007",
+    "\bH\n\b\f\b\u000e\bK\u000b\b\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t",
+    "\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0005\tY\n",
+    "\t\u0003\t\u0002\u0002\n\u0002\u0004\u0006\b\n\f\u000e\u0010\u0002\u0004",
+    "\u0003\u0002\u0005\u0006\u0003\u0002\u0007\t\u0002Z\u0002\u0012\u0003",
+    "\u0002\u0002\u0002\u0004\u0015\u0003\u0002\u0002\u0002\u0006\u001f\u0003",
+    "\u0002\u0002\u0002\b!\u0003\u0002\u0002\u0002\n3\u0003\u0002\u0002\u0002",
+    "\f8\u0003\u0002\u0002\u0002\u000eB\u0003\u0002\u0002\u0002\u0010X\u0003",
     "\u0002\u0002\u0002\u0012\u0013\b\u0002\u0001\u0002\u0013\u0014\u0005",
     "\u0004\u0003\u0002\u0014\u0003\u0003\u0002\u0002\u0002\u0015\u0017\b",
     "\u0003\u0001\u0002\u0016\u0018\u0005\u0006\u0004\u0002\u0017\u0016\u0003",
@@ -31,23 +43,29 @@ const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
     "\u0002\u0002\u0002\u001b\u001c\b\u0003\u0001\u0002\u001c\u0005\u0003",
     "\u0002\u0002\u0002\u001d \u0005\b\u0005\u0002\u001e \u0005\n\u0006\u0002",
     "\u001f\u001d\u0003\u0002\u0002\u0002\u001f\u001e\u0003\u0002\u0002\u0002",
-    " \u0007\u0003\u0002\u0002\u0002!\"\u0007\r\u0002\u0002\"#\u0007\u000b",
-    "\u0002\u0002#$\b\u0005\u0001\u0002$%\u0005\f\u0007\u0002%&\u0007\f\u0002",
-    "\u0002&\'\b\u0005\u0001\u0002\'\t\u0003\u0002\u0002\u0002()\u0007\u000f",
-    "\u0002\u0002)*\u0007\u0006\u0002\u0002*+\u0005\f\u0007\u0002+,\b\u0006",
-    "\u0001\u0002,\u000b\u0003\u0002\u0002\u0002-4\u0005\u000e\b\u0002./",
-    "\t\u0002\u0002\u0002/0\u0005\u000e\b\u000201\b\u0007\u0001\u000213\u0003",
-    "\u0002\u0002\u00022.\u0003\u0002\u0002\u000236\u0003\u0002\u0002\u0002",
-    "42\u0003\u0002\u0002\u000245\u0003\u0002\u0002\u00025\r\u0003\u0002",
-    "\u0002\u000264\u0003\u0002\u0002\u00027>\u0005\u0010\t\u000289\t\u0003",
-    "\u0002\u00029:\u0005\u0010\t\u0002:;\b\b\u0001\u0002;=\u0003\u0002\u0002",
-    "\u0002<8\u0003\u0002\u0002\u0002=@\u0003\u0002\u0002\u0002><\u0003\u0002",
-    "\u0002\u0002>?\u0003\u0002\u0002\u0002?\u000f\u0003\u0002\u0002\u0002",
-    "@>\u0003\u0002\u0002\u0002AB\u0007\u000e\u0002\u0002BJ\b\t\u0001\u0002",
-    "CD\u0007\u000b\u0002\u0002DE\u0005\f\u0007\u0002EF\u0007\f\u0002\u0002",
-    "FJ\u0003\u0002\u0002\u0002GH\u0007\u000f\u0002\u0002HJ\b\t\u0001\u0002",
-    "IA\u0003\u0002\u0002\u0002IC\u0003\u0002\u0002\u0002IG\u0003\u0002\u0002",
-    "\u0002J\u0011\u0003\u0002\u0002\u0002\u0007\u0019\u001f4>I"].join("");
+    " \u0007\u0003\u0002\u0002\u0002!\"\u0007\u000e\u0002\u0002\"#\u0007",
+    "\n\u0002\u0002#$\b\u0005\u0001\u0002$%\u0005\f\u0007\u0002%-\b\u0005",
+    "\u0001\u0002&\'\u0007\r\u0002\u0002\'(\b\u0005\u0001\u0002()\u0005\f",
+    "\u0007\u0002)*\b\u0005\u0001\u0002*,\u0003\u0002\u0002\u0002+&\u0003",
+    "\u0002\u0002\u0002,/\u0003\u0002\u0002\u0002-+\u0003\u0002\u0002\u0002",
+    "-.\u0003\u0002\u0002\u0002.0\u0003\u0002\u0002\u0002/-\u0003\u0002\u0002",
+    "\u000201\u0007\u000b\u0002\u000212\b\u0005\u0001\u00022\t\u0003\u0002",
+    "\u0002\u000234\u0007\u0011\u0002\u000245\u0007\f\u0002\u000256\u0005",
+    "\f\u0007\u000267\b\u0006\u0001\u00027\u000b\u0003\u0002\u0002\u0002",
+    "8?\u0005\u000e\b\u00029:\t\u0002\u0002\u0002:;\u0005\u000e\b\u0002;",
+    "<\b\u0007\u0001\u0002<>\u0003\u0002\u0002\u0002=9\u0003\u0002\u0002",
+    "\u0002>A\u0003\u0002\u0002\u0002?=\u0003\u0002\u0002\u0002?@\u0003\u0002",
+    "\u0002\u0002@\r\u0003\u0002\u0002\u0002A?\u0003\u0002\u0002\u0002BI",
+    "\u0005\u0010\t\u0002CD\t\u0003\u0002\u0002DE\u0005\u0010\t\u0002EF\b",
+    "\b\u0001\u0002FH\u0003\u0002\u0002\u0002GC\u0003\u0002\u0002\u0002H",
+    "K\u0003\u0002\u0002\u0002IG\u0003\u0002\u0002\u0002IJ\u0003\u0002\u0002",
+    "\u0002J\u000f\u0003\u0002\u0002\u0002KI\u0003\u0002\u0002\u0002LM\u0007",
+    "\u0010\u0002\u0002MY\b\t\u0001\u0002NO\u0007\n\u0002\u0002OP\u0005\f",
+    "\u0007\u0002PQ\u0007\u000b\u0002\u0002QY\u0003\u0002\u0002\u0002RS\u0007",
+    "\u0011\u0002\u0002SY\b\t\u0001\u0002TU\u0007\u000f\u0002\u0002UV\u0007",
+    "\n\u0002\u0002VW\u0007\u000b\u0002\u0002WY\b\t\u0001\u0002XL\u0003\u0002",
+    "\u0002\u0002XN\u0003\u0002\u0002\u0002XR\u0003\u0002\u0002\u0002XT\u0003",
+    "\u0002\u0002\u0002Y\u0011\u0003\u0002\u0002\u0002\b\u0019\u001f-?IX"].join("");
 
 
 const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -59,11 +77,13 @@ const sharedContextCache = new antlr4.PredictionContextCache();
 export default class ExpParser extends antlr4.Parser {
 
     static grammarFileName = "Exp.g4";
-    static literalNames = [ null, null, null, "'+'", "'='", "'-'", "'*'", 
-                            "'/'", "'%'", "'('", "')'", "'print'" ];
-    static symbolicNames = [ null, "COMMENT", "SPACE", "PLUS", "ATTRIB", 
-                             "MINUS", "TIMES", "OVER", "REM", "OP_PAR", 
-                             "CL_PAR", "PRINT", "NUMBER", "NAME" ];
+    static literalNames = [ null, null, null, "'+'", "'-'", "'*'", "'/'", 
+                            "'%'", "'('", "')'", "'='", "','", "'print'", 
+                            "'read_int'" ];
+    static symbolicNames = [ null, "COMMENT", "SPACE", "PLUS", "MINUS", 
+                             "TIMES", "OVER", "REM", "OP_PAR", "CL_PAR", 
+                             "ATTRIB", "COMMA", "PRINT", "READ_INT", "NUMBER", 
+                             "NAME" ];
     static ruleNames = [ "program", "main", "statement", "st_print", "st_attrib", 
                          "expression", "term", "factor" ];
 
@@ -138,14 +158,14 @@ export default class ExpParser extends antlr4.Parser {
 	        } while(_la===ExpParser.PRINT || _la===ExpParser.NAME);
 
 	                console.log("    return");
-	                console.log(".limit stack 10");
+	                console.log(`.limit stack ${max_stack}`);
 	                console.log(`.limit locals ${symbol_table.length}`);
 	                console.log(".end method");
 	                console.log("\n; symbol_table: ", symbol_table);
 	                symbol_table.filter(v => !used_symbols.includes(v))
 	                .map(u => {
-	                    let message;  
-	                    if (u !== 'args') { 
+	                    let message;
+	                    if (u !== 'args') {
 	                      console.error(`ERROR: '${u}' is defined but never used`);
 	                      process.exit(1);
 	                    }
@@ -207,6 +227,7 @@ export default class ExpParser extends antlr4.Parser {
 	st_print() {
 	    let localctx = new St_printContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 6, ExpParser.RULE_st_print);
+	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
 	        this.state = 31;
@@ -214,14 +235,38 @@ export default class ExpParser extends antlr4.Parser {
 	        this.state = 32;
 	        this.match(ExpParser.OP_PAR);
 
-	                console.log("    getstatic java/lang/System/out Ljava/io/PrintStream;");
+	                stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
 	            
 	        this.state = 34;
 	        this.expression();
-	        this.state = 35;
+
+	                // console.log("    invokevirtual java/io/PrintStream/print(I)V\n");
+	                stackCounter("invokevirtual java/io/PrintStream/print(I)V\n", 2);
+	            
+	        this.state = 43;
+	        this._errHandler.sync(this);
+	        _la = this._input.LA(1);
+	        while(_la===ExpParser.COMMA) {
+	            this.state = 36;
+	            this.match(ExpParser.COMMA);
+
+	                    stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+	                
+	            this.state = 38;
+	            this.expression();
+
+	                    // console.log("    invokevirtual java/io/PrintStream/print(I)V\n");
+	                    stackCounter("invokevirtual java/io/PrintStream/print(I)V\n", 2);
+	                
+	            this.state = 45;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
+	        }
+	        this.state = 46;
 	        this.match(ExpParser.CL_PAR);
 
-	                console.log("    invokevirtual java/io/PrintStream/println(I)V\n");
+	                stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+	                stackCounter("invokevirtual java/io/PrintStream/println()V\n", -1);
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -244,18 +289,18 @@ export default class ExpParser extends antlr4.Parser {
 	    this.enterRule(localctx, 8, ExpParser.RULE_st_attrib);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 38;
+	        this.state = 49;
 	        localctx._NAME = this.match(ExpParser.NAME);
-	        this.state = 39;
+	        this.state = 50;
 	        this.match(ExpParser.ATTRIB);
-	        this.state = 40;
+	        this.state = 51;
 	        this.expression();
 
 	                const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 	                if (!symbol_table.find(symbol => symbol === variable)) symbol_table.push(variable)
 
 	                const index = symbol_table.findIndex(symbol => symbol === variable);
-	                console.log(`    istore ${index} \n`);
+	                stackCounter(`istore ${index} \n`, -1);
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -279,13 +324,13 @@ export default class ExpParser extends antlr4.Parser {
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 43;
+	        this.state = 54;
 	        this.term();
-	        this.state = 50;
+	        this.state = 61;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===ExpParser.PLUS || _la===ExpParser.MINUS) {
-	            this.state = 44;
+	            this.state = 55;
 	            localctx.op = this._input.LT(1);
 	            _la = this._input.LA(1);
 	            if(!(_la===ExpParser.PLUS || _la===ExpParser.MINUS)) {
@@ -295,13 +340,13 @@ export default class ExpParser extends antlr4.Parser {
 	            	this._errHandler.reportMatch(this);
 	                this.consume();
 	            }
-	            this.state = 45;
+	            this.state = 56;
 	            this.term();
 
-	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.PLUS) console.log("    iadd")
-	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.MINUS) console.log("    isub")
+	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.PLUS) stackCounter("iadd", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.MINUS) stackCounter("isub", -1)
 	                
-	            this.state = 52;
+	            this.state = 63;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -327,13 +372,13 @@ export default class ExpParser extends antlr4.Parser {
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 53;
+	        this.state = 64;
 	        this.factor();
-	        this.state = 60;
+	        this.state = 71;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExpParser.TIMES) | (1 << ExpParser.OVER) | (1 << ExpParser.REM))) !== 0)) {
-	            this.state = 54;
+	            this.state = 65;
 	            localctx.op = this._input.LT(1);
 	            _la = this._input.LA(1);
 	            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExpParser.TIMES) | (1 << ExpParser.OVER) | (1 << ExpParser.REM))) !== 0))) {
@@ -343,14 +388,14 @@ export default class ExpParser extends antlr4.Parser {
 	            	this._errHandler.reportMatch(this);
 	                this.consume();
 	            }
-	            this.state = 55;
+	            this.state = 66;
 	            this.factor();
 
-	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.TIMES) console.log("    imul")
-	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.OVER) console.log("    idiv")
-	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.REM) console.log("    irem")
+	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.TIMES) stackCounter("imul", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.OVER) stackCounter("idiv", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.REM) stackCounter("irem", -1)
 	                
-	            this.state = 62;
+	            this.state = 73;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -374,29 +419,29 @@ export default class ExpParser extends antlr4.Parser {
 	    let localctx = new FactorContext(this, this._ctx, this.state);
 	    this.enterRule(localctx, 14, ExpParser.RULE_factor);
 	    try {
-	        this.state = 71;
+	        this.state = 86;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
 	        case ExpParser.NUMBER:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 63;
+	            this.state = 74;
 	            localctx._NUMBER = this.match(ExpParser.NUMBER);
 
-	                    console.log("    ldc " + (localctx._NUMBER===null ? null : localctx._NUMBER.text));
+	                    stackCounter(`ldc ${(localctx._NUMBER===null ? null : localctx._NUMBER.text)}`, 1);
 	                
 	            break;
 	        case ExpParser.OP_PAR:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 65;
+	            this.state = 76;
 	            this.match(ExpParser.OP_PAR);
-	            this.state = 66;
+	            this.state = 77;
 	            this.expression();
-	            this.state = 67;
+	            this.state = 78;
 	            this.match(ExpParser.CL_PAR);
 	            break;
 	        case ExpParser.NAME:
 	            this.enterOuterAlt(localctx, 3);
-	            this.state = 69;
+	            this.state = 80;
 	            localctx._NAME = this.match(ExpParser.NAME);
 
 	                    const variable = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -406,8 +451,20 @@ export default class ExpParser extends antlr4.Parser {
 	                        process.exit(1);
 	                    } else {
 	                        used_symbols.push(variable);
-	                        console.log(`    iload ${index}`);
+	                        stackCounter(`iload ${index}`, 1);
 	                    }
+	                
+	            break;
+	        case ExpParser.READ_INT:
+	            this.enterOuterAlt(localctx, 4);
+	            this.state = 82;
+	            this.match(ExpParser.READ_INT);
+	            this.state = 83;
+	            this.match(ExpParser.OP_PAR);
+	            this.state = 84;
+	            this.match(ExpParser.CL_PAR);
+
+	                    stackCounter("invokestatic Runtime/readInt()I", 1);
 	                
 	            break;
 	        default:
@@ -434,16 +491,18 @@ ExpParser.EOF = antlr4.Token.EOF;
 ExpParser.COMMENT = 1;
 ExpParser.SPACE = 2;
 ExpParser.PLUS = 3;
-ExpParser.ATTRIB = 4;
-ExpParser.MINUS = 5;
-ExpParser.TIMES = 6;
-ExpParser.OVER = 7;
-ExpParser.REM = 8;
-ExpParser.OP_PAR = 9;
-ExpParser.CL_PAR = 10;
-ExpParser.PRINT = 11;
-ExpParser.NUMBER = 12;
-ExpParser.NAME = 13;
+ExpParser.MINUS = 4;
+ExpParser.TIMES = 5;
+ExpParser.OVER = 6;
+ExpParser.REM = 7;
+ExpParser.OP_PAR = 8;
+ExpParser.CL_PAR = 9;
+ExpParser.ATTRIB = 10;
+ExpParser.COMMA = 11;
+ExpParser.PRINT = 12;
+ExpParser.READ_INT = 13;
+ExpParser.NUMBER = 14;
+ExpParser.NAME = 15;
 
 ExpParser.RULE_program = 0;
 ExpParser.RULE_main = 1;
@@ -556,13 +615,32 @@ class St_printContext extends antlr4.ParserRuleContext {
 	    return this.getToken(ExpParser.OP_PAR, 0);
 	};
 
-	expression() {
-	    return this.getTypedRuleContext(ExpressionContext,0);
+	expression = function(i) {
+	    if(i===undefined) {
+	        i = null;
+	    }
+	    if(i===null) {
+	        return this.getTypedRuleContexts(ExpressionContext);
+	    } else {
+	        return this.getTypedRuleContext(ExpressionContext,i);
+	    }
 	};
 
 	CL_PAR() {
 	    return this.getToken(ExpParser.CL_PAR, 0);
 	};
+
+	COMMA = function(i) {
+		if(i===undefined) {
+			i = null;
+		}
+	    if(i===null) {
+	        return this.getTokens(ExpParser.COMMA);
+	    } else {
+	        return this.getToken(ExpParser.COMMA, i);
+	    }
+	};
+
 
 
 }
@@ -757,6 +835,10 @@ class FactorContext extends antlr4.ParserRuleContext {
 
 	NAME() {
 	    return this.getToken(ExpParser.NAME, 0);
+	};
+
+	READ_INT() {
+	    return this.getToken(ExpParser.READ_INT, 0);
 	};
 
 

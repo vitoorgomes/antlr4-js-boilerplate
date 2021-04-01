@@ -1,8 +1,8 @@
 import antlr4 from 'antlr4';
+import fs from 'fs';
 import ExpLexer from './ExpLexer.js';
 import ExpParser from './ExpParser.js';
 import getFileName from './fileList.js';
-import fs from 'fs';
 
 const compile = async () => {
   // const fileName = await getFileName();
@@ -10,11 +10,21 @@ const compile = async () => {
   // const fileName = 'test-01-constant-expressions.exp';
   // const fileName = 'test-02-left-associativity.exp';
   // const fileName = 'test-03-variables.exp';
+
+  /* ---------------- VERSION 2 ----------------*/
   // const fileName = 'error-01-undefined-variables.exp';
   // const fileName = 'error-02-unused-variables.exp';
-  const fileName = 'VarSum.exp';
+  // const fileName = 'VarSum.exp';
+  /* ----------------    END   -----------------*/
+
+  /* ---------------- VERSION 3 ----------------*/
+  // const fileName = 'MultiPrint.exp';
+  // const fileName = 'Read.exp';
+    const fileName = 'StackSize.exp';
+  /* ----------------    END   -----------------*/
+
   if (fileName) {
-    const input = fs.readFileSync(`./testsFiles/${fileName}`, 'utf-8')
+    const input = fs.readFileSync(`./testsFiles/${fileName}`, 'utf-8');
     if (input) {
       const chars = new antlr4.InputStream(input);
       const lexer = new ExpLexer(chars);
@@ -23,5 +33,5 @@ const compile = async () => {
       parser.program();
     }
   }
-}
+};
 compile();
