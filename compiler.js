@@ -7,20 +7,26 @@ import getFileName from './fileList.js';
 const compile = async () => {
   // const fileName = await getFileName();
   // console.clear();
-  // const fileName = 'test-01-constant-expressions.exp';
-  // const fileName = 'test-02-left-associativity.exp';
-  // const fileName = 'test-03-variables.exp';
+    // const fileName = 'test-01-constant-expressions.exp';
+    // const fileName = 'test-02-left-associativity.exp';
+    // const fileName = 'test-03-variables.exp';
 
   /* ---------------- VERSION 2 ----------------*/
-  // const fileName = 'error-01-undefined-variables.exp';
-  // const fileName = 'error-02-unused-variables.exp';
-  // const fileName = 'VarSum.exp';
+    // const fileName = 'error-01-undefined-variables.exp';
+    // const fileName = 'error-02-unused-variables.exp';
+    // const fileName = 'VarSum.exp';
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 3 ----------------*/
-  // const fileName = 'MultiPrint.exp';
-  // const fileName = 'Read.exp';
-    const fileName = 'StackSize.exp';
+    // const fileName = 'MultiPrint.exp';
+    // const fileName = 'Read.exp';
+    // const fileName = 'StackSize.exp';
+  /* ----------------    END   -----------------*/
+
+  /* ---------------- VERSION 4 ----------------*/
+    // const fileName = 'If.exp';
+    // const fileName = 'test-07-sequential-if.exp';
+    const fileName = 'test-08-chained-if.exp';
   /* ----------------    END   -----------------*/
 
   if (fileName) {
