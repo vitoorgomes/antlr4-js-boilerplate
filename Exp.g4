@@ -10,7 +10,7 @@ grammar Exp;
     let max_stack = 0;
     let if_stack = 0;
 
-    function stackCounter(bytecode, value) {
+    function emit(bytecode, value) {
       current_stack += value;
       if (current_stack > max_stack) {
           max_stack = current_stack;
@@ -18,7 +18,7 @@ grammar Exp;
       console.log(`    ${bytecode}`)
     }
 
-    function checkUnsuedVars() {
+    function checkUnusedVars() {
       return symbol_table.filter(v => !used_symbols.includes(v))
         .map(u => {
             let message;
@@ -92,7 +92,7 @@ main:
         console.log(`.limit locals ${symbol_table.length}`);
         console.log(".end method");
         console.log("\n; symbol_table: ", symbol_table);
-        checkUnsuedVars();
+        checkUnusedVars();
     };
 
 statement: st_print | st_attrib | st_if ;
@@ -102,7 +102,7 @@ st_if: IF bytecode = comparison
         let if_local = if_stack;
         if_stack += 1;
         const { bytecode } = this._ctx.bytecode;
-        stackCounter(`${bytecode} NOT_IF_${if_local}`, -2);
+        emit(`${bytecode} NOT_IF_${if_local}`, -2);
     } OP_CUR ( statement )+ CL_CUR
     {
         console.log(`NOT_IF_${if_local}:`)
@@ -120,26 +120,26 @@ comparison returns [bytecode]: expression op = ( EQ | NE | LT | LE | GT | GE ) e
 
 st_print: PRINT OP_PAR
     {
-        stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+        emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
     }
         expression
     {
-        stackCounter("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+        emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
     }
     (
         COMMA
     {
-        stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+        emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
     }
         expression
     {
-        stackCounter("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+        emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
     }
     )*
         CL_PAR
     {
-        stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
-        stackCounter("invokevirtual java/io/PrintStream/println()V\n", -1);
+        emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+        emit("invokevirtual java/io/PrintStream/println()V\n", -1);
     };
 
 st_attrib: NAME ATTRIB expression
@@ -148,27 +148,27 @@ st_attrib: NAME ATTRIB expression
         if (!symbol_table.find(symbol => symbol === variable)) symbol_table.push(variable)
 
         const index = symbol_table.findIndex(symbol => symbol === variable);
-        stackCounter(`istore ${index}`, -1);
+        emit(`istore ${index}`, -1);
     };
 
 expression: term ( op = ( PLUS | MINUS ) term
     {
-        if ($op.type === ExpParser.PLUS) stackCounter("iadd", -1)
-        if ($op.type === ExpParser.MINUS) stackCounter("isub", -1)
+        if ($op.type === ExpParser.PLUS) emit("iadd", -1)
+        if ($op.type === ExpParser.MINUS) emit("isub", -1)
     }
     )* ;
 
 term: factor ( op = ( TIMES | OVER | REM ) factor
     {
-        if ($op.type == ExpParser.TIMES) stackCounter("imul", -1)
-        if ($op.type == ExpParser.OVER) stackCounter("idiv", -1)
-        if ($op.type == ExpParser.REM) stackCounter("irem", -1)
+        if ($op.type == ExpParser.TIMES) emit("imul", -1)
+        if ($op.type == ExpParser.OVER) emit("idiv", -1)
+        if ($op.type == ExpParser.REM) emit("irem", -1)
     }
     )* ;
 
 factor: NUMBER
     {
-        stackCounter(`ldc ${$NUMBER.text}`, 1);
+        emit(`ldc ${$NUMBER.text}`, 1);
     }
     | OP_PAR expression CL_PAR
     | NAME
@@ -180,11 +180,11 @@ factor: NUMBER
             process.exit(1);
         } else {
             used_symbols.push(variable);
-            stackCounter(`iload ${index}`, 1);
+            emit(`iload ${index}`, 1);
         }
     }
     | READ_INT OP_PAR CL_PAR
     {
-        stackCounter("invokestatic Runtime/readInt()I", 1);
+        emit("invokestatic Runtime/readInt()I", 1);
     };
 

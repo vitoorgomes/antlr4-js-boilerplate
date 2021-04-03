@@ -8,7 +8,7 @@ import antlr4 from 'antlr4';
     let max_stack = 0;
     let if_stack = 0;
 
-    function stackCounter(bytecode, value) {
+    function emit(bytecode, value) {
       current_stack += value;
       if (current_stack > max_stack) {
           max_stack = current_stack;
@@ -16,7 +16,7 @@ import antlr4 from 'antlr4';
       console.log(`    ${bytecode}`)
     }
 
-    function checkUnsuedVars() {
+    function checkUnusedVars() {
       return symbol_table.filter(v => !used_symbols.includes(v))
         .map(u => {
             let message;
@@ -190,7 +190,7 @@ export default class ExpParser extends antlr4.Parser {
 	                console.log(`.limit locals ${symbol_table.length}`);
 	                console.log(".end method");
 	                console.log("\n; symbol_table: ", symbol_table);
-	                checkUnsuedVars();
+	                checkUnusedVars();
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -263,7 +263,7 @@ export default class ExpParser extends antlr4.Parser {
 	                let if_local = if_stack;
 	                if_stack += 1;
 	                const { bytecode } = this._ctx.bytecode;
-	                stackCounter(`${bytecode} NOT_IF_${if_local}`, -2);
+	                emit(`${bytecode} NOT_IF_${if_local}`, -2);
 	            
 	        this.state = 39;
 	        this.match(ExpParser.OP_CUR);
@@ -353,12 +353,12 @@ export default class ExpParser extends antlr4.Parser {
 	        this.state = 54;
 	        this.match(ExpParser.OP_PAR);
 
-	                stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+	                emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
 	            
 	        this.state = 56;
 	        this.expression();
 
-	                stackCounter("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+	                emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
 	            
 	        this.state = 65;
 	        this._errHandler.sync(this);
@@ -367,12 +367,12 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 58;
 	            this.match(ExpParser.COMMA);
 
-	                    stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+	                    emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
 	                
 	            this.state = 60;
 	            this.expression();
 
-	                    stackCounter("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+	                    emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
 	                
 	            this.state = 67;
 	            this._errHandler.sync(this);
@@ -381,8 +381,8 @@ export default class ExpParser extends antlr4.Parser {
 	        this.state = 68;
 	        this.match(ExpParser.CL_PAR);
 
-	                stackCounter("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
-	                stackCounter("invokevirtual java/io/PrintStream/println()V\n", -1);
+	                emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+	                emit("invokevirtual java/io/PrintStream/println()V\n", -1);
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -416,7 +416,7 @@ export default class ExpParser extends antlr4.Parser {
 	                if (!symbol_table.find(symbol => symbol === variable)) symbol_table.push(variable)
 
 	                const index = symbol_table.findIndex(symbol => symbol === variable);
-	                stackCounter(`istore ${index}`, -1);
+	                emit(`istore ${index}`, -1);
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -459,8 +459,8 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 78;
 	            this.term();
 
-	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.PLUS) stackCounter("iadd", -1)
-	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.MINUS) stackCounter("isub", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.PLUS) emit("iadd", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.MINUS) emit("isub", -1)
 	                
 	            this.state = 85;
 	            this._errHandler.sync(this);
@@ -507,9 +507,9 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 88;
 	            this.factor();
 
-	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.TIMES) stackCounter("imul", -1)
-	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.OVER) stackCounter("idiv", -1)
-	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.REM) stackCounter("irem", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.TIMES) emit("imul", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.OVER) emit("idiv", -1)
+	                    if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.REM) emit("irem", -1)
 	                
 	            this.state = 95;
 	            this._errHandler.sync(this);
@@ -543,7 +543,7 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 96;
 	            localctx._NUMBER = this.match(ExpParser.NUMBER);
 
-	                    stackCounter(`ldc ${(localctx._NUMBER===null ? null : localctx._NUMBER.text)}`, 1);
+	                    emit(`ldc ${(localctx._NUMBER===null ? null : localctx._NUMBER.text)}`, 1);
 	                
 	            break;
 	        case ExpParser.OP_PAR:
@@ -567,7 +567,7 @@ export default class ExpParser extends antlr4.Parser {
 	                        process.exit(1);
 	                    } else {
 	                        used_symbols.push(variable);
-	                        stackCounter(`iload ${index}`, 1);
+	                        emit(`iload ${index}`, 1);
 	                    }
 	                
 	            break;
@@ -580,7 +580,7 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 106;
 	            this.match(ExpParser.CL_PAR);
 
-	                    stackCounter("invokestatic Runtime/readInt()I", 1);
+	                    emit("invokestatic Runtime/readInt()I", 1);
 	                
 	            break;
 	        default:
