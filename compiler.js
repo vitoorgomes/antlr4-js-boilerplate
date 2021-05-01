@@ -5,28 +5,34 @@ import ExpParser from './ExpParser.js';
 import getFileName from './fileList.js';
 
 const compile = async () => {
-  // const fileName = await getFileName();
-  // console.clear();
-    // const fileName = 'test-01-constant-expressions.exp';
-    // const fileName = 'test-02-left-associativity.exp';
-    // const fileName = 'test-03-variables.exp';
+    // const fileName = 'test-01-constant-expressions.exp';        // OK
+    // const fileName = 'test-02-left-associativity.exp';          // OK
+    // const fileName = 'test-03-variables.exp';                   // OK
 
   /* ---------------- VERSION 2 ----------------*/
-    // const fileName = 'error-01-undefined-variables.exp';
-    // const fileName = 'error-02-unused-variables.exp';
-    // const fileName = 'VarSum.exp';
+    // const fileName = 'error-01-undefined-variables.exp';        // OK
+    // const fileName = 'error-02-unused-variables.exp';           // OK
+    // const fileName = 'VarSum.exp';                              // OK
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 3 ----------------*/
-    // const fileName = 'MultiPrint.exp';
-    // const fileName = 'Read.exp';
-    // const fileName = 'StackSize.exp';
+    // const fileName = 'MultiPrint.exp';                          // OK
+    // const fileName = 'Read.exp';                                // OK
+    // const fileName = 'StackSize.exp';                           // OK
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 4 ----------------*/
-    // const fileName = 'If.exp';
-    // const fileName = 'test-07-sequential-if.exp';
-    const fileName = 'test-08-chained-if.exp';
+    // const fileName = 'If.exp';                                  // OK
+    // const fileName = 'test-07-sequential-if.exp';               // OK
+    // const fileName = 'test-08-chained-if.exp';                  // OK
+  /* ----------------    END   -----------------*/
+
+  /* ---------------- VERSION 5 ----------------*/
+    // const fileName = 'While.exp';                               // OK
+    // const fileName = 'test-09-sequential-while.exp';            // OK
+    // const fileName = 'test-10-chained-while.exp';               // OK
+    // const fileName = 'test-11-break-continue.exp';              // OK
+    // const fileName = 'error-03-break-continue.exp';             // OK
   /* ----------------    END   -----------------*/
 
   if (fileName) {

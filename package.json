@@ -12,11 +12,8 @@
   "scripts": {
     "ant": "java -jar antlr-4.9.1-complete.jar -Dlanguage=JavaScript -no-listener Exp.g4",
     "postant": "node ./compiler.js > Test.j",
-    "jasmin:run": "java -jar jasmin.jar Test.j",
-    "postjasmin:run": "java -cp . Test",
-    "precompile": "chmod +x ./build.sh",
-    "compile": "./build.sh",
-    "postcompile": "chmod +x ./run.sh"
+    "jasmin": "java -jar jasmin.jar Test.j",
+    "postjasmin": "java -cp . Test"
   },
   "dependencies": {
     "antlr4": "^4.9.1"

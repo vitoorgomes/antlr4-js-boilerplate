@@ -4,11 +4,16 @@ grammar Exp;
 
 @parser::header
 {
-    const symbol_table = [];
-    const used_symbols = [];
     let current_stack = 0;
     let max_stack = 0;
     let if_stack = 0;
+    let while_stack = 0;
+
+    const symbol_table = [];
+    const used_symbols = [];
+
+    let isWhile = false;
+    let whileLocalCounter = 0;
 
     function emit(bytecode, value) {
       current_stack += value;
@@ -61,6 +66,9 @@ LE    : '<=' ;
 PRINT   : 'print'   ;
 READ_INT: 'read_int';
 IF      : 'if'      ;
+WHILE   : 'while'   ;
+BREAK   : 'break'   ;
+CONTINUE: 'continue';
 
 NUMBER: '0'..'9'+ ;
 NAME  : 'a'..'z'+ ;
@@ -95,7 +103,7 @@ main:
         checkUnusedVars();
     };
 
-statement: st_print | st_attrib | st_if ;
+statement: st_print | st_attrib | st_if | st_while | st_break | st_continue ;
 
 st_if: IF bytecode = comparison
     {
@@ -103,9 +111,52 @@ st_if: IF bytecode = comparison
         if_stack += 1;
         const { bytecode } = this._ctx.bytecode;
         emit(`${bytecode} NOT_IF_${if_local}`, -2);
-    } OP_CUR ( statement )+ CL_CUR
+    }
+    OP_CUR ( statement )+ CL_CUR
     {
         console.log(`NOT_IF_${if_local}:`)
+    };
+
+st_while:
+    {
+      let while_local = while_stack;
+      whileLocalCounter = while_local;
+      isWhile = true;
+      while_stack += 1;
+      console.log(`BEGIN_WHILE_${while_local}:`);
+    }
+    WHILE bytecode = comparison
+    {
+      const { bytecode } = this._ctx.bytecode;
+      emit(`${bytecode} END_WHILE_${while_local}`, -2);
+    }
+    OP_CUR ( statement )+ CL_CUR
+    {
+        emit(`goto BEGIN_WHILE_${while_local}`, 0);
+        console.log(`END_WHILE_${while_local}:`);
+        isWhile = false;
+    };
+
+st_break: BREAK
+    {
+      if(isWhile) {
+        emit(`goto END_WHILE_${whileLocalCounter}`, 0);
+      }
+      else {
+        console.error('ERROR: BREAK is outside the while loop');
+        process.exit(1);
+      }
+    };
+
+st_continue: CONTINUE
+    {
+      if(isWhile) {
+        emit(`goto BEGIN_WHILE_${whileLocalCounter}`, 0);
+      }
+      else {
+        console.error('ERROR: CONTINUE is outside the while loop');
+        process.exit(1);
+      }
     };
 
 comparison returns [bytecode]: expression op = ( EQ | NE | LT | LE | GT | GE ) expression

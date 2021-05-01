@@ -10,82 +10,38 @@
 
 .method public static main([Ljava/lang/String;)V
 
-    ldc 1
+    ldc 0
     istore 1
-    ldc 2
-    istore 2
-    ldc 3
-    istore 3
+BEGIN_WHILE_0:
     iload 1
-    iload 2
-    if_icmpne NOT_IF_0
-    iload 2
-    iload 3
-    if_icmple NOT_IF_1
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc 4
-    invokevirtual java/io/PrintStream/print(I)V
-
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
-
-NOT_IF_1:
-    iload 2
-    iload 3
-    if_icmpgt NOT_IF_2
-    getstatic java/lang/System/out Ljava/io/PrintStream;
     ldc 5
-    invokevirtual java/io/PrintStream/print(I)V
-
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
-
-NOT_IF_2:
+    if_icmpgt END_WHILE_0
+    iload 1
+    ldc 1
+    iadd
+    istore 1
+    iload 1
+    ldc 2
+    if_icmpne NOT_IF_0
+    goto BEGIN_WHILE_0
 NOT_IF_0:
     iload 1
-    iload 2
-    if_icmpeq NOT_IF_3
+    ldc 4
+    if_icmpne NOT_IF_1
+    goto END_WHILE_0
+NOT_IF_1:
+    getstatic java/lang/System/out Ljava/io/PrintStream;
     iload 1
-    iload 2
-    if_icmpge NOT_IF_4
-    iload 2
-    iload 3
-    if_icmple NOT_IF_5
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc 6
     invokevirtual java/io/PrintStream/print(I)V
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
     invokevirtual java/io/PrintStream/println()V
 
-NOT_IF_5:
-    iload 2
-    iload 3
-    if_icmpgt NOT_IF_6
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc 7
-    invokevirtual java/io/PrintStream/print(I)V
-
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
-
-NOT_IF_6:
-NOT_IF_4:
-    iload 1
-    iload 2
-    if_icmplt NOT_IF_7
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc 8
-    invokevirtual java/io/PrintStream/print(I)V
-
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
-
-NOT_IF_7:
-NOT_IF_3:
+    goto BEGIN_WHILE_0
+END_WHILE_0:
     return
 .limit stack 2
-.limit locals 4
+.limit locals 2
 .end method
 
-; symbol_table:  [ 'args', 'a', 'b', 'c' ]
+; symbol_table:  [ 'args', 'n' ]
