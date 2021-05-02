@@ -12,62 +12,46 @@
 
     ldc 1
     istore 1
+    ldc "X"
+    astore 2
     ldc 2
-    istore 2
-    ldc 3
     istore 3
+    ldc "Y"
+    astore 4
+    ldc 3
+    istore 1
     iload 1
-    iload 2
-    if_icmpne NOT_IF_0
-    iload 2
-    iload 3
-    if_icmpeq NOT_IF_1
+    istore 3
+    ldc "Q"
+    astore 2
+    aload 2
+    astore 4
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    iload 2
+    ldc 123
     invokevirtual java/io/PrintStream/print(I)V
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
     invokevirtual java/io/PrintStream/println()V
 
-    goto END_ELSE_1
-NOT_IF_1:
+    getstatic java/lang/System/out Ljava/io/PrintStream;
+    ldc "xyz"
+    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
+
+    getstatic java/lang/System/out Ljava/io/PrintStream;
+    invokevirtual java/io/PrintStream/println()V
+
     getstatic java/lang/System/out Ljava/io/PrintStream;
     iload 3
     invokevirtual java/io/PrintStream/print(I)V
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
-
-END_ELSE_1:
-    goto END_ELSE_0
-NOT_IF_0:
-    iload 1
-    iload 2
-    if_icmple NOT_IF_2
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    iload 2
-    invokevirtual java/io/PrintStream/print(I)V
+    aload 4
+    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
+    aload 2
+    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V
 
-    goto END_ELSE_2
-NOT_IF_2:
-    iload 1
-    iload 2
-    if_icmpge NOT_IF_3
-    iload 2
-    iload 3
-    if_icmple NOT_IF_4
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    iload 3
-    invokevirtual java/io/PrintStream/print(I)V
-
-    getstatic java/lang/System/out Ljava/io/PrintStream;
-    invokevirtual java/io/PrintStream/println()V
-
-    goto END_ELSE_4
-NOT_IF_4:
     getstatic java/lang/System/out Ljava/io/PrintStream;
     iload 1
     invokevirtual java/io/PrintStream/print(I)V
@@ -75,15 +59,9 @@ NOT_IF_4:
     getstatic java/lang/System/out Ljava/io/PrintStream;
     invokevirtual java/io/PrintStream/println()V
 
-END_ELSE_4:
-    goto END_ELSE_3
-NOT_IF_3:
-END_ELSE_3:
-END_ELSE_2:
-END_ELSE_0:
     return
 .limit stack 2
-.limit locals 4
+.limit locals 5
 .end method
 
-; symbol_table:  [ 'args', 'a', 'b', 'c' ]
+; symbols_table:  [ 'args', 'a', 'x', 'b', 'y' ]

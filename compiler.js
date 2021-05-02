@@ -5,39 +5,47 @@ import ExpParser from './ExpParser.js';
 import getFileName from './fileList.js';
 
 const compile = async () => {
-    // const fileName = 'test-01-constant-expressions.exp';        // OK
-    // const fileName = 'test-02-left-associativity.exp';          // OK
-    // const fileName = 'test-03-variables.exp';                   // OK
+  /* ---------------- VERSION 1 ----------------*/
+    // const fileName = 'v1/test-01-constant-expressions.exp';        // OK
+    // const fileName = 'v1/test-02-left-associativity.exp';          // OK
+    // const fileName = 'v1/test-03-variables.exp';                   // OK
+  /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 2 ----------------*/
-    // const fileName = 'error-01-undefined-variables.exp';        // OK
-    // const fileName = 'error-02-unused-variables.exp';           // OK
-    // const fileName = 'VarSum.exp';                              // OK
+    // const fileName = 'v2/error-01-undefined-variables.exp';        // OK
+    // const fileName = 'v2/error-02-unused-variables.exp';           // OK
+    // const fileName = 'v2/VarSum.exp';                              // OK
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 3 ----------------*/
-    // const fileName = 'MultiPrint.exp';                          // OK
-    // const fileName = 'Read.exp';                                // OK
-    // const fileName = 'StackSize.exp';                           // OK
+    // const fileName = 'v3/MultiPrint.exp';                          // OK
+    // const fileName = 'v3/Read.exp';                                // OK
+    // const fileName = 'v3/StackSize.exp';                           // OK
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 4 ----------------*/
-    // const fileName = 'If.exp';                                  // OK
-    // const fileName = 'test-07-sequential-if.exp';               // OK
-    // const fileName = 'test-08-chained-if.exp';                  // OK
+    // const fileName = 'v4/If.exp';                                  // OK
+    // const fileName = 'v4/test-07-sequential-if.exp';               // OK
+    // const fileName = 'v4/test-08-chained-if.exp';                  // OK
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 5 ----------------*/
-    // const fileName = 'While.exp';                               // OK
-    // const fileName = 'test-09-sequential-while.exp';            // OK
-    // const fileName = 'test-10-chained-while.exp';               // OK
-    // const fileName = 'test-11-break-continue.exp';              // OK
-    // const fileName = 'error-03-break-continue.exp';             // OK
+    // const fileName = 'v5/While.exp';                               // OK
+    // const fileName = 'v5/test-09-sequential-while.exp';            // OK
+    // const fileName = 'v5/test-10-chained-while.exp';               // OK
+    // const fileName = 'v5/test-11-break-continue.exp';              // OK
+    // const fileName = 'v5/error-03-break-continue.exp';             // OK
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 6 ----------------*/
-    // const fileName = 'IfElse.exp';                              // OK
-    // const fileName = 'test-12-chained-conditionals.exp';        // OK
+    // const fileName = 'v6/IfElse.exp';                              // OK
+    // const fileName = 'v6/test-12-chained-conditionals.exp';        // OK
+  /* ----------------    END   -----------------*/
+
+  /* ---------------- VERSION 7 ----------------*/
+    // const fileName = 'v7/String.exp';                              // OK
+    // const fileName = 'v7/test-13-strings.exp';                     // OK
+    const fileName = 'v7/error-04-type-checking.exp';
   /* ----------------    END   -----------------*/
 
   if (fileName) {

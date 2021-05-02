@@ -1,0 +1,33 @@
+a = 1
+x = "X"
+b = 2
+y = "Y"
+
+a = 3
+b = a
+a = "Z"           # error: 'a' is integer
+b = x             # error: 'b' in integer
+a = read_str()    # error: 'a' is integer
+
+x = "Q"
+y = x
+x = 4             # error: 'x' is string
+y = b             # error: 'y' is string
+x = read_int()    # error: 'x' is string
+
+print(123)
+print("xyz")
+print(a + x)      # error: cannot mix types
+print(b - y)      # error: cannot mix types
+print(x * "W")    # error: cannot mix types
+print(y / x)      # error: cannot mix types
+print(8 % (x))    # error: cannot mix types
+
+if a == x {       # error: cannot mix types
+    print(456)
+}
+
+while y < 4 {     # error: cannot mix types
+    print("hi!")
+}
+

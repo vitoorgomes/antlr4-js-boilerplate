@@ -9,7 +9,8 @@ grammar Exp;
     let if_stack = 0;
     let while_stack = 0;
 
-    const symbol_table = [];
+    const symbols_table = [];
+    const types_table = [];
     const used_symbols = [];
 
     let isWhile = false;
@@ -25,7 +26,7 @@ grammar Exp;
     }
 
     function checkUnusedVars() {
-      return symbol_table.filter(v => !used_symbols.includes(v))
+      return symbols_table.filter(v => !used_symbols.includes(v))
         .map(u => {
             let message;
             if (u !== 'args') {
@@ -34,6 +35,32 @@ grammar Exp;
             }
             return message;
         });
+    }
+
+    // aux function to return the correct print type
+    function printResolver(type) {
+      if (type === 'i') {
+        return emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+      } else if (type === 's') {
+        return emit("invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n", -2);
+      } else {
+        console.error(`ERROR: check printResolver`);
+        process.exit(1);
+      }
+    }
+
+    // aux to validate that the expression type is the same as the saved one and to emit the correct store
+    function validateTypesToStore(expType, savedType, index, variable) {
+      if (expType === savedType) {
+        if (savedType === 'i') {
+          return emit(`istore ${index}`, -1);
+        } else if (expType === 's') {
+          return emit(`astore ${index}`, -1);
+        }
+      } else {
+        console.error(`ERROR: '${variable}' is a ${savedType === 'i' ? 'number' : 'string'}`);
+        process.exit(1);
+      }
     }
 }
 
@@ -66,6 +93,7 @@ LE    : '<=' ;
 
 PRINT   : 'print'   ;
 READ_INT: 'read_int';
+READ_STR: 'read_str';
 IF      : 'if'      ;
 ELSE    : 'else'    ;
 WHILE   : 'while'   ;
@@ -74,35 +102,36 @@ CONTINUE: 'continue';
 
 NUMBER: '0'..'9'+ ;
 NAME  : 'a'..'z'+ ;
+STRING: '"' ~('"')* '"';
 
 /*---------------- PARSER RULES ----------------*/
 
 program:
     {
-        console.log(".source Test.src");
-        console.log(".class  public Test");
-        console.log(".super  java/lang/Object\n");
-        console.log(".method public <init>()V");
-        console.log("    aload_0");
-        console.log("    invokenonvirtual java/lang/Object/<init>()V");
-        console.log("    return");
-        console.log(".end method\n");
+      console.log(".source Test.src");
+      console.log(".class  public Test");
+      console.log(".super  java/lang/Object\n");
+      console.log(".method public <init>()V");
+      console.log("    aload_0");
+      console.log("    invokenonvirtual java/lang/Object/<init>()V");
+      console.log("    return");
+      console.log(".end method\n");
     }
     main ;
 
 main:
     {
-        console.log(".method public static main([Ljava/lang/String;)V\n");
-        symbol_table.push('args');
+      console.log(".method public static main([Ljava/lang/String;)V\n");
+      symbols_table.push('args');
     }
     ( statement )+
     {
-        console.log("    return");
-        console.log(`.limit stack ${max_stack}`);
-        console.log(`.limit locals ${symbol_table.length}`);
-        console.log(".end method");
-        console.log("\n; symbol_table: ", symbol_table);
-        checkUnusedVars();
+      console.log("    return");
+      console.log(`.limit stack ${max_stack}`);
+      console.log(`.limit locals ${symbols_table.length}`);
+      console.log(".end method");
+      console.log("\n; symbols_table: ", symbols_table);
+      checkUnusedVars();
     };
 
 statement: st_print | st_attrib | st_if | st_while | st_break | st_continue ;
@@ -141,9 +170,9 @@ st_while:
     }
     OP_CUR ( statement )+ CL_CUR
     {
-        emit(`goto BEGIN_WHILE_${while_local}`, 0);
-        console.log(`END_WHILE_${while_local}:`);
-        isWhile = false;
+      emit(`goto BEGIN_WHILE_${while_local}`, 0);
+      console.log(`END_WHILE_${while_local}:`);
+      isWhile = false;
     };
 
 st_break: BREAK
@@ -168,83 +197,137 @@ st_continue: CONTINUE
       }
     };
 
-comparison returns [bytecode]: expression op = ( EQ | NE | LT | LE | GT | GE ) expression
+comparison returns [bytecode]: e1 = expression op = ( EQ | NE | LT | LE | GT | GE ) e2 = expression
     {
-        if ($op.type === ExpParser.EQ) $bytecode = 'if_icmpne';
-        if ($op.type === ExpParser.NE) $bytecode = 'if_icmpeq';
-        if ($op.type === ExpParser.LT) $bytecode = 'if_icmpge';
-        if ($op.type === ExpParser.GT) $bytecode = 'if_icmple';
-        if ($op.type === ExpParser.LE) $bytecode = 'if_icmpgt';
-        if ($op.type === ExpParser.GE) $bytecode = 'if_icmplt';
+      if ($e1.type !== $e2.type) {
+        console.error(`ERROR: operation not allowed, you cannot mix types`);
+        process.exit(1);
+      }
+
+      if ($op.type === ExpParser.EQ) $bytecode = 'if_icmpne';
+      if ($op.type === ExpParser.NE) $bytecode = 'if_icmpeq';
+      if ($op.type === ExpParser.LT) $bytecode = 'if_icmpge';
+      if ($op.type === ExpParser.GT) $bytecode = 'if_icmple';
+      if ($op.type === ExpParser.LE) $bytecode = 'if_icmpgt';
+      if ($op.type === ExpParser.GE) $bytecode = 'if_icmplt';
     };
 
 st_print: PRINT OP_PAR
     {
         emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
     }
-        expression
+      e1 = expression
     {
-        emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+      printResolver($e1.type);
     }
     (
-        COMMA
+      COMMA
     {
-        emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+      emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
     }
-        expression
+      e2 = expression
     {
-        emit("invokevirtual java/io/PrintStream/print(I)V\n", -2);
+      printResolver($e2.type);
     }
     )*
-        CL_PAR
+      CL_PAR
     {
-        emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
-        emit("invokevirtual java/io/PrintStream/println()V\n", -1);
+      emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+      emit("invokevirtual java/io/PrintStream/println()V\n", -1);
     };
 
 st_attrib: NAME ATTRIB expression
     {
-        const variable = $NAME.text;
-        if (!symbol_table.find(symbol => symbol === variable)) symbol_table.push(variable)
+      const variable = $NAME.text;
+      const expType = $expression.type;
 
-        const index = symbol_table.findIndex(symbol => symbol === variable);
-        emit(`istore ${index}`, -1);
+      if (!symbols_table.find(symbol => symbol === variable)) {
+        symbols_table.push(variable);
+        types_table.push(expType);
+      }
+
+      const index = symbols_table.findIndex(symbol => symbol === variable);
+
+      // need to -1 because in JS the symbols_table starts with 'args' at index 0
+      const savedType = types_table[index - 1];
+
+      validateTypesToStore(expType, savedType, index, variable);
     };
 
-expression: term ( op = ( PLUS | MINUS ) term
+expression returns [type]: t1 = term ( op = ( PLUS | MINUS ) t2 = term
     {
-        if ($op.type === ExpParser.PLUS) emit("iadd", -1)
-        if ($op.type === ExpParser.MINUS) emit("isub", -1)
-    }
-    )* ;
+      if ($t1.type !== $t2.type) {
+        console.error(`ERROR: operation not allowed, you cannot mix types`);
+        process.exit(1);
+      }
 
-term: factor ( op = ( TIMES | OVER | REM ) factor
-    {
-        if ($op.type == ExpParser.TIMES) emit("imul", -1)
-        if ($op.type == ExpParser.OVER) emit("idiv", -1)
-        if ($op.type == ExpParser.REM) emit("irem", -1)
+      if ($op.type === ExpParser.PLUS) emit("iadd", -1)
+      if ($op.type === ExpParser.MINUS) emit("isub", -1)
     }
-    )* ;
-
-factor: NUMBER
+    )*
     {
-        emit(`ldc ${$NUMBER.text}`, 1);
+      $type = $t1.type
+    };
+
+term returns [type]: f1 = factor ( op = ( TIMES | OVER | REM ) f2 = factor
+    {
+      if ($f1.type !== $f2.type) {
+        console.error(`ERROR: operation not allowed, you cannot mix types`);
+        process.exit(1);
+      }
+
+      if ($op.type == ExpParser.TIMES) emit("imul", -1)
+      if ($op.type == ExpParser.OVER) emit("idiv", -1)
+      if ($op.type == ExpParser.REM) emit("irem", -1)
+    }
+    )*
+    {
+      $type = $f1.type
+    };
+
+factor returns [type]: NUMBER
+    {
+      emit(`ldc ${$NUMBER.text}`, 1);
+      $type = 'i';
+    }
+    | STRING
+    {
+      emit(`ldc ${$STRING.text}`, 1);
+      $type = 's';
     }
     | OP_PAR expression CL_PAR
+    {
+      $type = $expression.type
+    }
     | NAME
     {
-        const variable = $NAME.text;
-        const index = symbol_table.findIndex(symbol => symbol === variable);
-        if (index === -1) {
-            console.error(`ERROR: Variable '${variable}' is not defined`);
-            process.exit(1);
-        } else {
-            used_symbols.push(variable);
-            emit(`iload ${index}`, 1);
+      const variable = $NAME.text;
+      const index = symbols_table.findIndex(symbol => symbol === variable);
+
+      if (index === -1) {
+        console.error(`ERROR: Variable '${variable}' is not defined`);
+        process.exit(1);
+      } else {
+        // need to -1 because in JS the symbols_table starts with 'args' at index 0
+        const type = types_table[index - 1];
+        if (type === 'i') {
+          emit(`iload ${index}`, 1);
+          $type = type;
+        } else if (type === 's') {
+          emit(`aload ${index}`, 1);
+          $type = type;
         }
+        used_symbols.push(variable);
+      }
     }
     | READ_INT OP_PAR CL_PAR
     {
-        emit("invokestatic Runtime/readInt()I", 1);
+      emit("invokestatic Runtime/readInt()I", 1);
+      $type = 'i';
+    }
+    | READ_STR OP_PAR CL_PAR
+    {
+      emit("invokestatic Runtime/readString()Ljava/lang/String;", 1);
+      $type = 's';
     };
 
