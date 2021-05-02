@@ -45,7 +45,13 @@ const compile = async () => {
   /* ---------------- VERSION 7 ----------------*/
     // const fileName = 'v7/String.exp';                              // OK
     // const fileName = 'v7/test-13-strings.exp';                     // OK
-    const fileName = 'v7/error-04-type-checking.exp';
+    // const fileName = 'v7/error-04-type-checking.exp';              // OK
+  /* ----------------    END   -----------------*/
+
+  /* ---------------- VERSION 8 ----------------*/
+    // const fileName = 'v8/TestArray.exp';                           // OK                     
+    const fileName = 'v8/test-14-array.exp';                  
+    // const fileName = 'v8/error-05-array-checking.exp';              
   /* ----------------    END   -----------------*/
 
   if (fileName) {
