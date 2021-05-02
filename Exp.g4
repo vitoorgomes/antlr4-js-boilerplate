@@ -13,6 +13,7 @@ grammar Exp;
     const used_symbols = [];
 
     let isWhile = false;
+    let isElse = false;
     let whileLocalCounter = 0;
 
     function emit(bytecode, value) {
@@ -66,6 +67,7 @@ LE    : '<=' ;
 PRINT   : 'print'   ;
 READ_INT: 'read_int';
 IF      : 'if'      ;
+ELSE    : 'else'    ;
 WHILE   : 'while'   ;
 BREAK   : 'break'   ;
 CONTINUE: 'continue';
@@ -107,14 +109,21 @@ statement: st_print | st_attrib | st_if | st_while | st_break | st_continue ;
 
 st_if: IF bytecode = comparison
     {
-        let if_local = if_stack;
-        if_stack += 1;
-        const { bytecode } = this._ctx.bytecode;
-        emit(`${bytecode} NOT_IF_${if_local}`, -2);
+      let if_local = if_stack;
+      if_stack += 1;
+      const { bytecode } = this._ctx.bytecode;
+      emit(`${bytecode} NOT_IF_${if_local}`, -2);
     }
     OP_CUR ( statement )+ CL_CUR
     {
-        console.log(`NOT_IF_${if_local}:`)
+      emit(`goto END_ELSE_${if_local}`, 0);
+      console.log(`NOT_IF_${if_local}:`)
+    }
+    (
+      ELSE OP_CUR ( statement )+ CL_CUR
+    )?
+    {
+      console.log(`END_ELSE_${if_local}:`);
     };
 
 st_while:

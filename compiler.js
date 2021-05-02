@@ -35,6 +35,11 @@ const compile = async () => {
     // const fileName = 'error-03-break-continue.exp';             // OK
   /* ----------------    END   -----------------*/
 
+  /* ---------------- VERSION 6 ----------------*/
+    // const fileName = 'IfElse.exp';                              // OK
+    // const fileName = 'test-12-chained-conditionals.exp';        // OK
+  /* ----------------    END   -----------------*/
+
   if (fileName) {
     const input = fs.readFileSync(`./testsFiles/${fileName}`, 'utf-8');
     if (input) {
