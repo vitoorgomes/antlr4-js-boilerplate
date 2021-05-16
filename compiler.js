@@ -56,7 +56,7 @@ const compile = async () => {
   /* ---------------- VERSION 9 ----------------*/
     // const fileName = 'v9/SimpleFunction.exp';                      // OK
     // const fileName = 'v9/test-15-simple-functions.exp';            // OK
-    const fileName = 'v9/error-06-simple-functions.exp';
+    // const fileName = 'v9/error-06-simple-functions.exp';           // OK
   /* ----------------    END   -----------------*/
 
   if (fileName) {
