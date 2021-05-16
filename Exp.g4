@@ -4,29 +4,29 @@ grammar Exp;
 
 @parser::header
 {
-    let current_stack = 0;
-    let max_stack = 0;
-    let if_stack = 0;
-    let while_stack = 0;
+    let currentStack = 0;
+    let maxStack = 0;
+    let ifStack = 0;
+    let whileStack = 0;
 
-    const symbols_table = [];
-    const types_table = [];
-    const used_symbols = [];
+    const symbolsTable = [];
+    const typesTable = [];
+    const usedTable = [];
 
     let isWhile = false;
     let isElse = false;
     let whileLocalCounter = 0;
 
     function emit(bytecode, value) {
-      current_stack += value;
-      if (current_stack > max_stack) {
-          max_stack = current_stack;
+      currentStack += value;
+      if (currentStack > maxStack) {
+          maxStack = currentStack;
       }
       console.log(`    ${bytecode}`)
     }
 
     function checkUnusedVars() {
-      return symbols_table.filter(v => !used_symbols.includes(v))
+      return symbolsTable.filter(v => !usedTable.includes(v))
         .map(u => {
             let message;
             if (u !== 'args') {
@@ -44,9 +44,8 @@ grammar Exp;
       } else if (type === 's') {
         emit(`invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n`, -2);
       } else if (type === 'a') {
-        console.log(`; type => ${type}`);
         emit(`invokevirtual Array/string()Ljava/lang/String;`, 0);
-        emit(`invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n`, -2); 
+        emit(`invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n`, -2);
       } else {
         console.error(`ERROR: check printResolver`);
         process.exit(1);
@@ -60,7 +59,7 @@ grammar Exp;
           emit(`istore ${index}`, -1);
         } else if (expType === 's') {
           emit(`astore ${index}`, -1);
-        } 
+        }
       } else {
         console.error(`ERROR: '${variable}' is a ${savedType === 'i' ? 'number' : 'string'}`);
         process.exit(1);
@@ -131,16 +130,16 @@ program:
 main:
     {
       console.log(".method public static main([Ljava/lang/String;)V\n");
-      symbols_table.push('args');
+      symbolsTable.push('args');
     }
     ( statement )+
     {
       console.log("    return");
-      console.log(`.limit stack ${max_stack}`);
-      console.log(`.limit locals ${symbols_table.length}`);
+      console.log(`.limit stack ${maxStack}`);
+      console.log(`.limit locals ${symbolsTable.length}`);
       console.log(".end method");
-      console.log("\n; symbols_table: ", symbols_table);
-      console.log("\n; types_table: ", types_table);
+      console.log("\n; symbolsTable: ", symbolsTable);
+      console.log("\n; typesTable: ", typesTable);
       checkUnusedVars();
     };
 
@@ -149,8 +148,8 @@ statement: st_print | st_attrib | st_if | st_while | st_break | st_continue | st
 
 st_if: IF bytecode = comparison
     {
-      let if_local = if_stack;
-      if_stack += 1;
+      let if_local = ifStack;
+      ifStack += 1;
       const { bytecode } = this._ctx.bytecode;
       emit(`${bytecode} NOT_IF_${if_local}`, -2);
     }
@@ -168,10 +167,10 @@ st_if: IF bytecode = comparison
 
 st_while:
     {
-      let while_local = while_stack;
+      let while_local = whileStack;
       whileLocalCounter = while_local;
       isWhile = true;
-      while_stack += 1;
+      whileStack += 1;
       console.log(`BEGIN_WHILE_${while_local}:`);
     }
       WHILE bytecode = comparison
@@ -210,12 +209,11 @@ st_continue: CONTINUE
 
 st_print: PRINT OP_PAR
     {
-        emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
+      emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
     }
       e1 = expression
     {
-      console.log(`; $e1.type => ${$e1.type}`);
-      // printResolver($e1.type);
+      printResolver($e1.type);
     }
     (
       COMMA
@@ -238,15 +236,15 @@ st_attrib: NAME ATTRIB expression
       const variable = $NAME.text;
       const expType = $expression.type;
 
-      if (!symbols_table.find(symbol => symbol === variable)) {
-        symbols_table.push(variable);
-        types_table.push(expType);
+      if (!symbolsTable.find(symbol => symbol === variable)) {
+        symbolsTable.push(variable);
+        typesTable.push(expType);
       }
 
-      const index = symbols_table.findIndex(symbol => symbol === variable);
+      const index = symbolsTable.findIndex(symbol => symbol === variable);
 
-      // need to -1 because in JS symbols_table starts with 'args' at index 0
-      const savedType = types_table[index - 1];
+      // need to -1 because in JS symbolsTable starts with 'args' at index 0
+      const savedType = typesTable[index - 1];
 
       validateTypesToStore(expType, savedType, index, variable);
     };
@@ -255,11 +253,11 @@ st_array_new: NAME ATTRIB OP_BRA CL_BRA
     {
       const variable = $NAME.text;
 
-      if (!symbols_table.find(symbol => symbol === variable)) {
-        symbols_table.push(variable);
-        types_table.push('a');
+      if (!symbolsTable.find(symbol => symbol === variable)) {
+        symbolsTable.push(variable);
+        typesTable.push('a');
 
-        const index = symbols_table.findIndex(symbol => symbol === variable);
+        const index = symbolsTable.findIndex(symbol => symbol === variable);
 
         emit(`new Array`, 1);
         emit(`dup`, 1);
@@ -275,15 +273,15 @@ st_array_push: NAME
     {
       const variable = $NAME.text;
 
-      const index = symbols_table.findIndex(symbol => symbol === variable);
+      const index = symbolsTable.findIndex(symbol => symbol === variable);
 
       if (index === -1)  {
         console.error(`ERROR: operation not allowed! Variable '${variable}' needs to be declared first!`);
         process.exit(1);
       }
 
-      if (!used_symbols.find(symbol => symbol === variable)) {
-        used_symbols.push(variable);
+      if (!usedTable.find(symbol => symbol === variable)) {
+        usedTable.push(variable);
       }
 
       emit(`aload ${index}`, 1);
@@ -303,25 +301,21 @@ st_array_set: NAME
     {
       const variable = $NAME.text;
 
-      const index = symbols_table.findIndex(symbol => symbol === variable);
+      const index = symbolsTable.findIndex(symbol => symbol === variable);
 
       if (index === -1)  {
         console.error(`ERROR: operation not allowed! Variable '${variable}' needs to be declared first!`);
         process.exit(1);
       }
 
-      if (!used_symbols.find(symbol => symbol === variable)) {
-        used_symbols.push(variable);
+      if (!usedTable.find(symbol => symbol === variable)) {
+        usedTable.push(variable);
       }
 
       emit(`aload ${index}`, 1);
     }
       OP_BRA e1 = expression CL_BRA ATTRIB e2 = expression
     {
-      if ($e1.type !== 'i' || $e2.type !== 'i') {
-        console.error(`ERROR: operation not allowed! Expression must be a number`);
-        process.exit(1);
-      }
       emit(`invokevirtual Array/set(II)V \n`, -3);
     };
 
@@ -388,13 +382,13 @@ factor returns [type]: NUMBER
     | NAME
     {
       const variable = $NAME.text;
-      const index = symbols_table.findIndex(symbol => symbol === variable);
+      const index = symbolsTable.findIndex(symbol => symbol === variable);
       if (index === -1) {
         console.error(`ERROR: Variable '${variable}' is not defined`);
         process.exit(1);
       } else {
-        // need to -1 because in JS symbols_table starts with 'args' at index 0
-        const type = types_table[index - 1];
+        // need to -1 because in JS symbolsTable starts with 'args' at index 0
+        const type = typesTable[index - 1];
 
         if (type === 'i') {
           emit(`iload ${index}`, 1);
@@ -406,7 +400,7 @@ factor returns [type]: NUMBER
           emit(`aload ${index}`, 1);
           $type = type;
         }
-        used_symbols.push(variable);
+        usedTable.push(variable);
       }
     }
     | READ_INT OP_PAR CL_PAR
@@ -424,10 +418,10 @@ factor returns [type]: NUMBER
       $type = 'i';
 
       const name = $NAME.text;
-      const i = symbols_table.findIndex(symbol => symbol === name);
+      const i = symbolsTable.findIndex(symbol => symbol === name);
 
-      // need to -1 because in JS symbols_table starts with 'args' at index 0
-      const t = types_table[i - 1];
+      // need to -1 because in JS symbolsTable starts with 'args' at index 0
+      const t = typesTable[i - 1];
 
       if (t !== 'a') {
         console.error(`ERROR: operation not allowed! Variable '${name}' is not an array`);
@@ -442,17 +436,12 @@ factor returns [type]: NUMBER
       $type = 'i';
 
       const variableName = $NAME.text;
-      const idx = symbols_table.findIndex(symbol => symbol === variableName);
+      const idx = symbolsTable.findIndex(symbol => symbol === variableName);
 
-      // need to -1 because in JS symbols_table starts with 'args' at index 0
-      const tp = types_table[idx - 1];
+      console.log(`; number? => ${$NUMBER.text}`);
 
-      // $type = 'i';
-
-      console.log(`; number => ${$NUMBER.text}`)
-      console.log(`; idx => ${idx}`)
-      console.log(`; variableName => ${variableName}`)
-      console.log(`; tp => ${tp}`)
+      // need to -1 because in JS symbolsTable starts with 'args' at index 0
+      const tp = typesTable[idx - 1];
 
       if (tp !== 'a') {
         console.error(`ERROR: operation not allowed! Variable '${variableName}' is not an array`);

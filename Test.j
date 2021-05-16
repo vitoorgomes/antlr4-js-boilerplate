@@ -11,12 +11,14 @@
 .method public static main([Ljava/lang/String;)V
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    ldc "Enter array size: "
-; localctx.e1.type => s
+    ldc "Enter array size:"
+; hey s
+    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V 
+
     getstatic java/lang/System/out Ljava/io/PrintStream;
     invokevirtual java/io/PrintStream/println()V
 
-    invokestatic Runtime/readInt()I
+    ldc 5
     istore 1
     new Array
     dup
@@ -31,10 +33,14 @@ BEGIN_WHILE_0:
     aload 2
     iload 3
     ldc 1
+; t1 => i
+; t2 => i
     iadd
     invokevirtual Array/push(I)V
     iload 3
     ldc 1
+; t1 => i
+; t2 => i
     iadd
     istore 3
     goto BEGIN_WHILE_0
@@ -42,18 +48,26 @@ END_WHILE_0:
     aload 2
     invokevirtual Array/length()I
     ldc 1
+; t1 => i
+; t2 => i
     isub
     istore 3
     getstatic java/lang/System/out Ljava/io/PrintStream;
-; localctx.e1.type => null
+; number? => 0
+    aload 1
+    ldc 1
+    invokevirtual Array/get(I)I
+; hey i
+    invokevirtual java/io/PrintStream/print(I)V 
+
     getstatic java/lang/System/out Ljava/io/PrintStream;
     invokevirtual java/io/PrintStream/println()V
 
     return
-.limit stack 5
+.limit stack 3
 .limit locals 4
 .end method
 
-; symbols_table:  [ 'args', 'n', 'a', 'i' ]
+; symbolsTable:  [ 'args', 'n', 'a', 'i' ]
 
-; types_table:  [ 'i', 'a', 'i' ]
+; typesTable:  [ 'i', 'a', 'i' ]

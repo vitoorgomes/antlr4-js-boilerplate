@@ -49,9 +49,9 @@ const compile = async () => {
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 8 ----------------*/
-    // const fileName = 'v8/TestArray.exp';                           // OK                     
-    const fileName = 'v8/test-14-array.exp';                  
-    // const fileName = 'v8/error-05-array-checking.exp';              
+    // const fileName = 'v8/TestArray.exp';                           // OKish
+    const fileName = 'v8/test-14-array.exp';
+    // const fileName = 'v8/error-05-array-checking.exp';             // OK
   /* ----------------    END   -----------------*/
 
   if (fileName) {

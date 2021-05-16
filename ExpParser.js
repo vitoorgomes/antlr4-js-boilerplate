@@ -2,29 +2,29 @@
 // jshint ignore: start
 import antlr4 from 'antlr4';
 
-    let current_stack = 0;
-    let max_stack = 0;
-    let if_stack = 0;
-    let while_stack = 0;
+    let currentStack = 0;
+    let maxStack = 0;
+    let ifStack = 0;
+    let whileStack = 0;
 
-    const symbols_table = [];
-    const types_table = [];
-    const used_symbols = [];
+    const symbolsTable = [];
+    const typesTable = [];
+    const usedTable = [];
 
     let isWhile = false;
     let isElse = false;
     let whileLocalCounter = 0;
 
     function emit(bytecode, value) {
-      current_stack += value;
-      if (current_stack > max_stack) {
-          max_stack = current_stack;
+      currentStack += value;
+      if (currentStack > maxStack) {
+          maxStack = currentStack;
       }
       console.log(`    ${bytecode}`)
     }
 
     function checkUnusedVars() {
-      return symbols_table.filter(v => !used_symbols.includes(v))
+      return symbolsTable.filter(v => !usedTable.includes(v))
         .map(u => {
             let message;
             if (u !== 'args') {
@@ -37,14 +37,14 @@ import antlr4 from 'antlr4';
 
     // aux function to emit the correct print type
     function printResolver(type) {
+      console.log(`; hey ${type}`)
       if (type === 'i') {
         emit(`invokevirtual java/io/PrintStream/print(I)V \n`, -2);
       } else if (type === 's') {
         emit(`invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n`, -2);
       } else if (type === 'a') {
-        console.log(`; type => ${type}`);
         emit(`invokevirtual Array/string()Ljava/lang/String;`, 0);
-        emit(`invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n`, -2); 
+        emit(`invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V \n`, -2);
       } else {
         console.error(`ERROR: check printResolver`);
         process.exit(1);
@@ -58,7 +58,7 @@ import antlr4 from 'antlr4';
           emit(`istore ${index}`, -1);
         } else if (expType === 's') {
           emit(`astore ${index}`, -1);
-        } 
+        }
       } else {
         console.error(`ERROR: '${variable}' is a ${savedType === 'i' ? 'number' : 'string'}`);
         process.exit(1);
@@ -275,7 +275,7 @@ export default class ExpParser extends antlr4.Parser {
 	        this.enterOuterAlt(localctx, 1);
 
 	              console.log(".method public static main([Ljava/lang/String;)V\n");
-	              symbols_table.push('args');
+	              symbolsTable.push('args');
 	            
 	        this.state = 37; 
 	        this._errHandler.sync(this);
@@ -289,11 +289,11 @@ export default class ExpParser extends antlr4.Parser {
 	        } while(((((_la - 22)) & ~0x1f) == 0 && ((1 << (_la - 22)) & ((1 << (ExpParser.PRINT - 22)) | (1 << (ExpParser.IF - 22)) | (1 << (ExpParser.WHILE - 22)) | (1 << (ExpParser.BREAK - 22)) | (1 << (ExpParser.CONTINUE - 22)) | (1 << (ExpParser.NAME - 22)))) !== 0));
 
 	              console.log("    return");
-	              console.log(`.limit stack ${max_stack}`);
-	              console.log(`.limit locals ${symbols_table.length}`);
+	              console.log(`.limit stack ${maxStack}`);
+	              console.log(`.limit locals ${symbolsTable.length}`);
 	              console.log(".end method");
-	              console.log("\n; symbols_table: ", symbols_table);
-	              console.log("\n; types_table: ", types_table);
+	              console.log("\n; symbolsTable: ", symbolsTable);
+	              console.log("\n; typesTable: ", typesTable);
 	              checkUnusedVars();
 	            
 	    } catch (re) {
@@ -402,8 +402,8 @@ export default class ExpParser extends antlr4.Parser {
 	        this.state = 55;
 	        localctx.bytecode = this.comparison();
 
-	              let if_local = if_stack;
-	              if_stack += 1;
+	              let if_local = ifStack;
+	              ifStack += 1;
 	              const { bytecode } = this._ctx.bytecode;
 	              emit(`${bytecode} NOT_IF_${if_local}`, -2);
 	            
@@ -473,10 +473,10 @@ export default class ExpParser extends antlr4.Parser {
 	    try {
 	        this.enterOuterAlt(localctx, 1);
 
-	              let while_local = while_stack;
+	              let while_local = whileStack;
 	              whileLocalCounter = while_local;
 	              isWhile = true;
-	              while_stack += 1;
+	              whileStack += 1;
 	              console.log(`BEGIN_WHILE_${while_local}:`);
 	            
 	        this.state = 79;
@@ -602,8 +602,7 @@ export default class ExpParser extends antlr4.Parser {
 	        this.state = 100;
 	        localctx.e1 = this.expression();
 
-	              console.log(`; localctx.e1.type => ${localctx.e1.type}`);
-	              // printResolver(localctx.e1.type);
+	              printResolver(localctx.e1.type);
 	            
 	        this.state = 109;
 	        this._errHandler.sync(this);
@@ -660,15 +659,15 @@ export default class ExpParser extends antlr4.Parser {
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 	              const expType = localctx._expression.type;
 
-	              if (!symbols_table.find(symbol => symbol === variable)) {
-	                symbols_table.push(variable);
-	                types_table.push(expType);
+	              if (!symbolsTable.find(symbol => symbol === variable)) {
+	                symbolsTable.push(variable);
+	                typesTable.push(expType);
 	              }
 
-	              const index = symbols_table.findIndex(symbol => symbol === variable);
+	              const index = symbolsTable.findIndex(symbol => symbol === variable);
 
-	              // need to -1 because in JS symbols_table starts with 'args' at index 0
-	              const savedType = types_table[index - 1];
+	              // need to -1 because in JS symbolsTable starts with 'args' at index 0
+	              const savedType = typesTable[index - 1];
 
 	              validateTypesToStore(expType, savedType, index, variable);
 	            
@@ -704,11 +703,11 @@ export default class ExpParser extends antlr4.Parser {
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 
-	              if (!symbols_table.find(symbol => symbol === variable)) {
-	                symbols_table.push(variable);
-	                types_table.push('a');
+	              if (!symbolsTable.find(symbol => symbol === variable)) {
+	                symbolsTable.push(variable);
+	                typesTable.push('a');
 
-	                const index = symbols_table.findIndex(symbol => symbol === variable);
+	                const index = symbolsTable.findIndex(symbol => symbol === variable);
 
 	                emit(`new Array`, 1);
 	                emit(`dup`, 1);
@@ -745,15 +744,15 @@ export default class ExpParser extends antlr4.Parser {
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 
-	              const index = symbols_table.findIndex(symbol => symbol === variable);
+	              const index = symbolsTable.findIndex(symbol => symbol === variable);
 
 	              if (index === -1)  {
 	                console.error(`ERROR: operation not allowed! Variable '${variable}' needs to be declared first!`);
 	                process.exit(1);
 	              }
 
-	              if (!used_symbols.find(symbol => symbol === variable)) {
-	                used_symbols.push(variable);
+	              if (!usedTable.find(symbol => symbol === variable)) {
+	                usedTable.push(variable);
 	              }
 
 	              emit(`aload ${index}`, 1);
@@ -802,15 +801,15 @@ export default class ExpParser extends antlr4.Parser {
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 
-	              const index = symbols_table.findIndex(symbol => symbol === variable);
+	              const index = symbolsTable.findIndex(symbol => symbol === variable);
 
 	              if (index === -1)  {
 	                console.error(`ERROR: operation not allowed! Variable '${variable}' needs to be declared first!`);
 	                process.exit(1);
 	              }
 
-	              if (!used_symbols.find(symbol => symbol === variable)) {
-	                used_symbols.push(variable);
+	              if (!usedTable.find(symbol => symbol === variable)) {
+	                usedTable.push(variable);
 	              }
 
 	              emit(`aload ${index}`, 1);
@@ -826,10 +825,6 @@ export default class ExpParser extends antlr4.Parser {
 	        this.state = 141;
 	        localctx.e2 = this.expression();
 
-	              if (localctx.e1.type !== 'i' || localctx.e2.type !== 'i') {
-	                console.error(`ERROR: operation not allowed! Expression must be a number`);
-	                process.exit(1);
-	              }
 	              emit(`invokevirtual Array/set(II)V \n`, -3);
 	            
 	    } catch (re) {
@@ -922,6 +917,8 @@ export default class ExpParser extends antlr4.Parser {
 	            this.state = 151;
 	            localctx.t2 = this.term();
 
+	                  console.log(`; t1 => ${localctx.t1.type}`);
+	                  console.log(`; t2 => ${localctx.t2.type}`);
 	                  if (localctx.t1.type !== localctx.t2.type) {
 	                    console.error(`ERROR: operation not allowed! you cannot mix types`);
 	                    process.exit(1);
@@ -1057,13 +1054,13 @@ export default class ExpParser extends antlr4.Parser {
 	            localctx._NAME = this.match(ExpParser.NAME);
 
 	                  const variable = (localctx._NAME===null ? null : localctx._NAME.text);
-	                  const index = symbols_table.findIndex(symbol => symbol === variable);
+	                  const index = symbolsTable.findIndex(symbol => symbol === variable);
 	                  if (index === -1) {
 	                    console.error(`ERROR: Variable '${variable}' is not defined`);
 	                    process.exit(1);
 	                  } else {
-	                    // need to -1 because in JS symbols_table starts with 'args' at index 0
-	                    const type = types_table[index - 1];
+	                    // need to -1 because in JS symbolsTable starts with 'args' at index 0
+	                    const type = typesTable[index - 1];
 
 	                    if (type === 'i') {
 	                      emit(`iload ${index}`, 1);
@@ -1075,7 +1072,7 @@ export default class ExpParser extends antlr4.Parser {
 	                      emit(`aload ${index}`, 1);
 	                      localctx.type =  type
 	                    }
-	                    used_symbols.push(variable);
+	                    usedTable.push(variable);
 	                  }
 	                
 	            break;
@@ -1120,10 +1117,10 @@ export default class ExpParser extends antlr4.Parser {
 	                  localctx.type =  'i'
 
 	                  const name = (localctx._NAME===null ? null : localctx._NAME.text);
-	                  const i = symbols_table.findIndex(symbol => symbol === name);
+	                  const i = symbolsTable.findIndex(symbol => symbol === name);
 
-	                  // need to -1 because in JS symbols_table starts with 'args' at index 0
-	                  const t = types_table[i - 1];
+	                  // need to -1 because in JS symbolsTable starts with 'args' at index 0
+	                  const t = typesTable[i - 1];
 
 	                  if (t !== 'a') {
 	                    console.error(`ERROR: operation not allowed! Variable '${name}' is not an array`);
@@ -1149,17 +1146,12 @@ export default class ExpParser extends antlr4.Parser {
 	                  localctx.type =  'i'
 
 	                  const variableName = (localctx._NAME===null ? null : localctx._NAME.text);
-	                  const idx = symbols_table.findIndex(symbol => symbol === variableName);
+	                  const idx = symbolsTable.findIndex(symbol => symbol === variableName);
 
-	                  // need to -1 because in JS symbols_table starts with 'args' at index 0
-	                  const tp = types_table[idx - 1];
+	                  console.log(`; number? => ${(localctx._NUMBER===null ? null : localctx._NUMBER.text)}`);
 
-	                  // localctx.type =  'i'
-
-	                  console.log(`; number => ${(localctx._NUMBER===null ? null : localctx._NUMBER.text)}`)
-	                  console.log(`; idx => ${idx}`)
-	                  console.log(`; variableName => ${variableName}`)
-	                  console.log(`; tp => ${tp}`)
+	                  // need to -1 because in JS symbolsTable starts with 'args' at index 0
+	                  const tp = typesTable[idx - 1];
 
 	                  if (tp !== 'a') {
 	                    console.error(`ERROR: operation not allowed! Variable '${variableName}' is not an array`);
