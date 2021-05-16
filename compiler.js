@@ -2,7 +2,6 @@ import antlr4 from 'antlr4';
 import fs from 'fs';
 import ExpLexer from './ExpLexer.js';
 import ExpParser from './ExpParser.js';
-import getFileName from './fileList.js';
 
 const compile = async () => {
   /* ---------------- VERSION 1 ----------------*/
@@ -50,8 +49,14 @@ const compile = async () => {
 
   /* ---------------- VERSION 8 ----------------*/
     // const fileName = 'v8/TestArray.exp';                           // OKish
-    const fileName = 'v8/test-14-array.exp';
+    // const fileName = 'v8/test-14-array.exp';
     // const fileName = 'v8/error-05-array-checking.exp';             // OK
+  /* ----------------    END   -----------------*/
+
+  /* ---------------- VERSION 9 ----------------*/
+    // const fileName = 'v9/SimpleFunction.exp';                      // OK
+    // const fileName = 'v9/test-15-simple-functions.exp';            // OK
+    const fileName = 'v9/error-06-simple-functions.exp';
   /* ----------------    END   -----------------*/
 
   if (fileName) {

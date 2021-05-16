@@ -9,9 +9,10 @@ grammar Exp;
     let ifStack = 0;
     let whileStack = 0;
 
-    const symbolsTable = [];
-    const typesTable = [];
-    const usedTable = [];
+    let symbolsTable = [];
+    let typesTable = [];
+    let usedTable = [];
+    let funcsTable = [];
 
     let isWhile = false;
     let isElse = false;
@@ -107,6 +108,7 @@ CONTINUE: 'continue';
 DOT     : '.'       ;
 PUSH    : 'push'    ;
 LENGTH  : 'length'  ;
+DEF     : 'def'     ;
 
 NUMBER: '0'..'9'+ ;
 NAME  : 'a'..'z'+ ;
@@ -125,6 +127,7 @@ program:
       console.log("    return");
       console.log(".end method\n");
     }
+    ( func )*
     main ;
 
 main:
@@ -135,53 +138,95 @@ main:
     ( statement )+
     {
       console.log("    return");
-      console.log(`.limit stack ${maxStack}`);
-      console.log(`.limit locals ${symbolsTable.length}`);
+      console.log(`    .limit stack ${maxStack}`);
+      console.log(`    .limit locals ${symbolsTable.length}`);
       console.log(".end method");
       console.log("\n; symbolsTable: ", symbolsTable);
       console.log("\n; typesTable: ", typesTable);
+      console.log("\n; funcsTable: ", funcsTable);
+      console.log("\n");
       checkUnusedVars();
     };
 
 statement: st_print | st_attrib | st_if | st_while | st_break | st_continue | st_array_new
-         | st_array_push | st_array_set ;
+         | st_array_push | st_array_set | st_call ;
+
+func: DEF NAME OP_PAR CL_PAR OP_CUR
+    {
+      const funcName = $NAME.text;
+
+      const findFunc = funcsTable.find(func => func === funcName);
+
+      if (findFunc) {
+        console.error(`ERROR: function '${funcName}' is already declared`);
+        process.exit(1);
+      } else {
+        console.log(`.method public static ${funcName}()V\n`);
+        symbolsTable.push('args');
+        funcsTable.push(funcName);
+      }
+    }
+    ( statement )+ CL_CUR
+    {
+      console.log("    return");
+      console.log(`    .limit stack ${maxStack}`);
+      console.log(`    .limit locals ${symbolsTable.length}`);
+      console.log(".end method");
+      console.log("\n; symbolsTable: ", symbolsTable);
+      console.log("\n; typesTable: ", typesTable);
+      console.log("\n; funcsTable: ", funcsTable);
+      console.log("\n");
+
+      currentStack = 0;
+      maxStack = 0;
+      ifStack = 0;
+      whileStack = 0;
+
+      symbolsTable = [];
+      typesTable = [];
+      usedTable = [];
+
+      isWhile = false;
+      isElse = false;
+      whileLocalCounter = 0;
+    };
 
 st_if: IF bytecode = comparison
     {
-      let if_local = ifStack;
+      let ifLocal = ifStack;
       ifStack += 1;
       const { bytecode } = this._ctx.bytecode;
-      emit(`${bytecode} NOT_IF_${if_local}`, -2);
+      emit(`${bytecode} NOT_IF_${ifLocal}`, -2);
     }
       OP_CUR ( statement )+ CL_CUR
     {
-      emit(`goto END_ELSE_${if_local}`, 0);
-      console.log(`NOT_IF_${if_local}:`)
+      emit(`goto END_ELSE_${ifLocal}`, 0);
+      console.log(`NOT_IF_${ifLocal}:`)
     }
     (
       ELSE OP_CUR ( statement )+ CL_CUR
     )?
     {
-      console.log(`END_ELSE_${if_local}:`);
+      console.log(`END_ELSE_${ifLocal}:`);
     };
 
 st_while:
     {
-      let while_local = whileStack;
-      whileLocalCounter = while_local;
+      let whileLocal = whileStack;
+      whileLocalCounter = whileLocal;
       isWhile = true;
       whileStack += 1;
-      console.log(`BEGIN_WHILE_${while_local}:`);
+      console.log(`BEGIN_WHILE_${whileLocal}:`);
     }
       WHILE bytecode = comparison
     {
       const { bytecode } = this._ctx.bytecode;
-      emit(`${bytecode} END_WHILE_${while_local}`, -2);
+      emit(`${bytecode} END_WHILE_${whileLocal}`, -2);
     }
       OP_CUR ( statement )+ CL_CUR
     {
-      emit(`goto BEGIN_WHILE_${while_local}`, 0);
-      console.log(`END_WHILE_${while_local}:`);
+      emit(`goto BEGIN_WHILE_${whileLocal}`, 0);
+      console.log(`END_WHILE_${whileLocal}:`);
       isWhile = false;
     };
 
@@ -318,6 +363,20 @@ st_array_set: NAME
     {
       emit(`invokevirtual Array/set(II)V \n`, -3);
     };
+
+st_call: NAME
+    {
+      const name = $NAME.text;
+
+      const findFunc = funcsTable.find(func => func === name);
+
+      if (!findFunc) {
+        console.error(`ERROR: function '${name}' is not defined`);
+        process.exit(1);
+      } else {
+        emit(`invokestatic Test/${name}()V`, 0);
+      }
+    } OP_PAR CL_PAR;
 
 comparison returns [bytecode]: e1 = expression op = ( EQ | NE | LT | LE | GT | GE ) e2 = expression
     {
