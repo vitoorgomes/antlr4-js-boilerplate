@@ -133,9 +133,9 @@ program:
 main:
     {
       console.log(".method public static main([Ljava/lang/String;)V\n");
-      symbolsTable.push('args');
+      // symbolsTable.push('args');
     }
-    ( statement )+
+    ( statement )*
     {
       console.log("    return");
       console.log(`    .limit stack ${maxStack}`);
@@ -143,7 +143,7 @@ main:
       console.log(".end method");
       console.log("\n; symbolsTable: ", symbolsTable);
       console.log("\n; typesTable: ", typesTable);
-      console.log("\n; funcsTable: ", funcsTable);
+      console.log("\n; funcsTable: ", funcsTable.map(fn => `${fn.funcName}`));
       console.log("\n");
       checkUnusedVars();
     };
@@ -151,29 +151,33 @@ main:
 statement: st_print | st_attrib | st_if | st_while | st_break | st_continue | st_array_new
          | st_array_push | st_array_set | st_call ;
 
-func: DEF NAME OP_PAR (( p = parameters )?)
-    CL_PAR OP_CUR
+func: DEF NAME OP_PAR ( p = parameters )? CL_PAR OP_CUR
     {
       const funcName = $NAME.text;
 
-      const findFunc = funcsTable.find(func => func === funcName);
+      const findFunc = funcsTable.find(f => f.funcName === funcName);
 
       if (findFunc) {
         console.error(`ERROR: function '${funcName}' is already declared`);
         process.exit(1);
       } else {
-        const paramsArray = $p.text.split(',');
+        const paramsArray = $p.text ? $p.text.split(',') : [];
+        if (paramsArray.length !== [...new Set(paramsArray)].length) {
+          console.error(`ERROR: parameter names must be unique`);
+          process.exit(1);
+        } else {
+          const repeatable = paramsArray.length > 0 ? 'I'.repeat(paramsArray.length) : '';
 
-        const repeatable = paramsArray.length > 0 ? 'I'.repeat(paramsArray.length) : '';
+          console.log(`.method public static ${funcName}(${repeatable})V\n`);
 
-        console.log(`.method public static ${funcName}(${repeatable})V\n`);
-
-        symbolsTable.push('args', ...paramsArray);
-        paramsArray.map(par => typesTable.push('i'));
-        funcsTable.push(funcName);
+          symbolsTable.push(...paramsArray);
+          usedTable.push(...paramsArray);
+          paramsArray.length > 0 ? paramsArray.map(par => typesTable.push('i')) : typesTable.push('i');
+          funcsTable.push({ funcName, paramsCount: paramsArray.length });
+        }
       }
     }
-    ( statement )+ CL_CUR
+    ( statement )* CL_CUR
     {
       console.log("    return");
       console.log(`    .limit stack ${maxStack}`);
@@ -181,7 +185,6 @@ func: DEF NAME OP_PAR (( p = parameters )?)
       console.log(".end method");
       console.log("\n; symbolsTable: ", symbolsTable);
       console.log("\n; typesTable: ", typesTable);
-      console.log("\n; funcsTable: ", funcsTable);
       console.log("\n");
 
       currentStack = 0;
@@ -297,8 +300,7 @@ st_attrib: NAME ATTRIB expression
 
       const index = symbolsTable.findIndex(symbol => symbol === variable);
 
-      // need to -1 because in JS symbolsTable starts with 'args' at index 0
-      const savedType = typesTable[index - 1];
+      const savedType = typesTable[index];
 
       validateTypesToStore(expType, savedType, index, variable);
     };
@@ -377,20 +379,48 @@ st_call: NAME OP_PAR ( args = arguments )? CL_PAR
     {
       const name = $NAME.text;
 
-      const findFunc = funcsTable.find(func => func === name);
+      const findFunc = funcsTable.find(f => f.funcName === name);
 
       if (!findFunc) {
         console.error(`ERROR: function '${name}' is not defined`);
         process.exit(1);
       } else {
-        const argsArray = $args.text.split(',');
-        // console.log(`; args => ${$args.text}`);
-        const repeatable = argsArray.length > 0 ? 'I'.repeat(argsArray.length) : '';
-        emit(`invokestatic Test/${name}(${repeatable})V \n`, 0);
+        const argsArray = $args.text ? $args.text.split(',') : [];
+        if (findFunc.paramsCount !== argsArray.length) {
+          console.error(`ERROR: wrong number of arguments`);
+          process.exit(1);
+        } else {
+          const repeatable = argsArray.length > 0 ? 'I'.repeat(argsArray.length) : '';
+          emit(`invokestatic Test/${name}(${repeatable})V \n`, 0);
+        }
       }
     };
 
-arguments: expression ( COMMA expression )*;
+arguments: e1 = expression 
+    {
+      if ($e1.type !== 'i') {
+        console.error(`ERROR: all arguments must be integer`);
+        process.exit(1);
+      } else {
+        const v1 = $e1.text;
+        symbolsTable.push(v1);
+        usedTable.push(v1);
+        typesTable.push('i');
+      }
+    } 
+    ( COMMA e2 = expression 
+    {
+      if ($e2.type !== 'i') {
+        console.error(`ERROR: all arguments must be integer`);
+        process.exit(1);
+      } else {
+        const v2 = $e2.text;
+        symbolsTable.push(v2);
+        usedTable.push(v2);
+        typesTable.push('i');
+      }
+    }
+    )*;
 
 comparison returns [bytecode]: e1 = expression op = ( EQ | NE | LT | LE | GT | GE ) e2 = expression
     {
@@ -455,13 +485,14 @@ factor returns [type]: NUMBER
     | NAME
     {
       const variable = $NAME.text;
+
       const index = symbolsTable.findIndex(symbol => symbol === variable);
+      
       if (index === -1) {
         console.error(`ERROR: Variable '${variable}' is not defined`);
         process.exit(1);
       } else {
-        // need to -1 because in JS symbolsTable starts with 'args' at index 0
-        const type = typesTable[index - 1];
+        const type = typesTable[index];
 
         if (type === 'i') {
           emit(`iload ${index}`, 1);
@@ -493,8 +524,7 @@ factor returns [type]: NUMBER
       const name = $NAME.text;
       const i = symbolsTable.findIndex(symbol => symbol === name);
 
-      // need to -1 because in JS symbolsTable starts with 'args' at index 0
-      const t = typesTable[i - 1];
+      const t = typesTable[i];
 
       if (t !== 'a') {
         console.error(`ERROR: operation not allowed! Variable '${name}' is not an array`);
@@ -509,8 +539,7 @@ factor returns [type]: NUMBER
       const variableName = $NAME.text;
       const idx = symbolsTable.findIndex(symbol => symbol === variableName);
 
-      // need to -1 because in JS symbolsTable starts with 'args' at index 0
-      const tp = typesTable[idx - 1];
+      const tp = typesTable[idx];
 
       if (tp !== 'a') {
         console.error(`ERROR: operation not allowed! Variable '${variableName}' is not an array`);
@@ -527,5 +556,5 @@ factor returns [type]: NUMBER
       } else {
         console.error(`ERROR: The expression '${$exp.type}' must be a number to access the specific array item`);
         process.exit(1);
-      } 
+      }
     } CL_BRA ;

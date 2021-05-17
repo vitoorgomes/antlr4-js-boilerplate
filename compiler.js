@@ -49,7 +49,7 @@ const compile = async () => {
 
   /* ---------------- VERSION 8 ----------------*/
     // const fileName = 'v8/TestArray.exp';                           // OK
-    const fileName = 'v8/test-14-array.exp';
+    // const fileName = 'v8/test-14-array.exp';                       // OK
     // const fileName = 'v8/error-05-array-checking.exp';             // OK
   /* ----------------    END   -----------------*/
 
@@ -60,9 +60,9 @@ const compile = async () => {
   /* ----------------    END   -----------------*/
 
   /* ---------------- VERSION 10 ----------------*/
-    // const fileName = 'v10/Parameters.exp';
-    // const fileName = 'v10/test-16-parameters.exp';
-    // const fileName = 'v9/error-07-parameters.exp';
+    const fileName = 'v10/Parameters.exp';                         // OK
+    // const fileName = 'v10/test-16-parameters.exp';                 // OK
+    // const fileName = 'v10/error-07-parameters.exp';                // OK
   /* ----------------    END   -----------------*/
 
   if (fileName) {

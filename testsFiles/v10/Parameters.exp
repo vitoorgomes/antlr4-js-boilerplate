@@ -4,4 +4,3 @@ def product(a, b) {
 }
 
 product(4, 5)
-
