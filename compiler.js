@@ -59,6 +59,12 @@ const compile = async () => {
     // const fileName = 'v9/error-06-simple-functions.exp';           // OK
   /* ----------------    END   -----------------*/
 
+  /* ---------------- VERSION 10 ----------------*/
+    const fileName = 'v10/Parameters.exp';
+    // const fileName = 'v10/test-16-parameters.exp';
+    // const fileName = 'v9/error-07-parameters.exp';
+  /* ----------------    END   -----------------*/
+
   if (fileName) {
     const input = fs.readFileSync(`./testsFiles/${fileName}`, 'utf-8');
     if (input) {

@@ -151,7 +151,8 @@ main:
 statement: st_print | st_attrib | st_if | st_while | st_break | st_continue | st_array_new
          | st_array_push | st_array_set | st_call ;
 
-func: DEF NAME OP_PAR CL_PAR OP_CUR
+func: DEF NAME OP_PAR (( p = parameters )?)
+    CL_PAR OP_CUR
     {
       const funcName = $NAME.text;
 
@@ -161,8 +162,14 @@ func: DEF NAME OP_PAR CL_PAR OP_CUR
         console.error(`ERROR: function '${funcName}' is already declared`);
         process.exit(1);
       } else {
-        console.log(`.method public static ${funcName}()V\n`);
-        symbolsTable.push('args');
+        const paramsArray = $p.text.split(',');
+
+        const repeatable = paramsArray.length > 0 ? 'I'.repeat(paramsArray.length) : '';
+
+        console.log(`.method public static ${funcName}(${repeatable})V\n`);
+
+        symbolsTable.push('args', ...paramsArray);
+        paramsArray.map(par => typesTable.push('i'));
         funcsTable.push(funcName);
       }
     }
@@ -190,6 +197,8 @@ func: DEF NAME OP_PAR CL_PAR OP_CUR
       isElse = false;
       whileLocalCounter = 0;
     };
+
+parameters: NAME ( COMMA NAME )*;
 
 st_if: IF bytecode = comparison
     {
@@ -364,7 +373,7 @@ st_array_set: NAME
       emit(`invokevirtual Array/set(II)V \n`, -3);
     };
 
-st_call: NAME
+st_call: NAME OP_PAR ( args = arguments )? CL_PAR
     {
       const name = $NAME.text;
 
@@ -374,9 +383,14 @@ st_call: NAME
         console.error(`ERROR: function '${name}' is not defined`);
         process.exit(1);
       } else {
-        emit(`invokestatic Test/${name}()V`, 0);
+        const argsArray = $args.text.split(',');
+        // console.log(`; args => ${$args.text}`);
+        const repeatable = argsArray.length > 0 ? 'I'.repeat(argsArray.length) : '';
+        emit(`invokestatic Test/${name}(${repeatable})V \n`, 0);
       }
-    } OP_PAR CL_PAR;
+    };
+
+arguments: expression ( COMMA expression )*;
 
 comparison returns [bytecode]: e1 = expression op = ( EQ | NE | LT | LE | GT | GE ) e2 = expression
     {
