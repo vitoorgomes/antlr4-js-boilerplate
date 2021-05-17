@@ -504,14 +504,10 @@ factor returns [type]: NUMBER
         emit(`invokevirtual Array/length()I`, 0);
       }
     }
-    | NAME OP_BRA NUMBER CL_BRA
+    | NAME
     {
-      $type = 'i';
-
       const variableName = $NAME.text;
       const idx = symbolsTable.findIndex(symbol => symbol === variableName);
-
-      console.log(`; number? => ${$NUMBER.text}`);
 
       // need to -1 because in JS symbolsTable starts with 'args' at index 0
       const tp = typesTable[idx - 1];
@@ -520,8 +516,16 @@ factor returns [type]: NUMBER
         console.error(`ERROR: operation not allowed! Variable '${variableName}' is not an array`);
         process.exit(1);
       } else {
-        emit(`aload ${idx - 1}`, 1);
-        emit(`ldc ${idx - 1}`, 1);
-        emit(`invokevirtual Array/get(I)I`, -1);
+        emit(`aload ${idx}`, 1);
       }
-    };
+    }
+    OP_BRA exp = expression
+    {
+      if ($exp.type === 'i') {
+        emit(`invokevirtual Array/get(I)I`, -1);
+        $type = 'i';
+      } else {
+        console.error(`ERROR: The expression '${$exp.type}' must be a number to access the specific array item`);
+        process.exit(1);
+      } 
+    } CL_BRA ;

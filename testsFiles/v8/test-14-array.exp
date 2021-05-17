@@ -2,7 +2,7 @@
 # [1, 4, 9, 16, ...]
 
 print("Enter array size:")
-n = 5
+n = read_int()
 a = []
 
 i = 0
@@ -12,10 +12,9 @@ while i < n {
 }
 
 i = a.length - 1
-
-print(a[0])
-
-#a[i] = a[i] * a[i]
-
-#print(a)
+while i >= 0 {
+    a[i] = a[i] * a[i]
+    i = i - 1
+}
+print(a)
 
