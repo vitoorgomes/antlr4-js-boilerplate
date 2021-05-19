@@ -1,0 +1,12 @@
+def max(a, b) int {
+    c = a
+    if b > c {
+        c = b
+    }
+    return c
+}
+
+x = 8
+y = max(4, x)
+print(y)
+

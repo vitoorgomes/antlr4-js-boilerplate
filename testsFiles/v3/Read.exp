@@ -1,0 +1,2 @@
+z = read_int()
+print(z)

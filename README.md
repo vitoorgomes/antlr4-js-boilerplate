@@ -32,6 +32,10 @@ After that, a `Test.j` will be generated and to run this another script is ready
 
 Running this command will get the result logged into the console
 
+## In progress
+
+> Still need to add the console to select to test file
+
 ## License
 
 MIT

@@ -1,0 +1,11 @@
+# constant
+#print("abc")
+#print(1)
+
+# input
+#print(read_str())
+
+# variable
+x = "def"
+print(x)
+

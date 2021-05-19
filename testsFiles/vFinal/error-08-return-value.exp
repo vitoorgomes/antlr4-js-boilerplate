@@ -1,0 +1,18 @@
+# errors for complete functions
+
+
+
+
+
+def fy(b, c) int {
+    print(b + c)   # error: missing return statement in returning function
+    return b
+}
+
+#e = fx(1)          # error: void function does not return a value
+
+#fy(1, 2)           # error: return value cannot be ignored
+
+f = "ab"
+f = fy(1, 2)       # error: types not matching
+

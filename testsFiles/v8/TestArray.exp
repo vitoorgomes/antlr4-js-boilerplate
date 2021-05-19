@@ -1,0 +1,12 @@
+a = []
+
+a.push(123)
+
+print(a.length)
+
+print(a)
+
+a[0] = 456
+
+print(a[0])
+

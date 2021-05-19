@@ -1,0 +1,9 @@
+def cube() {
+    n = 4
+    print(n * n * n)
+}
+
+n = "abc"
+cube()
+print(n)
+
