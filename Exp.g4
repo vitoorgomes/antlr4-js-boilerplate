@@ -185,8 +185,6 @@ func: DEF NAME OP_PAR ( p = parameters )? CL_PAR (frt = func_return_type)? OP_CU
     {
       const returnText = $frt.text;
       const statementText = $st.text;
-      console.log(`; returnText => ${returnText}`);
-      console.log(`; statementText => ${statementText}`);
       if (returnText && !statementText.includes('return')) {
         console.error(`ERROR: missing return statement in returning function`);
         process.exit(1);
