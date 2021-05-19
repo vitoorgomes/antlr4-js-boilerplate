@@ -60,179 +60,192 @@ import antlr4 from 'antlr4';
           emit(`astore ${index}`, -1);
         }
       } else {
-        console.error(`ERROR: '${variable}' is a ${savedType === 'i' ? 'number' : 'string'}`);
+        console.error(`ERROR: types not matching`);
         process.exit(1);
       }
     }
 
 
 const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
-    "\u5964\u0003&\u010d\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\u5964\u0003(\u0122\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
     "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007",
     "\u0004\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f",
     "\u0004\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010",
     "\u0004\u0011\t\u0011\u0004\u0012\t\u0012\u0004\u0013\t\u0013\u0004\u0014",
-    "\t\u0014\u0004\u0015\t\u0015\u0003\u0002\u0003\u0002\u0007\u0002-\n",
-    "\u0002\f\u0002\u000e\u00020\u000b\u0002\u0003\u0002\u0003\u0002\u0003",
-    "\u0003\u0003\u0003\u0007\u00036\n\u0003\f\u0003\u000e\u00039\u000b\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0005\u0004G\n\u0004\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0005\u0005M\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0007\u0005S\n\u0005\f\u0005\u000e\u0005V\u000b\u0005\u0003\u0005\u0003",
-    "\u0005\u0003\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0007\u0006^",
-    "\n\u0006\f\u0006\u000e\u0006a\u000b\u0006\u0003\u0007\u0003\u0007\u0003",
-    "\u0007\u0003\u0007\u0003\u0007\u0006\u0007h\n\u0007\r\u0007\u000e\u0007",
-    "i\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0006",
-    "\u0007q\n\u0007\r\u0007\u000e\u0007r\u0003\u0007\u0003\u0007\u0005\u0007",
-    "w\n\u0007\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003",
-    "\b\u0003\b\u0006\b\u0081\n\b\r\b\u000e\b\u0082\u0003\b\u0003\b\u0003",
-    "\b\u0003\t\u0003\t\u0003\t\u0003\n\u0003\n\u0003\n\u0003\u000b\u0003",
-    "\u000b\u0003\u000b\u0003\u000b\u0003\u000b\u0003\u000b\u0003\u000b\u0003",
-    "\u000b\u0003\u000b\u0003\u000b\u0007\u000b\u0098\n\u000b\f\u000b\u000e",
-    "\u000b\u009b\u000b\u000b\u0003\u000b\u0003\u000b\u0003\u000b\u0003\f",
-    "\u0003\f\u0003\f\u0003\f\u0003\f\u0003\r\u0003\r\u0003\r\u0003\r\u0003",
-    "\r\u0003\r\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e",
-    "\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000f\u0003\u000f",
-    "\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f",
-    "\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0010\u0005\u0010\u00c0\n",
-    "\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0011\u0003\u0011\u0003",
-    "\u0011\u0003\u0011\u0003\u0011\u0003\u0011\u0007\u0011\u00cb\n\u0011",
-    "\f\u0011\u000e\u0011\u00ce\u000b\u0011\u0003\u0012\u0003\u0012\u0003",
-    "\u0012\u0003\u0012\u0003\u0012\u0003\u0013\u0003\u0013\u0003\u0013\u0003",
-    "\u0013\u0003\u0013\u0007\u0013\u00da\n\u0013\f\u0013\u000e\u0013\u00dd",
-    "\u000b\u0013\u0003\u0013\u0003\u0013\u0003\u0014\u0003\u0014\u0003\u0014",
-    "\u0003\u0014\u0003\u0014\u0007\u0014\u00e6\n\u0014\f\u0014\u000e\u0014",
-    "\u00e9\u000b\u0014\u0003\u0014\u0003\u0014\u0003\u0015\u0003\u0015\u0003",
-    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003",
-    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003",
-    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003",
-    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0003",
-    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0005\u0015\u010b\n\u0015",
-    "\u0003\u0015\u0002\u0002\u0016\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012",
-    "\u0014\u0016\u0018\u001a\u001c\u001e \"$&(\u0002\u0005\u0003\u0002\u0012",
-    "\u0017\u0003\u0002\u0005\u0006\u0003\u0002\u0007\t\u0002\u0116\u0002",
-    "*\u0003\u0002\u0002\u0002\u00043\u0003\u0002\u0002\u0002\u0006F\u0003",
-    "\u0002\u0002\u0002\bH\u0003\u0002\u0002\u0002\nZ\u0003\u0002\u0002\u0002",
-    "\fb\u0003\u0002\u0002\u0002\u000ez\u0003\u0002\u0002\u0002\u0010\u0087",
-    "\u0003\u0002\u0002\u0002\u0012\u008a\u0003\u0002\u0002\u0002\u0014\u008d",
-    "\u0003\u0002\u0002\u0002\u0016\u009f\u0003\u0002\u0002\u0002\u0018\u00a4",
-    "\u0003\u0002\u0002\u0002\u001a\u00aa\u0003\u0002\u0002\u0002\u001c\u00b3",
-    "\u0003\u0002\u0002\u0002\u001e\u00bc\u0003\u0002\u0002\u0002 \u00c4",
-    "\u0003\u0002\u0002\u0002\"\u00cf\u0003\u0002\u0002\u0002$\u00d4\u0003",
-    "\u0002\u0002\u0002&\u00e0\u0003\u0002\u0002\u0002(\u010a\u0003\u0002",
-    "\u0002\u0002*.\b\u0002\u0001\u0002+-\u0005\b\u0005\u0002,+\u0003\u0002",
-    "\u0002\u0002-0\u0003\u0002\u0002\u0002.,\u0003\u0002\u0002\u0002./\u0003",
-    "\u0002\u0002\u0002/1\u0003\u0002\u0002\u00020.\u0003\u0002\u0002\u0002",
-    "12\u0005\u0004\u0003\u00022\u0003\u0003\u0002\u0002\u000237\b\u0003",
-    "\u0001\u000246\u0005\u0006\u0004\u000254\u0003\u0002\u0002\u000269\u0003",
-    "\u0002\u0002\u000275\u0003\u0002\u0002\u000278\u0003\u0002\u0002\u0002",
-    "8:\u0003\u0002\u0002\u000297\u0003\u0002\u0002\u0002:;\b\u0003\u0001",
-    "\u0002;\u0005\u0003\u0002\u0002\u0002<G\u0005\u0014\u000b\u0002=G\u0005",
-    "\u0016\f\u0002>G\u0005\f\u0007\u0002?G\u0005\u000e\b\u0002@G\u0005\u0010",
-    "\t\u0002AG\u0005\u0012\n\u0002BG\u0005\u0018\r\u0002CG\u0005\u001a\u000e",
-    "\u0002DG\u0005\u001c\u000f\u0002EG\u0005\u001e\u0010\u0002F<\u0003\u0002",
-    "\u0002\u0002F=\u0003\u0002\u0002\u0002F>\u0003\u0002\u0002\u0002F?\u0003",
-    "\u0002\u0002\u0002F@\u0003\u0002\u0002\u0002FA\u0003\u0002\u0002\u0002",
-    "FB\u0003\u0002\u0002\u0002FC\u0003\u0002\u0002\u0002FD\u0003\u0002\u0002",
-    "\u0002FE\u0003\u0002\u0002\u0002G\u0007\u0003\u0002\u0002\u0002HI\u0007",
-    "#\u0002\u0002IJ\u0007%\u0002\u0002JL\u0007\n\u0002\u0002KM\u0005\n\u0006",
-    "\u0002LK\u0003\u0002\u0002\u0002LM\u0003\u0002\u0002\u0002MN\u0003\u0002",
-    "\u0002\u0002NO\u0007\u000b\u0002\u0002OP\u0007\u000e\u0002\u0002PT\b",
-    "\u0005\u0001\u0002QS\u0005\u0006\u0004\u0002RQ\u0003\u0002\u0002\u0002",
-    "SV\u0003\u0002\u0002\u0002TR\u0003\u0002\u0002\u0002TU\u0003\u0002\u0002",
-    "\u0002UW\u0003\u0002\u0002\u0002VT\u0003\u0002\u0002\u0002WX\u0007\u000f",
-    "\u0002\u0002XY\b\u0005\u0001\u0002Y\t\u0003\u0002\u0002\u0002Z_\u0007",
-    "%\u0002\u0002[\\\u0007\r\u0002\u0002\\^\u0007%\u0002\u0002][\u0003\u0002",
-    "\u0002\u0002^a\u0003\u0002\u0002\u0002_]\u0003\u0002\u0002\u0002_`\u0003",
-    "\u0002\u0002\u0002`\u000b\u0003\u0002\u0002\u0002a_\u0003\u0002\u0002",
-    "\u0002bc\u0007\u001b\u0002\u0002cd\u0005\"\u0012\u0002de\b\u0007\u0001",
-    "\u0002eg\u0007\u000e\u0002\u0002fh\u0005\u0006\u0004\u0002gf\u0003\u0002",
-    "\u0002\u0002hi\u0003\u0002\u0002\u0002ig\u0003\u0002\u0002\u0002ij\u0003",
-    "\u0002\u0002\u0002jk\u0003\u0002\u0002\u0002kl\u0007\u000f\u0002\u0002",
-    "lv\b\u0007\u0001\u0002mn\u0007\u001c\u0002\u0002np\u0007\u000e\u0002",
-    "\u0002oq\u0005\u0006\u0004\u0002po\u0003\u0002\u0002\u0002qr\u0003\u0002",
-    "\u0002\u0002rp\u0003\u0002\u0002\u0002rs\u0003\u0002\u0002\u0002st\u0003",
-    "\u0002\u0002\u0002tu\u0007\u000f\u0002\u0002uw\u0003\u0002\u0002\u0002",
-    "vm\u0003\u0002\u0002\u0002vw\u0003\u0002\u0002\u0002wx\u0003\u0002\u0002",
-    "\u0002xy\b\u0007\u0001\u0002y\r\u0003\u0002\u0002\u0002z{\b\b\u0001",
-    "\u0002{|\u0007\u001d\u0002\u0002|}\u0005\"\u0012\u0002}~\b\b\u0001\u0002",
-    "~\u0080\u0007\u000e\u0002\u0002\u007f\u0081\u0005\u0006\u0004\u0002",
-    "\u0080\u007f\u0003\u0002\u0002\u0002\u0081\u0082\u0003\u0002\u0002\u0002",
-    "\u0082\u0080\u0003\u0002\u0002\u0002\u0082\u0083\u0003\u0002\u0002\u0002",
-    "\u0083\u0084\u0003\u0002\u0002\u0002\u0084\u0085\u0007\u000f\u0002\u0002",
-    "\u0085\u0086\b\b\u0001\u0002\u0086\u000f\u0003\u0002\u0002\u0002\u0087",
-    "\u0088\u0007\u001e\u0002\u0002\u0088\u0089\b\t\u0001\u0002\u0089\u0011",
-    "\u0003\u0002\u0002\u0002\u008a\u008b\u0007\u001f\u0002\u0002\u008b\u008c",
-    "\b\n\u0001\u0002\u008c\u0013\u0003\u0002\u0002\u0002\u008d\u008e\u0007",
-    "\u0018\u0002\u0002\u008e\u008f\u0007\n\u0002\u0002\u008f\u0090\b\u000b",
-    "\u0001\u0002\u0090\u0091\u0005$\u0013\u0002\u0091\u0099\b\u000b\u0001",
-    "\u0002\u0092\u0093\u0007\r\u0002\u0002\u0093\u0094\b\u000b\u0001\u0002",
-    "\u0094\u0095\u0005$\u0013\u0002\u0095\u0096\b\u000b\u0001\u0002\u0096",
-    "\u0098\u0003\u0002\u0002\u0002\u0097\u0092\u0003\u0002\u0002\u0002\u0098",
-    "\u009b\u0003\u0002\u0002\u0002\u0099\u0097\u0003\u0002\u0002\u0002\u0099",
-    "\u009a\u0003\u0002\u0002\u0002\u009a\u009c\u0003\u0002\u0002\u0002\u009b",
-    "\u0099\u0003\u0002\u0002\u0002\u009c\u009d\u0007\u000b\u0002\u0002\u009d",
-    "\u009e\b\u000b\u0001\u0002\u009e\u0015\u0003\u0002\u0002\u0002\u009f",
-    "\u00a0\u0007%\u0002\u0002\u00a0\u00a1\u0007\f\u0002\u0002\u00a1\u00a2",
-    "\u0005$\u0013\u0002\u00a2\u00a3\b\f\u0001\u0002\u00a3\u0017\u0003\u0002",
-    "\u0002\u0002\u00a4\u00a5\u0007%\u0002\u0002\u00a5\u00a6\u0007\f\u0002",
-    "\u0002\u00a6\u00a7\u0007\u0010\u0002\u0002\u00a7\u00a8\u0007\u0011\u0002",
-    "\u0002\u00a8\u00a9\b\r\u0001\u0002\u00a9\u0019\u0003\u0002\u0002\u0002",
-    "\u00aa\u00ab\u0007%\u0002\u0002\u00ab\u00ac\b\u000e\u0001\u0002\u00ac",
-    "\u00ad\u0007 \u0002\u0002\u00ad\u00ae\u0007!\u0002\u0002\u00ae\u00af",
-    "\u0007\n\u0002\u0002\u00af\u00b0\u0005$\u0013\u0002\u00b0\u00b1\b\u000e",
-    "\u0001\u0002\u00b1\u00b2\u0007\u000b\u0002\u0002\u00b2\u001b\u0003\u0002",
-    "\u0002\u0002\u00b3\u00b4\u0007%\u0002\u0002\u00b4\u00b5\b\u000f\u0001",
-    "\u0002\u00b5\u00b6\u0007\u0010\u0002\u0002\u00b6\u00b7\u0005$\u0013",
-    "\u0002\u00b7\u00b8\u0007\u0011\u0002\u0002\u00b8\u00b9\u0007\f\u0002",
-    "\u0002\u00b9\u00ba\u0005$\u0013\u0002\u00ba\u00bb\b\u000f\u0001\u0002",
-    "\u00bb\u001d\u0003\u0002\u0002\u0002\u00bc\u00bd\u0007%\u0002\u0002",
-    "\u00bd\u00bf\u0007\n\u0002\u0002\u00be\u00c0\u0005 \u0011\u0002\u00bf",
-    "\u00be\u0003\u0002\u0002\u0002\u00bf\u00c0\u0003\u0002\u0002\u0002\u00c0",
-    "\u00c1\u0003\u0002\u0002\u0002\u00c1\u00c2\u0007\u000b\u0002\u0002\u00c2",
-    "\u00c3\b\u0010\u0001\u0002\u00c3\u001f\u0003\u0002\u0002\u0002\u00c4",
-    "\u00c5\u0005$\u0013\u0002\u00c5\u00cc\b\u0011\u0001\u0002\u00c6\u00c7",
-    "\u0007\r\u0002\u0002\u00c7\u00c8\u0005$\u0013\u0002\u00c8\u00c9\b\u0011",
-    "\u0001\u0002\u00c9\u00cb\u0003\u0002\u0002\u0002\u00ca\u00c6\u0003\u0002",
-    "\u0002\u0002\u00cb\u00ce\u0003\u0002\u0002\u0002\u00cc\u00ca\u0003\u0002",
-    "\u0002\u0002\u00cc\u00cd\u0003\u0002\u0002\u0002\u00cd!\u0003\u0002",
-    "\u0002\u0002\u00ce\u00cc\u0003\u0002\u0002\u0002\u00cf\u00d0\u0005$",
-    "\u0013\u0002\u00d0\u00d1\t\u0002\u0002\u0002\u00d1\u00d2\u0005$\u0013",
-    "\u0002\u00d2\u00d3\b\u0012\u0001\u0002\u00d3#\u0003\u0002\u0002\u0002",
-    "\u00d4\u00db\u0005&\u0014\u0002\u00d5\u00d6\t\u0003\u0002\u0002\u00d6",
-    "\u00d7\u0005&\u0014\u0002\u00d7\u00d8\b\u0013\u0001\u0002\u00d8\u00da",
-    "\u0003\u0002\u0002\u0002\u00d9\u00d5\u0003\u0002\u0002\u0002\u00da\u00dd",
-    "\u0003\u0002\u0002\u0002\u00db\u00d9\u0003\u0002\u0002\u0002\u00db\u00dc",
-    "\u0003\u0002\u0002\u0002\u00dc\u00de\u0003\u0002\u0002\u0002\u00dd\u00db",
-    "\u0003\u0002\u0002\u0002\u00de\u00df\b\u0013\u0001\u0002\u00df%\u0003",
-    "\u0002\u0002\u0002\u00e0\u00e7\u0005(\u0015\u0002\u00e1\u00e2\t\u0004",
-    "\u0002\u0002\u00e2\u00e3\u0005(\u0015\u0002\u00e3\u00e4\b\u0014\u0001",
-    "\u0002\u00e4\u00e6\u0003\u0002\u0002\u0002\u00e5\u00e1\u0003\u0002\u0002",
-    "\u0002\u00e6\u00e9\u0003\u0002\u0002\u0002\u00e7\u00e5\u0003\u0002\u0002",
-    "\u0002\u00e7\u00e8\u0003\u0002\u0002\u0002\u00e8\u00ea\u0003\u0002\u0002",
-    "\u0002\u00e9\u00e7\u0003\u0002\u0002\u0002\u00ea\u00eb\b\u0014\u0001",
-    "\u0002\u00eb\'\u0003\u0002\u0002\u0002\u00ec\u00ed\u0007$\u0002\u0002",
-    "\u00ed\u010b\b\u0015\u0001\u0002\u00ee\u00ef\u0007&\u0002\u0002\u00ef",
-    "\u010b\b\u0015\u0001\u0002\u00f0\u00f1\u0007\n\u0002\u0002\u00f1\u00f2",
-    "\u0005$\u0013\u0002\u00f2\u00f3\u0007\u000b\u0002\u0002\u00f3\u00f4",
-    "\b\u0015\u0001\u0002\u00f4\u010b\u0003\u0002\u0002\u0002\u00f5\u00f6",
-    "\u0007%\u0002\u0002\u00f6\u010b\b\u0015\u0001\u0002\u00f7\u00f8\u0007",
-    "\u0019\u0002\u0002\u00f8\u00f9\u0007\n\u0002\u0002\u00f9\u00fa\u0007",
-    "\u000b\u0002\u0002\u00fa\u010b\b\u0015\u0001\u0002\u00fb\u00fc\u0007",
-    "\u001a\u0002\u0002\u00fc\u00fd\u0007\n\u0002\u0002\u00fd\u00fe\u0007",
-    "\u000b\u0002\u0002\u00fe\u010b\b\u0015\u0001\u0002\u00ff\u0100\u0007",
-    "%\u0002\u0002\u0100\u0101\u0007 \u0002\u0002\u0101\u0102\u0007\"\u0002",
-    "\u0002\u0102\u010b\b\u0015\u0001\u0002\u0103\u0104\u0007%\u0002\u0002",
-    "\u0104\u0105\b\u0015\u0001\u0002\u0105\u0106\u0007\u0010\u0002\u0002",
-    "\u0106\u0107\u0005$\u0013\u0002\u0107\u0108\b\u0015\u0001\u0002\u0108",
-    "\u0109\u0007\u0011\u0002\u0002\u0109\u010b\u0003\u0002\u0002\u0002\u010a",
-    "\u00ec\u0003\u0002\u0002\u0002\u010a\u00ee\u0003\u0002\u0002\u0002\u010a",
-    "\u00f0\u0003\u0002\u0002\u0002\u010a\u00f5\u0003\u0002\u0002\u0002\u010a",
-    "\u00f7\u0003\u0002\u0002\u0002\u010a\u00fb\u0003\u0002\u0002\u0002\u010a",
-    "\u00ff\u0003\u0002\u0002\u0002\u010a\u0103\u0003\u0002\u0002\u0002\u010b",
-    ")\u0003\u0002\u0002\u0002\u0012.7FLT_irv\u0082\u0099\u00bf\u00cc\u00db",
-    "\u00e7\u010a"].join("");
+    "\t\u0014\u0004\u0015\t\u0015\u0004\u0016\t\u0016\u0004\u0017\t\u0017",
+    "\u0003\u0002\u0003\u0002\u0007\u00021\n\u0002\f\u0002\u000e\u00024\u000b",
+    "\u0002\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0007\u0003:",
+    "\n\u0003\f\u0003\u000e\u0003=\u000b\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0004\u0003\u0004\u0003\u0005\u0003\u0005\u0003\u0005\u0007\u0005F",
+    "\n\u0005\f\u0005\u000e\u0005I\u000b\u0005\u0003\u0006\u0003\u0006\u0003",
+    "\u0006\u0003\u0006\u0005\u0006O\n\u0006\u0003\u0006\u0003\u0006\u0005",
+    "\u0006S\n\u0006\u0003\u0006\u0003\u0006\u0003\u0006\u0007\u0006X\n\u0006",
+    "\f\u0006\u000e\u0006[\u000b\u0006\u0003\u0006\u0003\u0006\u0003\u0006",
+    "\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007",
+    "\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0003\u0007\u0005\u0007",
+    "k\n\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0006\br\n\b\r\b\u000e",
+    "\bs\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0006\b{\n\b\r\b\u000e\b",
+    "|\u0003\b\u0003\b\u0005\b\u0081\n\b\u0003\b\u0003\b\u0003\t\u0003\t",
+    "\u0003\t\u0003\t\u0003\t\u0003\t\u0006\t\u008b\n\t\r\t\u000e\t\u008c",
+    "\u0003\t\u0003\t\u0003\t\u0003\n\u0003\n\u0003\n\u0003\u000b\u0003\u000b",
+    "\u0003\u000b\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f\u0003\f",
+    "\u0003\f\u0003\f\u0003\f\u0007\f\u00a2\n\f\f\f\u000e\f\u00a5\u000b\f",
+    "\u0003\f\u0003\f\u0003\f\u0003\r\u0003\r\u0003\r\u0003\r\u0003\r\u0003",
+    "\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0003",
+    "\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003\u000f\u0003",
+    "\u000f\u0003\u000f\u0003\u000f\u0003\u0010\u0003\u0010\u0003\u0010\u0003",
+    "\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0003",
+    "\u0011\u0003\u0011\u0003\u0011\u0005\u0011\u00ca\n\u0011\u0003\u0011",
+    "\u0003\u0011\u0003\u0011\u0003\u0012\u0003\u0012\u0003\u0012\u0003\u0012",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013",
+    "\u0007\u0013\u00d9\n\u0013\f\u0013\u000e\u0013\u00dc\u000b\u0013\u0003",
+    "\u0014\u0003\u0014\u0003\u0014\u0003\u0014\u0003\u0014\u0003\u0015\u0003",
+    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0007\u0015\u00e8\n\u0015",
+    "\f\u0015\u000e\u0015\u00eb\u000b\u0015\u0003\u0015\u0003\u0015\u0003",
+    "\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0003\u0016\u0007\u0016\u00f4",
+    "\n\u0016\f\u0016\u000e\u0016\u00f7\u000b\u0016\u0003\u0016\u0003\u0016",
+    "\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017",
+    "\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017",
+    "\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017",
+    "\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017",
+    "\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017\u0003\u0017",
+    "\u0003\u0017\u0003\u0017\u0003\u0017\u0005\u0017\u011c\n\u0017\u0003",
+    "\u0017\u0003\u0017\u0005\u0017\u0120\n\u0017\u0003\u0017\u0002\u0002",
+    "\u0018\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a",
+    "\u001c\u001e \"$&(*,\u0002\u0005\u0003\u0002\u0013\u0018\u0003\u0002",
+    "\u0005\u0006\u0003\u0002\u0007\t\u0002\u012d\u0002.\u0003\u0002\u0002",
+    "\u0002\u00047\u0003\u0002\u0002\u0002\u0006@\u0003\u0002\u0002\u0002",
+    "\bB\u0003\u0002\u0002\u0002\nJ\u0003\u0002\u0002\u0002\fj\u0003\u0002",
+    "\u0002\u0002\u000el\u0003\u0002\u0002\u0002\u0010\u0084\u0003\u0002",
+    "\u0002\u0002\u0012\u0091\u0003\u0002\u0002\u0002\u0014\u0094\u0003\u0002",
+    "\u0002\u0002\u0016\u0097\u0003\u0002\u0002\u0002\u0018\u00a9\u0003\u0002",
+    "\u0002\u0002\u001a\u00ae\u0003\u0002\u0002\u0002\u001c\u00b4\u0003\u0002",
+    "\u0002\u0002\u001e\u00bd\u0003\u0002\u0002\u0002 \u00c6\u0003\u0002",
+    "\u0002\u0002\"\u00ce\u0003\u0002\u0002\u0002$\u00d2\u0003\u0002\u0002",
+    "\u0002&\u00dd\u0003\u0002\u0002\u0002(\u00e2\u0003\u0002\u0002\u0002",
+    "*\u00ee\u0003\u0002\u0002\u0002,\u011f\u0003\u0002\u0002\u0002.2\b\u0002",
+    "\u0001\u0002/1\u0005\n\u0006\u00020/\u0003\u0002\u0002\u000214\u0003",
+    "\u0002\u0002\u000220\u0003\u0002\u0002\u000223\u0003\u0002\u0002\u0002",
+    "35\u0003\u0002\u0002\u000242\u0003\u0002\u0002\u000256\u0005\u0004\u0003",
+    "\u00026\u0003\u0003\u0002\u0002\u00027;\b\u0003\u0001\u00028:\u0005",
+    "\f\u0007\u000298\u0003\u0002\u0002\u0002:=\u0003\u0002\u0002\u0002;",
+    "9\u0003\u0002\u0002\u0002;<\u0003\u0002\u0002\u0002<>\u0003\u0002\u0002",
+    "\u0002=;\u0003\u0002\u0002\u0002>?\b\u0003\u0001\u0002?\u0005\u0003",
+    "\u0002\u0002\u0002@A\u0007\u0012\u0002\u0002A\u0007\u0003\u0002\u0002",
+    "\u0002BG\u0007\'\u0002\u0002CD\u0007\r\u0002\u0002DF\u0007\'\u0002\u0002",
+    "EC\u0003\u0002\u0002\u0002FI\u0003\u0002\u0002\u0002GE\u0003\u0002\u0002",
+    "\u0002GH\u0003\u0002\u0002\u0002H\t\u0003\u0002\u0002\u0002IG\u0003",
+    "\u0002\u0002\u0002JK\u0007$\u0002\u0002KL\u0007\'\u0002\u0002LN\u0007",
+    "\n\u0002\u0002MO\u0005\b\u0005\u0002NM\u0003\u0002\u0002\u0002NO\u0003",
+    "\u0002\u0002\u0002OP\u0003\u0002\u0002\u0002PR\u0007\u000b\u0002\u0002",
+    "QS\u0005\u0006\u0004\u0002RQ\u0003\u0002\u0002\u0002RS\u0003\u0002\u0002",
+    "\u0002ST\u0003\u0002\u0002\u0002TU\u0007\u000e\u0002\u0002UY\b\u0006",
+    "\u0001\u0002VX\u0005\f\u0007\u0002WV\u0003\u0002\u0002\u0002X[\u0003",
+    "\u0002\u0002\u0002YW\u0003\u0002\u0002\u0002YZ\u0003\u0002\u0002\u0002",
+    "Z\\\u0003\u0002\u0002\u0002[Y\u0003\u0002\u0002\u0002\\]\u0007\u000f",
+    "\u0002\u0002]^\b\u0006\u0001\u0002^\u000b\u0003\u0002\u0002\u0002_k",
+    "\u0005\u0016\f\u0002`k\u0005\u0018\r\u0002ak\u0005\u000e\b\u0002bk\u0005",
+    "\u0010\t\u0002ck\u0005\u0012\n\u0002dk\u0005\u0014\u000b\u0002ek\u0005",
+    "\u001a\u000e\u0002fk\u0005\u001c\u000f\u0002gk\u0005\u001e\u0010\u0002",
+    "hk\u0005 \u0011\u0002ik\u0005\"\u0012\u0002j_\u0003\u0002\u0002\u0002",
+    "j`\u0003\u0002\u0002\u0002ja\u0003\u0002\u0002\u0002jb\u0003\u0002\u0002",
+    "\u0002jc\u0003\u0002\u0002\u0002jd\u0003\u0002\u0002\u0002je\u0003\u0002",
+    "\u0002\u0002jf\u0003\u0002\u0002\u0002jg\u0003\u0002\u0002\u0002jh\u0003",
+    "\u0002\u0002\u0002ji\u0003\u0002\u0002\u0002k\r\u0003\u0002\u0002\u0002",
+    "lm\u0007\u001c\u0002\u0002mn\u0005&\u0014\u0002no\b\b\u0001\u0002oq",
+    "\u0007\u000e\u0002\u0002pr\u0005\f\u0007\u0002qp\u0003\u0002\u0002\u0002",
+    "rs\u0003\u0002\u0002\u0002sq\u0003\u0002\u0002\u0002st\u0003\u0002\u0002",
+    "\u0002tu\u0003\u0002\u0002\u0002uv\u0007\u000f\u0002\u0002v\u0080\b",
+    "\b\u0001\u0002wx\u0007\u001d\u0002\u0002xz\u0007\u000e\u0002\u0002y",
+    "{\u0005\f\u0007\u0002zy\u0003\u0002\u0002\u0002{|\u0003\u0002\u0002",
+    "\u0002|z\u0003\u0002\u0002\u0002|}\u0003\u0002\u0002\u0002}~\u0003\u0002",
+    "\u0002\u0002~\u007f\u0007\u000f\u0002\u0002\u007f\u0081\u0003\u0002",
+    "\u0002\u0002\u0080w\u0003\u0002\u0002\u0002\u0080\u0081\u0003\u0002",
+    "\u0002\u0002\u0081\u0082\u0003\u0002\u0002\u0002\u0082\u0083\b\b\u0001",
+    "\u0002\u0083\u000f\u0003\u0002\u0002\u0002\u0084\u0085\b\t\u0001\u0002",
+    "\u0085\u0086\u0007\u001e\u0002\u0002\u0086\u0087\u0005&\u0014\u0002",
+    "\u0087\u0088\b\t\u0001\u0002\u0088\u008a\u0007\u000e\u0002\u0002\u0089",
+    "\u008b\u0005\f\u0007\u0002\u008a\u0089\u0003\u0002\u0002\u0002\u008b",
+    "\u008c\u0003\u0002\u0002\u0002\u008c\u008a\u0003\u0002\u0002\u0002\u008c",
+    "\u008d\u0003\u0002\u0002\u0002\u008d\u008e\u0003\u0002\u0002\u0002\u008e",
+    "\u008f\u0007\u000f\u0002\u0002\u008f\u0090\b\t\u0001\u0002\u0090\u0011",
+    "\u0003\u0002\u0002\u0002\u0091\u0092\u0007\u001f\u0002\u0002\u0092\u0093",
+    "\b\n\u0001\u0002\u0093\u0013\u0003\u0002\u0002\u0002\u0094\u0095\u0007",
+    " \u0002\u0002\u0095\u0096\b\u000b\u0001\u0002\u0096\u0015\u0003\u0002",
+    "\u0002\u0002\u0097\u0098\u0007\u0019\u0002\u0002\u0098\u0099\u0007\n",
+    "\u0002\u0002\u0099\u009a\b\f\u0001\u0002\u009a\u009b\u0005(\u0015\u0002",
+    "\u009b\u00a3\b\f\u0001\u0002\u009c\u009d\u0007\r\u0002\u0002\u009d\u009e",
+    "\b\f\u0001\u0002\u009e\u009f\u0005(\u0015\u0002\u009f\u00a0\b\f\u0001",
+    "\u0002\u00a0\u00a2\u0003\u0002\u0002\u0002\u00a1\u009c\u0003\u0002\u0002",
+    "\u0002\u00a2\u00a5\u0003\u0002\u0002\u0002\u00a3\u00a1\u0003\u0002\u0002",
+    "\u0002\u00a3\u00a4\u0003\u0002\u0002\u0002\u00a4\u00a6\u0003\u0002\u0002",
+    "\u0002\u00a5\u00a3\u0003\u0002\u0002\u0002\u00a6\u00a7\u0007\u000b\u0002",
+    "\u0002\u00a7\u00a8\b\f\u0001\u0002\u00a8\u0017\u0003\u0002\u0002\u0002",
+    "\u00a9\u00aa\u0007\'\u0002\u0002\u00aa\u00ab\u0007\f\u0002\u0002\u00ab",
+    "\u00ac\u0005(\u0015\u0002\u00ac\u00ad\b\r\u0001\u0002\u00ad\u0019\u0003",
+    "\u0002\u0002\u0002\u00ae\u00af\u0007\'\u0002\u0002\u00af\u00b0\u0007",
+    "\f\u0002\u0002\u00b0\u00b1\u0007\u0010\u0002\u0002\u00b1\u00b2\u0007",
+    "\u0011\u0002\u0002\u00b2\u00b3\b\u000e\u0001\u0002\u00b3\u001b\u0003",
+    "\u0002\u0002\u0002\u00b4\u00b5\u0007\'\u0002\u0002\u00b5\u00b6\b\u000f",
+    "\u0001\u0002\u00b6\u00b7\u0007!\u0002\u0002\u00b7\u00b8\u0007\"\u0002",
+    "\u0002\u00b8\u00b9\u0007\n\u0002\u0002\u00b9\u00ba\u0005(\u0015\u0002",
+    "\u00ba\u00bb\b\u000f\u0001\u0002\u00bb\u00bc\u0007\u000b\u0002\u0002",
+    "\u00bc\u001d\u0003\u0002\u0002\u0002\u00bd\u00be\u0007\'\u0002\u0002",
+    "\u00be\u00bf\b\u0010\u0001\u0002\u00bf\u00c0\u0007\u0010\u0002\u0002",
+    "\u00c0\u00c1\u0005(\u0015\u0002\u00c1\u00c2\u0007\u0011\u0002\u0002",
+    "\u00c2\u00c3\u0007\f\u0002\u0002\u00c3\u00c4\u0005(\u0015\u0002\u00c4",
+    "\u00c5\b\u0010\u0001\u0002\u00c5\u001f\u0003\u0002\u0002\u0002\u00c6",
+    "\u00c7\u0007\'\u0002\u0002\u00c7\u00c9\u0007\n\u0002\u0002\u00c8\u00ca",
+    "\u0005$\u0013\u0002\u00c9\u00c8\u0003\u0002\u0002\u0002\u00c9\u00ca",
+    "\u0003\u0002\u0002\u0002\u00ca\u00cb\u0003\u0002\u0002\u0002\u00cb\u00cc",
+    "\u0007\u000b\u0002\u0002\u00cc\u00cd\b\u0011\u0001\u0002\u00cd!\u0003",
+    "\u0002\u0002\u0002\u00ce\u00cf\u0007%\u0002\u0002\u00cf\u00d0\u0005",
+    "(\u0015\u0002\u00d0\u00d1\b\u0012\u0001\u0002\u00d1#\u0003\u0002\u0002",
+    "\u0002\u00d2\u00d3\u0005(\u0015\u0002\u00d3\u00da\b\u0013\u0001\u0002",
+    "\u00d4\u00d5\u0007\r\u0002\u0002\u00d5\u00d6\u0005(\u0015\u0002\u00d6",
+    "\u00d7\b\u0013\u0001\u0002\u00d7\u00d9\u0003\u0002\u0002\u0002\u00d8",
+    "\u00d4\u0003\u0002\u0002\u0002\u00d9\u00dc\u0003\u0002\u0002\u0002\u00da",
+    "\u00d8\u0003\u0002\u0002\u0002\u00da\u00db\u0003\u0002\u0002\u0002\u00db",
+    "%\u0003\u0002\u0002\u0002\u00dc\u00da\u0003\u0002\u0002\u0002\u00dd",
+    "\u00de\u0005(\u0015\u0002\u00de\u00df\t\u0002\u0002\u0002\u00df\u00e0",
+    "\u0005(\u0015\u0002\u00e0\u00e1\b\u0014\u0001\u0002\u00e1\'\u0003\u0002",
+    "\u0002\u0002\u00e2\u00e9\u0005*\u0016\u0002\u00e3\u00e4\t\u0003\u0002",
+    "\u0002\u00e4\u00e5\u0005*\u0016\u0002\u00e5\u00e6\b\u0015\u0001\u0002",
+    "\u00e6\u00e8\u0003\u0002\u0002\u0002\u00e7\u00e3\u0003\u0002\u0002\u0002",
+    "\u00e8\u00eb\u0003\u0002\u0002\u0002\u00e9\u00e7\u0003\u0002\u0002\u0002",
+    "\u00e9\u00ea\u0003\u0002\u0002\u0002\u00ea\u00ec\u0003\u0002\u0002\u0002",
+    "\u00eb\u00e9\u0003\u0002\u0002\u0002\u00ec\u00ed\b\u0015\u0001\u0002",
+    "\u00ed)\u0003\u0002\u0002\u0002\u00ee\u00f5\u0005,\u0017\u0002\u00ef",
+    "\u00f0\t\u0004\u0002\u0002\u00f0\u00f1\u0005,\u0017\u0002\u00f1\u00f2",
+    "\b\u0016\u0001\u0002\u00f2\u00f4\u0003\u0002\u0002\u0002\u00f3\u00ef",
+    "\u0003\u0002\u0002\u0002\u00f4\u00f7\u0003\u0002\u0002\u0002\u00f5\u00f3",
+    "\u0003\u0002\u0002\u0002\u00f5\u00f6\u0003\u0002\u0002\u0002\u00f6\u00f8",
+    "\u0003\u0002\u0002\u0002\u00f7\u00f5\u0003\u0002\u0002\u0002\u00f8\u00f9",
+    "\b\u0016\u0001\u0002\u00f9+\u0003\u0002\u0002\u0002\u00fa\u00fb\u0007",
+    "&\u0002\u0002\u00fb\u0120\b\u0017\u0001\u0002\u00fc\u00fd\u0007(\u0002",
+    "\u0002\u00fd\u0120\b\u0017\u0001\u0002\u00fe\u00ff\u0007\n\u0002\u0002",
+    "\u00ff\u0100\u0005(\u0015\u0002\u0100\u0101\u0007\u000b\u0002\u0002",
+    "\u0101\u0102\b\u0017\u0001\u0002\u0102\u0120\u0003\u0002\u0002\u0002",
+    "\u0103\u0104\u0007\'\u0002\u0002\u0104\u0120\b\u0017\u0001\u0002\u0105",
+    "\u0106\u0007\u001a\u0002\u0002\u0106\u0107\u0007\n\u0002\u0002\u0107",
+    "\u0108\u0007\u000b\u0002\u0002\u0108\u0120\b\u0017\u0001\u0002\u0109",
+    "\u010a\u0007\u001b\u0002\u0002\u010a\u010b\u0007\n\u0002\u0002\u010b",
+    "\u010c\u0007\u000b\u0002\u0002\u010c\u0120\b\u0017\u0001\u0002\u010d",
+    "\u010e\u0007\'\u0002\u0002\u010e\u010f\u0007!\u0002\u0002\u010f\u0110",
+    "\u0007#\u0002\u0002\u0110\u0120\b\u0017\u0001\u0002\u0111\u0112\u0007",
+    "\'\u0002\u0002\u0112\u0113\b\u0017\u0001\u0002\u0113\u0114\u0007\u0010",
+    "\u0002\u0002\u0114\u0115\u0005(\u0015\u0002\u0115\u0116\b\u0017\u0001",
+    "\u0002\u0116\u0117\u0007\u0011\u0002\u0002\u0117\u0120\u0003\u0002\u0002",
+    "\u0002\u0118\u0119\u0007\'\u0002\u0002\u0119\u011b\u0007\n\u0002\u0002",
+    "\u011a\u011c\u0005$\u0013\u0002\u011b\u011a\u0003\u0002\u0002\u0002",
+    "\u011b\u011c\u0003\u0002\u0002\u0002\u011c\u011d\u0003\u0002\u0002\u0002",
+    "\u011d\u011e\b\u0017\u0001\u0002\u011e\u0120\u0007\u000b\u0002\u0002",
+    "\u011f\u00fa\u0003\u0002\u0002\u0002\u011f\u00fc\u0003\u0002\u0002\u0002",
+    "\u011f\u00fe\u0003\u0002\u0002\u0002\u011f\u0103\u0003\u0002\u0002\u0002",
+    "\u011f\u0105\u0003\u0002\u0002\u0002\u011f\u0109\u0003\u0002\u0002\u0002",
+    "\u011f\u010d\u0003\u0002\u0002\u0002\u011f\u0111\u0003\u0002\u0002\u0002",
+    "\u011f\u0118\u0003\u0002\u0002\u0002\u0120-\u0003\u0002\u0002\u0002",
+    "\u00142;GNRYjs|\u0080\u008c\u00a3\u00c9\u00da\u00e9\u00f5\u011b\u011f"].join("");
 
 
 const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -246,22 +259,25 @@ export default class ExpParser extends antlr4.Parser {
     static grammarFileName = "Exp.g4";
     static literalNames = [ null, null, null, "'+'", "'-'", "'*'", "'/'", 
                             "'%'", "'('", "')'", "'='", "','", "'{'", "'}'", 
-                            "'['", "']'", "'=='", "'!='", "'>'", "'>='", 
-                            "'<'", "'<='", "'print'", "'read_int'", "'read_str'", 
-                            "'if'", "'else'", "'while'", "'break'", "'continue'", 
-                            "'.'", "'push'", "'length'", "'def'" ];
+                            "'['", "']'", "'int'", "'=='", "'!='", "'>'", 
+                            "'>='", "'<'", "'<='", "'print'", "'read_int'", 
+                            "'read_str'", "'if'", "'else'", "'while'", "'break'", 
+                            "'continue'", "'.'", "'push'", "'length'", "'def'", 
+                            "'return'" ];
     static symbolicNames = [ null, "COMMENT", "SPACE", "PLUS", "MINUS", 
                              "TIMES", "OVER", "REM", "OP_PAR", "CL_PAR", 
                              "ATTRIB", "COMMA", "OP_CUR", "CL_CUR", "OP_BRA", 
-                             "CL_BRA", "EQ", "NE", "GT", "GE", "LT", "LE", 
-                             "PRINT", "READ_INT", "READ_STR", "IF", "ELSE", 
-                             "WHILE", "BREAK", "CONTINUE", "DOT", "PUSH", 
-                             "LENGTH", "DEF", "NUMBER", "NAME", "STRING" ];
-    static ruleNames = [ "program", "main", "statement", "func", "parameters", 
-                         "st_if", "st_while", "st_break", "st_continue", 
-                         "st_print", "st_attrib", "st_array_new", "st_array_push", 
-                         "st_array_set", "st_call", "arguments", "comparison", 
-                         "expression", "term", "factor" ];
+                             "CL_BRA", "INT", "EQ", "NE", "GT", "GE", "LT", 
+                             "LE", "PRINT", "READ_INT", "READ_STR", "IF", 
+                             "ELSE", "WHILE", "BREAK", "CONTINUE", "DOT", 
+                             "PUSH", "LENGTH", "DEF", "RETURN", "NUMBER", 
+                             "NAME", "STRING" ];
+    static ruleNames = [ "program", "main", "func_return_type", "parameters", 
+                         "func", "statement", "st_if", "st_while", "st_break", 
+                         "st_continue", "st_print", "st_attrib", "st_array_new", 
+                         "st_array_push", "st_array_set", "st_call", "st_return", 
+                         "arguments", "comparison", "expression", "term", 
+                         "factor" ];
 
     constructor(input) {
         super(input);
@@ -295,17 +311,17 @@ export default class ExpParser extends antlr4.Parser {
 	              console.log("    return");
 	              console.log(".end method\n");
 	            
-	        this.state = 44;
+	        this.state = 48;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===ExpParser.DEF) {
-	            this.state = 41;
+	            this.state = 45;
 	            this.func();
-	            this.state = 46;
+	            this.state = 50;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 47;
+	        this.state = 51;
 	        this.main();
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -331,15 +347,14 @@ export default class ExpParser extends antlr4.Parser {
 	        this.enterOuterAlt(localctx, 1);
 
 	              console.log(".method public static main([Ljava/lang/String;)V\n");
-	              // symbolsTable.push('args');
 	            
-	        this.state = 53;
+	        this.state = 57;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while(((((_la - 22)) & ~0x1f) == 0 && ((1 << (_la - 22)) & ((1 << (ExpParser.PRINT - 22)) | (1 << (ExpParser.IF - 22)) | (1 << (ExpParser.WHILE - 22)) | (1 << (ExpParser.BREAK - 22)) | (1 << (ExpParser.CONTINUE - 22)) | (1 << (ExpParser.NAME - 22)))) !== 0)) {
-	            this.state = 50;
+	        while(((((_la - 23)) & ~0x1f) == 0 && ((1 << (_la - 23)) & ((1 << (ExpParser.PRINT - 23)) | (1 << (ExpParser.IF - 23)) | (1 << (ExpParser.WHILE - 23)) | (1 << (ExpParser.BREAK - 23)) | (1 << (ExpParser.CONTINUE - 23)) | (1 << (ExpParser.RETURN - 23)) | (1 << (ExpParser.NAME - 23)))) !== 0)) {
+	            this.state = 54;
 	            this.statement();
-	            this.state = 55;
+	            this.state = 59;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -370,74 +385,48 @@ export default class ExpParser extends antlr4.Parser {
 
 
 
-	statement() {
-	    let localctx = new StatementContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 4, ExpParser.RULE_statement);
+	func_return_type() {
+	    let localctx = new Func_return_typeContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 4, ExpParser.RULE_func_return_type);
 	    try {
-	        this.state = 68;
+	        this.enterOuterAlt(localctx, 1);
+	        this.state = 62;
+	        this.match(ExpParser.INT);
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+
+	parameters() {
+	    let localctx = new ParametersContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 6, ExpParser.RULE_parameters);
+	    var _la = 0; // Token type
+	    try {
+	        this.enterOuterAlt(localctx, 1);
+	        this.state = 64;
+	        this.match(ExpParser.NAME);
+	        this.state = 69;
 	        this._errHandler.sync(this);
-	        var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
-	        switch(la_) {
-	        case 1:
-	            this.enterOuterAlt(localctx, 1);
-	            this.state = 58;
-	            this.st_print();
-	            break;
-
-	        case 2:
-	            this.enterOuterAlt(localctx, 2);
-	            this.state = 59;
-	            this.st_attrib();
-	            break;
-
-	        case 3:
-	            this.enterOuterAlt(localctx, 3);
-	            this.state = 60;
-	            this.st_if();
-	            break;
-
-	        case 4:
-	            this.enterOuterAlt(localctx, 4);
-	            this.state = 61;
-	            this.st_while();
-	            break;
-
-	        case 5:
-	            this.enterOuterAlt(localctx, 5);
-	            this.state = 62;
-	            this.st_break();
-	            break;
-
-	        case 6:
-	            this.enterOuterAlt(localctx, 6);
-	            this.state = 63;
-	            this.st_continue();
-	            break;
-
-	        case 7:
-	            this.enterOuterAlt(localctx, 7);
-	            this.state = 64;
-	            this.st_array_new();
-	            break;
-
-	        case 8:
-	            this.enterOuterAlt(localctx, 8);
+	        _la = this._input.LA(1);
+	        while(_la===ExpParser.COMMA) {
 	            this.state = 65;
-	            this.st_array_push();
-	            break;
-
-	        case 9:
-	            this.enterOuterAlt(localctx, 9);
+	            this.match(ExpParser.COMMA);
 	            this.state = 66;
-	            this.st_array_set();
-	            break;
-
-	        case 10:
-	            this.enterOuterAlt(localctx, 10);
-	            this.state = 67;
-	            this.st_call();
-	            break;
-
+	            this.match(ExpParser.NAME);
+	            this.state = 71;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
 	        }
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -457,27 +446,35 @@ export default class ExpParser extends antlr4.Parser {
 
 	func() {
 	    let localctx = new FuncContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 6, ExpParser.RULE_func);
+	    this.enterRule(localctx, 8, ExpParser.RULE_func);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 70;
-	        this.match(ExpParser.DEF);
-	        this.state = 71;
-	        localctx._NAME = this.match(ExpParser.NAME);
 	        this.state = 72;
-	        this.match(ExpParser.OP_PAR);
+	        this.match(ExpParser.DEF);
+	        this.state = 73;
+	        localctx._NAME = this.match(ExpParser.NAME);
 	        this.state = 74;
+	        this.match(ExpParser.OP_PAR);
+	        this.state = 76;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(_la===ExpParser.NAME) {
-	            this.state = 73;
+	            this.state = 75;
 	            localctx.p = this.parameters();
 	        }
 
-	        this.state = 76;
+	        this.state = 78;
 	        this.match(ExpParser.CL_PAR);
-	        this.state = 77;
+	        this.state = 80;
+	        this._errHandler.sync(this);
+	        _la = this._input.LA(1);
+	        if(_la===ExpParser.INT) {
+	            this.state = 79;
+	            localctx.frt = this.func_return_type();
+	        }
+
+	        this.state = 82;
 	        this.match(ExpParser.OP_CUR);
 
 	              const funcName = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -489,54 +486,69 @@ export default class ExpParser extends antlr4.Parser {
 	                process.exit(1);
 	              } else {
 	                const paramsArray = (localctx.p===null ? null : this._input.getText(new antlr4.Interval(localctx.p.start,localctx.p.stop))) ? (localctx.p===null ? null : this._input.getText(new antlr4.Interval(localctx.p.start,localctx.p.stop))).split(',') : [];
+
 	                if (paramsArray.length !== [...new Set(paramsArray)].length) {
 	                  console.error(`ERROR: parameter names must be unique`);
 	                  process.exit(1);
 	                } else {
 	                  const repeatable = paramsArray.length > 0 ? 'I'.repeat(paramsArray.length) : '';
 
-	                  console.log(`.method public static ${funcName}(${repeatable})V\n`);
+	                  const isVoid = (localctx.frt===null ? null : this._input.getText(new antlr4.Interval(localctx.frt.start,localctx.frt.stop))) ? false : true;
+
+	                  console.log(`.method public static ${funcName}(${repeatable})${isVoid ? 'V' : 'I'}\n`);
 
 	                  symbolsTable.push(...paramsArray);
 	                  usedTable.push(...paramsArray);
 	                  paramsArray.length > 0 ? paramsArray.map(par => typesTable.push('i')) : typesTable.push('i');
-	                  funcsTable.push({ funcName, paramsCount: paramsArray.length });
+	                  funcsTable.push({ funcName, paramsCount: paramsArray.length, isVoid });
 	                }
 	              }
 	            
-	        this.state = 82;
+	        this.state = 87;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while(((((_la - 22)) & ~0x1f) == 0 && ((1 << (_la - 22)) & ((1 << (ExpParser.PRINT - 22)) | (1 << (ExpParser.IF - 22)) | (1 << (ExpParser.WHILE - 22)) | (1 << (ExpParser.BREAK - 22)) | (1 << (ExpParser.CONTINUE - 22)) | (1 << (ExpParser.NAME - 22)))) !== 0)) {
-	            this.state = 79;
-	            this.statement();
+	        while(((((_la - 23)) & ~0x1f) == 0 && ((1 << (_la - 23)) & ((1 << (ExpParser.PRINT - 23)) | (1 << (ExpParser.IF - 23)) | (1 << (ExpParser.WHILE - 23)) | (1 << (ExpParser.BREAK - 23)) | (1 << (ExpParser.CONTINUE - 23)) | (1 << (ExpParser.RETURN - 23)) | (1 << (ExpParser.NAME - 23)))) !== 0)) {
 	            this.state = 84;
+	            localctx.st = this.statement();
+	            this.state = 89;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 85;
+	        this.state = 90;
 	        this.match(ExpParser.CL_CUR);
 
-	              console.log("    return");
-	              console.log(`    .limit stack ${maxStack}`);
-	              console.log(`    .limit locals ${symbolsTable.length}`);
-	              console.log(".end method");
-	              console.log("\n; symbolsTable: ", symbolsTable);
-	              console.log("\n; typesTable: ", typesTable);
-	              console.log("\n");
+	              const returnText = (localctx.frt===null ? null : this._input.getText(new antlr4.Interval(localctx.frt.start,localctx.frt.stop)));
+	              const statementText = (localctx.st===null ? null : this._input.getText(new antlr4.Interval(localctx.st.start,localctx.st.stop)));
+	              console.log(`; returnText => ${returnText}`);
+	              console.log(`; statementText => ${statementText}`);
+	              if (returnText && !statementText.includes('return')) {
+	                console.error(`ERROR: missing return statement in returning function`);
+	                process.exit(1);
+	              } else if (!returnText && statementText.includes('return')) {
+	                console.error(`ERROR: void function does not return a value`);
+	                process.exit(1);
+	              } else {
+	                console.log("    return");
+	                console.log(`    .limit stack ${maxStack}`);
+	                console.log(`    .limit locals ${symbolsTable.length}`);
+	                console.log(".end method");
+	                console.log("\n; symbolsTable: ", symbolsTable);
+	                console.log("\n; typesTable: ", typesTable);
+	                console.log("\n");
 
-	              currentStack = 0;
-	              maxStack = 0;
-	              ifStack = 0;
-	              whileStack = 0;
+	                currentStack = 0;
+	                maxStack = 0;
+	                ifStack = 0;
+	                whileStack = 0;
 
-	              symbolsTable = [];
-	              typesTable = [];
-	              usedTable = [];
+	                symbolsTable = [];
+	                typesTable = [];
+	                usedTable = [];
 
-	              isWhile = false;
-	              isElse = false;
-	              whileLocalCounter = 0;
+	                isWhile = false;
+	                isElse = false;
+	                whileLocalCounter = 0;
+	              }
 	            
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -554,25 +566,80 @@ export default class ExpParser extends antlr4.Parser {
 
 
 
-	parameters() {
-	    let localctx = new ParametersContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 8, ExpParser.RULE_parameters);
-	    var _la = 0; // Token type
+	statement() {
+	    let localctx = new StatementContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 10, ExpParser.RULE_statement);
 	    try {
-	        this.enterOuterAlt(localctx, 1);
-	        this.state = 88;
-	        this.match(ExpParser.NAME);
-	        this.state = 93;
+	        this.state = 104;
 	        this._errHandler.sync(this);
-	        _la = this._input.LA(1);
-	        while(_la===ExpParser.COMMA) {
-	            this.state = 89;
-	            this.match(ExpParser.COMMA);
-	            this.state = 90;
-	            this.match(ExpParser.NAME);
+	        var la_ = this._interp.adaptivePredict(this._input,6,this._ctx);
+	        switch(la_) {
+	        case 1:
+	            this.enterOuterAlt(localctx, 1);
+	            this.state = 93;
+	            this.st_print();
+	            break;
+
+	        case 2:
+	            this.enterOuterAlt(localctx, 2);
+	            this.state = 94;
+	            this.st_attrib();
+	            break;
+
+	        case 3:
+	            this.enterOuterAlt(localctx, 3);
 	            this.state = 95;
-	            this._errHandler.sync(this);
-	            _la = this._input.LA(1);
+	            this.st_if();
+	            break;
+
+	        case 4:
+	            this.enterOuterAlt(localctx, 4);
+	            this.state = 96;
+	            this.st_while();
+	            break;
+
+	        case 5:
+	            this.enterOuterAlt(localctx, 5);
+	            this.state = 97;
+	            this.st_break();
+	            break;
+
+	        case 6:
+	            this.enterOuterAlt(localctx, 6);
+	            this.state = 98;
+	            this.st_continue();
+	            break;
+
+	        case 7:
+	            this.enterOuterAlt(localctx, 7);
+	            this.state = 99;
+	            this.st_array_new();
+	            break;
+
+	        case 8:
+	            this.enterOuterAlt(localctx, 8);
+	            this.state = 100;
+	            this.st_array_push();
+	            break;
+
+	        case 9:
+	            this.enterOuterAlt(localctx, 9);
+	            this.state = 101;
+	            this.st_array_set();
+	            break;
+
+	        case 10:
+	            this.enterOuterAlt(localctx, 10);
+	            this.state = 102;
+	            this.st_call();
+	            break;
+
+	        case 11:
+	            this.enterOuterAlt(localctx, 11);
+	            this.state = 103;
+	            this.st_return();
+	            break;
+
 	        }
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -592,13 +659,13 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_if() {
 	    let localctx = new St_ifContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 10, ExpParser.RULE_st_if);
+	    this.enterRule(localctx, 12, ExpParser.RULE_st_if);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 96;
+	        this.state = 106;
 	        this.match(ExpParser.IF);
-	        this.state = 97;
+	        this.state = 107;
 	        localctx.bytecode = this.comparison();
 
 	              let ifLocal = ifStack;
@@ -606,43 +673,43 @@ export default class ExpParser extends antlr4.Parser {
 	              const { bytecode } = this._ctx.bytecode;
 	              emit(`${bytecode} NOT_IF_${ifLocal}`, -2);
 	            
-	        this.state = 99;
+	        this.state = 109;
 	        this.match(ExpParser.OP_CUR);
-	        this.state = 101; 
+	        this.state = 111; 
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        do {
-	            this.state = 100;
+	            this.state = 110;
 	            this.statement();
-	            this.state = 103; 
+	            this.state = 113; 
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
-	        } while(((((_la - 22)) & ~0x1f) == 0 && ((1 << (_la - 22)) & ((1 << (ExpParser.PRINT - 22)) | (1 << (ExpParser.IF - 22)) | (1 << (ExpParser.WHILE - 22)) | (1 << (ExpParser.BREAK - 22)) | (1 << (ExpParser.CONTINUE - 22)) | (1 << (ExpParser.NAME - 22)))) !== 0));
-	        this.state = 105;
+	        } while(((((_la - 23)) & ~0x1f) == 0 && ((1 << (_la - 23)) & ((1 << (ExpParser.PRINT - 23)) | (1 << (ExpParser.IF - 23)) | (1 << (ExpParser.WHILE - 23)) | (1 << (ExpParser.BREAK - 23)) | (1 << (ExpParser.CONTINUE - 23)) | (1 << (ExpParser.RETURN - 23)) | (1 << (ExpParser.NAME - 23)))) !== 0));
+	        this.state = 115;
 	        this.match(ExpParser.CL_CUR);
 
 	              emit(`goto END_ELSE_${ifLocal}`, 0);
 	              console.log(`NOT_IF_${ifLocal}:`)
 	            
-	        this.state = 116;
+	        this.state = 126;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(_la===ExpParser.ELSE) {
-	            this.state = 107;
+	            this.state = 117;
 	            this.match(ExpParser.ELSE);
-	            this.state = 108;
+	            this.state = 118;
 	            this.match(ExpParser.OP_CUR);
-	            this.state = 110; 
+	            this.state = 120; 
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	            do {
-	                this.state = 109;
+	                this.state = 119;
 	                this.statement();
-	                this.state = 112; 
+	                this.state = 122; 
 	                this._errHandler.sync(this);
 	                _la = this._input.LA(1);
-	            } while(((((_la - 22)) & ~0x1f) == 0 && ((1 << (_la - 22)) & ((1 << (ExpParser.PRINT - 22)) | (1 << (ExpParser.IF - 22)) | (1 << (ExpParser.WHILE - 22)) | (1 << (ExpParser.BREAK - 22)) | (1 << (ExpParser.CONTINUE - 22)) | (1 << (ExpParser.NAME - 22)))) !== 0));
-	            this.state = 114;
+	            } while(((((_la - 23)) & ~0x1f) == 0 && ((1 << (_la - 23)) & ((1 << (ExpParser.PRINT - 23)) | (1 << (ExpParser.IF - 23)) | (1 << (ExpParser.WHILE - 23)) | (1 << (ExpParser.BREAK - 23)) | (1 << (ExpParser.CONTINUE - 23)) | (1 << (ExpParser.RETURN - 23)) | (1 << (ExpParser.NAME - 23)))) !== 0));
+	            this.state = 124;
 	            this.match(ExpParser.CL_CUR);
 	        }
 
@@ -667,7 +734,7 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_while() {
 	    let localctx = new St_whileContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 12, ExpParser.RULE_st_while);
+	    this.enterRule(localctx, 14, ExpParser.RULE_st_while);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
@@ -678,27 +745,27 @@ export default class ExpParser extends antlr4.Parser {
 	              whileStack += 1;
 	              console.log(`BEGIN_WHILE_${whileLocal}:`);
 	            
-	        this.state = 121;
+	        this.state = 131;
 	        this.match(ExpParser.WHILE);
-	        this.state = 122;
+	        this.state = 132;
 	        localctx.bytecode = this.comparison();
 
 	              const { bytecode } = this._ctx.bytecode;
 	              emit(`${bytecode} END_WHILE_${whileLocal}`, -2);
 	            
-	        this.state = 124;
+	        this.state = 134;
 	        this.match(ExpParser.OP_CUR);
-	        this.state = 126; 
+	        this.state = 136; 
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        do {
-	            this.state = 125;
+	            this.state = 135;
 	            this.statement();
-	            this.state = 128; 
+	            this.state = 138; 
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
-	        } while(((((_la - 22)) & ~0x1f) == 0 && ((1 << (_la - 22)) & ((1 << (ExpParser.PRINT - 22)) | (1 << (ExpParser.IF - 22)) | (1 << (ExpParser.WHILE - 22)) | (1 << (ExpParser.BREAK - 22)) | (1 << (ExpParser.CONTINUE - 22)) | (1 << (ExpParser.NAME - 22)))) !== 0));
-	        this.state = 130;
+	        } while(((((_la - 23)) & ~0x1f) == 0 && ((1 << (_la - 23)) & ((1 << (ExpParser.PRINT - 23)) | (1 << (ExpParser.IF - 23)) | (1 << (ExpParser.WHILE - 23)) | (1 << (ExpParser.BREAK - 23)) | (1 << (ExpParser.CONTINUE - 23)) | (1 << (ExpParser.RETURN - 23)) | (1 << (ExpParser.NAME - 23)))) !== 0));
+	        this.state = 140;
 	        this.match(ExpParser.CL_CUR);
 
 	              emit(`goto BEGIN_WHILE_${whileLocal}`, 0);
@@ -723,10 +790,10 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_break() {
 	    let localctx = new St_breakContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 14, ExpParser.RULE_st_break);
+	    this.enterRule(localctx, 16, ExpParser.RULE_st_break);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 133;
+	        this.state = 143;
 	        this.match(ExpParser.BREAK);
 
 	              if(isWhile) {
@@ -755,10 +822,10 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_continue() {
 	    let localctx = new St_continueContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 16, ExpParser.RULE_st_continue);
+	    this.enterRule(localctx, 18, ExpParser.RULE_st_continue);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 136;
+	        this.state = 146;
 	        this.match(ExpParser.CONTINUE);
 
 	              if(isWhile) {
@@ -787,41 +854,41 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_print() {
 	    let localctx = new St_printContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 18, ExpParser.RULE_st_print);
+	    this.enterRule(localctx, 20, ExpParser.RULE_st_print);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 139;
+	        this.state = 149;
 	        this.match(ExpParser.PRINT);
-	        this.state = 140;
+	        this.state = 150;
 	        this.match(ExpParser.OP_PAR);
 
 	              emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
 	            
-	        this.state = 142;
+	        this.state = 152;
 	        localctx.e1 = this.expression();
 
 	              printResolver(localctx.e1.type);
 	            
-	        this.state = 151;
+	        this.state = 161;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===ExpParser.COMMA) {
-	            this.state = 144;
+	            this.state = 154;
 	            this.match(ExpParser.COMMA);
 
 	                  emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
 	                
-	            this.state = 146;
+	            this.state = 156;
 	            localctx.e2 = this.expression();
 
 	                  printResolver(localctx.e2.type);
 	                
-	            this.state = 153;
+	            this.state = 163;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
-	        this.state = 154;
+	        this.state = 164;
 	        this.match(ExpParser.CL_PAR);
 
 	              emit("getstatic java/lang/System/out Ljava/io/PrintStream;", 1);
@@ -845,18 +912,18 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_attrib() {
 	    let localctx = new St_attribContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 20, ExpParser.RULE_st_attrib);
+	    this.enterRule(localctx, 22, ExpParser.RULE_st_attrib);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 157;
+	        this.state = 167;
 	        localctx._NAME = this.match(ExpParser.NAME);
-	        this.state = 158;
+	        this.state = 168;
 	        this.match(ExpParser.ATTRIB);
-	        this.state = 159;
-	        localctx._expression = this.expression();
+	        this.state = 169;
+	        localctx.exp = this.expression();
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
-	              const expType = localctx._expression.type;
+	              const expType = localctx.exp.type;
 
 	              if (!symbolsTable.find(symbol => symbol === variable)) {
 	                symbolsTable.push(variable);
@@ -887,16 +954,16 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_array_new() {
 	    let localctx = new St_array_newContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 22, ExpParser.RULE_st_array_new);
+	    this.enterRule(localctx, 24, ExpParser.RULE_st_array_new);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 162;
+	        this.state = 172;
 	        localctx._NAME = this.match(ExpParser.NAME);
-	        this.state = 163;
+	        this.state = 173;
 	        this.match(ExpParser.ATTRIB);
-	        this.state = 164;
+	        this.state = 174;
 	        this.match(ExpParser.OP_BRA);
-	        this.state = 165;
+	        this.state = 175;
 	        this.match(ExpParser.CL_BRA);
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -934,10 +1001,10 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_array_push() {
 	    let localctx = new St_array_pushContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 24, ExpParser.RULE_st_array_push);
+	    this.enterRule(localctx, 26, ExpParser.RULE_st_array_push);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 168;
+	        this.state = 178;
 	        localctx._NAME = this.match(ExpParser.NAME);
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -955,13 +1022,13 @@ export default class ExpParser extends antlr4.Parser {
 
 	              emit(`aload ${index}`, 1);
 	            
-	        this.state = 170;
+	        this.state = 180;
 	        this.match(ExpParser.DOT);
-	        this.state = 171;
+	        this.state = 181;
 	        this.match(ExpParser.PUSH);
-	        this.state = 172;
+	        this.state = 182;
 	        this.match(ExpParser.OP_PAR);
-	        this.state = 173;
+	        this.state = 183;
 	        localctx.e1 = this.expression();
 
 	              if (localctx.e1.type === 'i') {
@@ -971,7 +1038,7 @@ export default class ExpParser extends antlr4.Parser {
 	                process.exit(1);
 	              }
 	            
-	        this.state = 175;
+	        this.state = 185;
 	        this.match(ExpParser.CL_PAR);
 	    } catch (re) {
 	    	if(re instanceof antlr4.error.RecognitionException) {
@@ -991,10 +1058,10 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_array_set() {
 	    let localctx = new St_array_setContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 26, ExpParser.RULE_st_array_set);
+	    this.enterRule(localctx, 28, ExpParser.RULE_st_array_set);
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 177;
+	        this.state = 187;
 	        localctx._NAME = this.match(ExpParser.NAME);
 
 	              const variable = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -1012,15 +1079,15 @@ export default class ExpParser extends antlr4.Parser {
 
 	              emit(`aload ${index}`, 1);
 	            
-	        this.state = 179;
+	        this.state = 189;
 	        this.match(ExpParser.OP_BRA);
-	        this.state = 180;
+	        this.state = 190;
 	        localctx.e1 = this.expression();
-	        this.state = 181;
+	        this.state = 191;
 	        this.match(ExpParser.CL_BRA);
-	        this.state = 182;
+	        this.state = 192;
 	        this.match(ExpParser.ATTRIB);
-	        this.state = 183;
+	        this.state = 193;
 	        localctx.e2 = this.expression();
 
 	              emit(`invokevirtual Array/set(II)V \n`, -3);
@@ -1043,23 +1110,23 @@ export default class ExpParser extends antlr4.Parser {
 
 	st_call() {
 	    let localctx = new St_callContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 28, ExpParser.RULE_st_call);
+	    this.enterRule(localctx, 30, ExpParser.RULE_st_call);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 186;
+	        this.state = 196;
 	        localctx._NAME = this.match(ExpParser.NAME);
-	        this.state = 187;
+	        this.state = 197;
 	        this.match(ExpParser.OP_PAR);
-	        this.state = 189;
+	        this.state = 199;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        if(((((_la - 8)) & ~0x1f) == 0 && ((1 << (_la - 8)) & ((1 << (ExpParser.OP_PAR - 8)) | (1 << (ExpParser.READ_INT - 8)) | (1 << (ExpParser.READ_STR - 8)) | (1 << (ExpParser.NUMBER - 8)) | (1 << (ExpParser.NAME - 8)) | (1 << (ExpParser.STRING - 8)))) !== 0)) {
-	            this.state = 188;
+	            this.state = 198;
 	            localctx.args = this.arguments();
 	        }
 
-	        this.state = 191;
+	        this.state = 201;
 	        this.match(ExpParser.CL_PAR);
 
 	              const name = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -1073,6 +1140,9 @@ export default class ExpParser extends antlr4.Parser {
 	                const argsArray = (localctx.args===null ? null : this._input.getText(new antlr4.Interval(localctx.args.start,localctx.args.stop))) ? (localctx.args===null ? null : this._input.getText(new antlr4.Interval(localctx.args.start,localctx.args.stop))).split(',') : [];
 	                if (findFunc.paramsCount !== argsArray.length) {
 	                  console.error(`ERROR: wrong number of arguments`);
+	                  process.exit(1);
+	                } else if (!findFunc.isVoid) {
+	                  console.error(`ERROR: return value cannot be ignored`);
 	                  process.exit(1);
 	                } else {
 	                  const repeatable = argsArray.length > 0 ? 'I'.repeat(argsArray.length) : '';
@@ -1096,13 +1166,47 @@ export default class ExpParser extends antlr4.Parser {
 
 
 
+	st_return() {
+	    let localctx = new St_returnContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 32, ExpParser.RULE_st_return);
+	    try {
+	        this.enterOuterAlt(localctx, 1);
+	        this.state = 204;
+	        this.match(ExpParser.RETURN);
+	        this.state = 205;
+	        localctx._expression = this.expression();
+
+	              const eType = localctx._expression.type;
+	              if (eType !== 'i') {
+	                console.error(`ERROR: return value must be of integer type`);
+	                process.exit(1);
+	              } else {
+	                emit('ireturn', 0);
+	              }
+	            
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+
 	arguments() {
 	    let localctx = new ArgumentsContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 30, ExpParser.RULE_arguments);
+	    this.enterRule(localctx, 34, ExpParser.RULE_arguments);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 194;
+	        this.state = 208;
 	        localctx.e1 = this.expression();
 
 	              if (localctx.e1.type !== 'i') {
@@ -1115,13 +1219,13 @@ export default class ExpParser extends antlr4.Parser {
 	                typesTable.push('i');
 	              }
 	            
-	        this.state = 202;
+	        this.state = 216;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===ExpParser.COMMA) {
-	            this.state = 196;
+	            this.state = 210;
 	            this.match(ExpParser.COMMA);
-	            this.state = 197;
+	            this.state = 211;
 	            localctx.e2 = this.expression();
 
 	                  if (localctx.e2.type !== 'i') {
@@ -1134,7 +1238,7 @@ export default class ExpParser extends antlr4.Parser {
 	                    typesTable.push('i');
 	                  }
 	                
-	            this.state = 204;
+	            this.state = 218;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -1156,13 +1260,13 @@ export default class ExpParser extends antlr4.Parser {
 
 	comparison() {
 	    let localctx = new ComparisonContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 32, ExpParser.RULE_comparison);
+	    this.enterRule(localctx, 36, ExpParser.RULE_comparison);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 205;
+	        this.state = 219;
 	        localctx.e1 = this.expression();
-	        this.state = 206;
+	        this.state = 220;
 	        localctx.op = this._input.LT(1);
 	        _la = this._input.LA(1);
 	        if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExpParser.EQ) | (1 << ExpParser.NE) | (1 << ExpParser.GT) | (1 << ExpParser.GE) | (1 << ExpParser.LT) | (1 << ExpParser.LE))) !== 0))) {
@@ -1172,7 +1276,7 @@ export default class ExpParser extends antlr4.Parser {
 	        	this._errHandler.reportMatch(this);
 	            this.consume();
 	        }
-	        this.state = 207;
+	        this.state = 221;
 	        localctx.e2 = this.expression();
 
 	              if (localctx.e1.type !== localctx.e2.type) {
@@ -1205,17 +1309,17 @@ export default class ExpParser extends antlr4.Parser {
 
 	expression() {
 	    let localctx = new ExpressionContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 34, ExpParser.RULE_expression);
+	    this.enterRule(localctx, 38, ExpParser.RULE_expression);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 210;
+	        this.state = 224;
 	        localctx.t1 = this.term();
-	        this.state = 217;
+	        this.state = 231;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while(_la===ExpParser.PLUS || _la===ExpParser.MINUS) {
-	            this.state = 211;
+	            this.state = 225;
 	            localctx.op = this._input.LT(1);
 	            _la = this._input.LA(1);
 	            if(!(_la===ExpParser.PLUS || _la===ExpParser.MINUS)) {
@@ -1225,7 +1329,7 @@ export default class ExpParser extends antlr4.Parser {
 	            	this._errHandler.reportMatch(this);
 	                this.consume();
 	            }
-	            this.state = 212;
+	            this.state = 226;
 	            localctx.t2 = this.term();
 
 	                  if (localctx.t1.type !== localctx.t2.type) {
@@ -1236,7 +1340,7 @@ export default class ExpParser extends antlr4.Parser {
 	                  if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.PLUS) emit("iadd", -1)
 	                  if ((localctx.op === null ? 0 : localctx.op.type) === ExpParser.MINUS) emit("isub", -1)
 	                
-	            this.state = 219;
+	            this.state = 233;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -1261,17 +1365,17 @@ export default class ExpParser extends antlr4.Parser {
 
 	term() {
 	    let localctx = new TermContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 36, ExpParser.RULE_term);
+	    this.enterRule(localctx, 40, ExpParser.RULE_term);
 	    var _la = 0; // Token type
 	    try {
 	        this.enterOuterAlt(localctx, 1);
-	        this.state = 222;
+	        this.state = 236;
 	        localctx.f1 = this.factor();
-	        this.state = 229;
+	        this.state = 243;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
 	        while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExpParser.TIMES) | (1 << ExpParser.OVER) | (1 << ExpParser.REM))) !== 0)) {
-	            this.state = 223;
+	            this.state = 237;
 	            localctx.op = this._input.LT(1);
 	            _la = this._input.LA(1);
 	            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << ExpParser.TIMES) | (1 << ExpParser.OVER) | (1 << ExpParser.REM))) !== 0))) {
@@ -1281,7 +1385,7 @@ export default class ExpParser extends antlr4.Parser {
 	            	this._errHandler.reportMatch(this);
 	                this.consume();
 	            }
-	            this.state = 224;
+	            this.state = 238;
 	            localctx.f2 = this.factor();
 
 	                  if (localctx.f1.type !== localctx.f2.type) {
@@ -1293,7 +1397,7 @@ export default class ExpParser extends antlr4.Parser {
 	                  if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.OVER) emit("idiv", -1)
 	                  if ((localctx.op === null ? 0 : localctx.op.type) == ExpParser.REM) emit("irem", -1)
 	                
-	            this.state = 231;
+	            this.state = 245;
 	            this._errHandler.sync(this);
 	            _la = this._input.LA(1);
 	        }
@@ -1318,15 +1422,16 @@ export default class ExpParser extends antlr4.Parser {
 
 	factor() {
 	    let localctx = new FactorContext(this, this._ctx, this.state);
-	    this.enterRule(localctx, 38, ExpParser.RULE_factor);
+	    this.enterRule(localctx, 42, ExpParser.RULE_factor);
+	    var _la = 0; // Token type
 	    try {
-	        this.state = 264;
+	        this.state = 285;
 	        this._errHandler.sync(this);
-	        var la_ = this._interp.adaptivePredict(this._input,15,this._ctx);
+	        var la_ = this._interp.adaptivePredict(this._input,17,this._ctx);
 	        switch(la_) {
 	        case 1:
 	            this.enterOuterAlt(localctx, 1);
-	            this.state = 234;
+	            this.state = 248;
 	            localctx._NUMBER = this.match(ExpParser.NUMBER);
 
 	                  emit(`ldc ${(localctx._NUMBER===null ? null : localctx._NUMBER.text)}`, 1);
@@ -1336,7 +1441,7 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 2:
 	            this.enterOuterAlt(localctx, 2);
-	            this.state = 236;
+	            this.state = 250;
 	            localctx._STRING = this.match(ExpParser.STRING);
 
 	                  emit(`ldc ${(localctx._STRING===null ? null : localctx._STRING.text)}`, 1);
@@ -1346,11 +1451,11 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 3:
 	            this.enterOuterAlt(localctx, 3);
-	            this.state = 238;
+	            this.state = 252;
 	            this.match(ExpParser.OP_PAR);
-	            this.state = 239;
+	            this.state = 253;
 	            localctx._expression = this.expression();
-	            this.state = 240;
+	            this.state = 254;
 	            this.match(ExpParser.CL_PAR);
 
 	                  localctx.type = localctx._expression.type
@@ -1359,13 +1464,13 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 4:
 	            this.enterOuterAlt(localctx, 4);
-	            this.state = 243;
+	            this.state = 257;
 	            localctx._NAME = this.match(ExpParser.NAME);
 
 	                  const variable = (localctx._NAME===null ? null : localctx._NAME.text);
 
 	                  const index = symbolsTable.findIndex(symbol => symbol === variable);
-	                  
+
 	                  if (index === -1) {
 	                    console.error(`ERROR: Variable '${variable}' is not defined`);
 	                    process.exit(1);
@@ -1389,11 +1494,11 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 5:
 	            this.enterOuterAlt(localctx, 5);
-	            this.state = 245;
+	            this.state = 259;
 	            this.match(ExpParser.READ_INT);
-	            this.state = 246;
+	            this.state = 260;
 	            this.match(ExpParser.OP_PAR);
-	            this.state = 247;
+	            this.state = 261;
 	            this.match(ExpParser.CL_PAR);
 
 	                  emit("invokestatic Runtime/readInt()I", 1);
@@ -1403,11 +1508,11 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 6:
 	            this.enterOuterAlt(localctx, 6);
-	            this.state = 249;
+	            this.state = 263;
 	            this.match(ExpParser.READ_STR);
-	            this.state = 250;
+	            this.state = 264;
 	            this.match(ExpParser.OP_PAR);
-	            this.state = 251;
+	            this.state = 265;
 	            this.match(ExpParser.CL_PAR);
 
 	                  emit("invokestatic Runtime/readString()Ljava/lang/String;", 1);
@@ -1417,11 +1522,11 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 7:
 	            this.enterOuterAlt(localctx, 7);
-	            this.state = 253;
+	            this.state = 267;
 	            localctx._NAME = this.match(ExpParser.NAME);
-	            this.state = 254;
+	            this.state = 268;
 	            this.match(ExpParser.DOT);
-	            this.state = 255;
+	            this.state = 269;
 	            this.match(ExpParser.LENGTH);
 
 	                  localctx.type =  'i'
@@ -1443,7 +1548,7 @@ export default class ExpParser extends antlr4.Parser {
 
 	        case 8:
 	            this.enterOuterAlt(localctx, 8);
-	            this.state = 257;
+	            this.state = 271;
 	            localctx._NAME = this.match(ExpParser.NAME);
 
 	                  const variableName = (localctx._NAME===null ? null : localctx._NAME.text);
@@ -1458,9 +1563,9 @@ export default class ExpParser extends antlr4.Parser {
 	                    emit(`aload ${idx}`, 1);
 	                  }
 	                
-	            this.state = 259;
+	            this.state = 273;
 	            this.match(ExpParser.OP_BRA);
-	            this.state = 260;
+	            this.state = 274;
 	            localctx.exp = this.expression();
 
 	                  if (localctx.exp.type === 'i') {
@@ -1471,8 +1576,50 @@ export default class ExpParser extends antlr4.Parser {
 	                    process.exit(1);
 	                  }
 	                
-	            this.state = 262;
+	            this.state = 276;
 	            this.match(ExpParser.CL_BRA);
+	            break;
+
+	        case 9:
+	            this.enterOuterAlt(localctx, 9);
+	            this.state = 278;
+	            localctx._NAME = this.match(ExpParser.NAME);
+	            this.state = 279;
+	            this.match(ExpParser.OP_PAR);
+	            this.state = 281;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
+	            if(((((_la - 8)) & ~0x1f) == 0 && ((1 << (_la - 8)) & ((1 << (ExpParser.OP_PAR - 8)) | (1 << (ExpParser.READ_INT - 8)) | (1 << (ExpParser.READ_STR - 8)) | (1 << (ExpParser.NUMBER - 8)) | (1 << (ExpParser.NAME - 8)) | (1 << (ExpParser.STRING - 8)))) !== 0)) {
+	                this.state = 280;
+	                localctx.args = this.arguments();
+	            }
+
+
+	                  const fName = (localctx._NAME===null ? null : localctx._NAME.text);
+
+	                  const findFunc = funcsTable.find(f => f.funcName === fName);
+
+	                  if (!findFunc) {
+	                    console.error(`ERROR: function '${fName}' was not defined `);
+	                    process.exit(1);
+	                  } else if (findFunc.isVoid) {
+	                    console.error(`ERROR: a void function '${fName}' does not return a value `);
+	                    process.exit(1);
+	                  } else {
+	                    const argsArray = (localctx.args===null ? null : this._input.getText(new antlr4.Interval(localctx.args.start,localctx.args.stop))) ? (localctx.args===null ? null : this._input.getText(new antlr4.Interval(localctx.args.start,localctx.args.stop))).split(',') : [];
+
+	                    if (findFunc.paramsCount !== argsArray.length) {
+	                      console.error(`ERROR: wrong number of arguments`);
+	                      process.exit(1);
+	                    } else {
+	                      const repeatable = 'I'.repeat(findFunc.paramsCount);
+	                      emit(`invokestatic Test/${fName}(${repeatable})I \n`, 0);
+	                      localctx.type =  'i'
+	                    }
+	                  }
+	                
+	            this.state = 284;
+	            this.match(ExpParser.CL_PAR);
 	            break;
 
 	        }
@@ -1509,48 +1656,52 @@ ExpParser.OP_CUR = 12;
 ExpParser.CL_CUR = 13;
 ExpParser.OP_BRA = 14;
 ExpParser.CL_BRA = 15;
-ExpParser.EQ = 16;
-ExpParser.NE = 17;
-ExpParser.GT = 18;
-ExpParser.GE = 19;
-ExpParser.LT = 20;
-ExpParser.LE = 21;
-ExpParser.PRINT = 22;
-ExpParser.READ_INT = 23;
-ExpParser.READ_STR = 24;
-ExpParser.IF = 25;
-ExpParser.ELSE = 26;
-ExpParser.WHILE = 27;
-ExpParser.BREAK = 28;
-ExpParser.CONTINUE = 29;
-ExpParser.DOT = 30;
-ExpParser.PUSH = 31;
-ExpParser.LENGTH = 32;
-ExpParser.DEF = 33;
-ExpParser.NUMBER = 34;
-ExpParser.NAME = 35;
-ExpParser.STRING = 36;
+ExpParser.INT = 16;
+ExpParser.EQ = 17;
+ExpParser.NE = 18;
+ExpParser.GT = 19;
+ExpParser.GE = 20;
+ExpParser.LT = 21;
+ExpParser.LE = 22;
+ExpParser.PRINT = 23;
+ExpParser.READ_INT = 24;
+ExpParser.READ_STR = 25;
+ExpParser.IF = 26;
+ExpParser.ELSE = 27;
+ExpParser.WHILE = 28;
+ExpParser.BREAK = 29;
+ExpParser.CONTINUE = 30;
+ExpParser.DOT = 31;
+ExpParser.PUSH = 32;
+ExpParser.LENGTH = 33;
+ExpParser.DEF = 34;
+ExpParser.RETURN = 35;
+ExpParser.NUMBER = 36;
+ExpParser.NAME = 37;
+ExpParser.STRING = 38;
 
 ExpParser.RULE_program = 0;
 ExpParser.RULE_main = 1;
-ExpParser.RULE_statement = 2;
-ExpParser.RULE_func = 3;
-ExpParser.RULE_parameters = 4;
-ExpParser.RULE_st_if = 5;
-ExpParser.RULE_st_while = 6;
-ExpParser.RULE_st_break = 7;
-ExpParser.RULE_st_continue = 8;
-ExpParser.RULE_st_print = 9;
-ExpParser.RULE_st_attrib = 10;
-ExpParser.RULE_st_array_new = 11;
-ExpParser.RULE_st_array_push = 12;
-ExpParser.RULE_st_array_set = 13;
-ExpParser.RULE_st_call = 14;
-ExpParser.RULE_arguments = 15;
-ExpParser.RULE_comparison = 16;
-ExpParser.RULE_expression = 17;
-ExpParser.RULE_term = 18;
-ExpParser.RULE_factor = 19;
+ExpParser.RULE_func_return_type = 2;
+ExpParser.RULE_parameters = 3;
+ExpParser.RULE_func = 4;
+ExpParser.RULE_statement = 5;
+ExpParser.RULE_st_if = 6;
+ExpParser.RULE_st_while = 7;
+ExpParser.RULE_st_break = 8;
+ExpParser.RULE_st_continue = 9;
+ExpParser.RULE_st_print = 10;
+ExpParser.RULE_st_attrib = 11;
+ExpParser.RULE_st_array_new = 12;
+ExpParser.RULE_st_array_push = 13;
+ExpParser.RULE_st_array_set = 14;
+ExpParser.RULE_st_call = 15;
+ExpParser.RULE_st_return = 16;
+ExpParser.RULE_arguments = 17;
+ExpParser.RULE_comparison = 18;
+ExpParser.RULE_expression = 19;
+ExpParser.RULE_term = 20;
+ExpParser.RULE_factor = 21;
 
 class ProgramContext extends antlr4.ParserRuleContext {
 
@@ -1599,6 +1750,138 @@ class MainContext extends antlr4.ParserRuleContext {
         this.parser = parser;
         this.ruleIndex = ExpParser.RULE_main;
     }
+
+	statement = function(i) {
+	    if(i===undefined) {
+	        i = null;
+	    }
+	    if(i===null) {
+	        return this.getTypedRuleContexts(StatementContext);
+	    } else {
+	        return this.getTypedRuleContext(StatementContext,i);
+	    }
+	};
+
+
+}
+
+
+
+class Func_return_typeContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = ExpParser.RULE_func_return_type;
+    }
+
+	INT() {
+	    return this.getToken(ExpParser.INT, 0);
+	};
+
+
+}
+
+
+
+class ParametersContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = ExpParser.RULE_parameters;
+    }
+
+	NAME = function(i) {
+		if(i===undefined) {
+			i = null;
+		}
+	    if(i===null) {
+	        return this.getTokens(ExpParser.NAME);
+	    } else {
+	        return this.getToken(ExpParser.NAME, i);
+	    }
+	};
+
+
+	COMMA = function(i) {
+		if(i===undefined) {
+			i = null;
+		}
+	    if(i===null) {
+	        return this.getTokens(ExpParser.COMMA);
+	    } else {
+	        return this.getToken(ExpParser.COMMA, i);
+	    }
+	};
+
+
+
+}
+
+
+
+class FuncContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = ExpParser.RULE_func;
+        this._NAME = null; // Token
+        this.p = null; // ParametersContext
+        this.frt = null; // Func_return_typeContext
+        this.st = null; // StatementContext
+    }
+
+	DEF() {
+	    return this.getToken(ExpParser.DEF, 0);
+	};
+
+	NAME() {
+	    return this.getToken(ExpParser.NAME, 0);
+	};
+
+	OP_PAR() {
+	    return this.getToken(ExpParser.OP_PAR, 0);
+	};
+
+	CL_PAR() {
+	    return this.getToken(ExpParser.CL_PAR, 0);
+	};
+
+	OP_CUR() {
+	    return this.getToken(ExpParser.OP_CUR, 0);
+	};
+
+	CL_CUR() {
+	    return this.getToken(ExpParser.CL_CUR, 0);
+	};
+
+	parameters() {
+	    return this.getTypedRuleContext(ParametersContext,0);
+	};
+
+	func_return_type() {
+	    return this.getTypedRuleContext(Func_return_typeContext,0);
+	};
 
 	statement = function(i) {
 	    if(i===undefined) {
@@ -1670,108 +1953,9 @@ class StatementContext extends antlr4.ParserRuleContext {
 	    return this.getTypedRuleContext(St_callContext,0);
 	};
 
-
-}
-
-
-
-class FuncContext extends antlr4.ParserRuleContext {
-
-    constructor(parser, parent, invokingState) {
-        if(parent===undefined) {
-            parent = null;
-        }
-        if(invokingState===undefined || invokingState===null) {
-            invokingState = -1;
-        }
-        super(parent, invokingState);
-        this.parser = parser;
-        this.ruleIndex = ExpParser.RULE_func;
-        this._NAME = null; // Token
-        this.p = null; // ParametersContext
-    }
-
-	DEF() {
-	    return this.getToken(ExpParser.DEF, 0);
+	st_return() {
+	    return this.getTypedRuleContext(St_returnContext,0);
 	};
-
-	NAME() {
-	    return this.getToken(ExpParser.NAME, 0);
-	};
-
-	OP_PAR() {
-	    return this.getToken(ExpParser.OP_PAR, 0);
-	};
-
-	CL_PAR() {
-	    return this.getToken(ExpParser.CL_PAR, 0);
-	};
-
-	OP_CUR() {
-	    return this.getToken(ExpParser.OP_CUR, 0);
-	};
-
-	CL_CUR() {
-	    return this.getToken(ExpParser.CL_CUR, 0);
-	};
-
-	statement = function(i) {
-	    if(i===undefined) {
-	        i = null;
-	    }
-	    if(i===null) {
-	        return this.getTypedRuleContexts(StatementContext);
-	    } else {
-	        return this.getTypedRuleContext(StatementContext,i);
-	    }
-	};
-
-	parameters() {
-	    return this.getTypedRuleContext(ParametersContext,0);
-	};
-
-
-}
-
-
-
-class ParametersContext extends antlr4.ParserRuleContext {
-
-    constructor(parser, parent, invokingState) {
-        if(parent===undefined) {
-            parent = null;
-        }
-        if(invokingState===undefined || invokingState===null) {
-            invokingState = -1;
-        }
-        super(parent, invokingState);
-        this.parser = parser;
-        this.ruleIndex = ExpParser.RULE_parameters;
-    }
-
-	NAME = function(i) {
-		if(i===undefined) {
-			i = null;
-		}
-	    if(i===null) {
-	        return this.getTokens(ExpParser.NAME);
-	    } else {
-	        return this.getToken(ExpParser.NAME, i);
-	    }
-	};
-
-
-	COMMA = function(i) {
-		if(i===undefined) {
-			i = null;
-		}
-	    if(i===null) {
-	        return this.getTokens(ExpParser.COMMA);
-	    } else {
-	        return this.getToken(ExpParser.COMMA, i);
-	    }
-	};
-
 
 
 }
@@ -2007,7 +2191,7 @@ class St_attribContext extends antlr4.ParserRuleContext {
         this.parser = parser;
         this.ruleIndex = ExpParser.RULE_st_attrib;
         this._NAME = null; // Token
-        this._expression = null; // ExpressionContext
+        this.exp = null; // ExpressionContext
     }
 
 	NAME() {
@@ -2187,6 +2371,34 @@ class St_callContext extends antlr4.ParserRuleContext {
 
 	arguments() {
 	    return this.getTypedRuleContext(ArgumentsContext,0);
+	};
+
+
+}
+
+
+
+class St_returnContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = ExpParser.RULE_st_return;
+        this._expression = null; // ExpressionContext
+    }
+
+	RETURN() {
+	    return this.getToken(ExpParser.RETURN, 0);
+	};
+
+	expression() {
+	    return this.getTypedRuleContext(ExpressionContext,0);
 	};
 
 
@@ -2442,6 +2654,7 @@ class FactorContext extends antlr4.ParserRuleContext {
         this._expression = null; // ExpressionContext
         this._NAME = null; // Token
         this.exp = null; // ExpressionContext
+        this.args = null; // ArgumentsContext
     }
 
 	NUMBER() {
@@ -2492,6 +2705,10 @@ class FactorContext extends antlr4.ParserRuleContext {
 	    return this.getToken(ExpParser.CL_BRA, 0);
 	};
 
+	arguments() {
+	    return this.getTypedRuleContext(ArgumentsContext,0);
+	};
+
 
 }
 
@@ -2500,9 +2717,10 @@ class FactorContext extends antlr4.ParserRuleContext {
 
 ExpParser.ProgramContext = ProgramContext; 
 ExpParser.MainContext = MainContext; 
-ExpParser.StatementContext = StatementContext; 
-ExpParser.FuncContext = FuncContext; 
+ExpParser.Func_return_typeContext = Func_return_typeContext; 
 ExpParser.ParametersContext = ParametersContext; 
+ExpParser.FuncContext = FuncContext; 
+ExpParser.StatementContext = StatementContext; 
 ExpParser.St_ifContext = St_ifContext; 
 ExpParser.St_whileContext = St_whileContext; 
 ExpParser.St_breakContext = St_breakContext; 
@@ -2513,6 +2731,7 @@ ExpParser.St_array_newContext = St_array_newContext;
 ExpParser.St_array_pushContext = St_array_pushContext; 
 ExpParser.St_array_setContext = St_array_setContext; 
 ExpParser.St_callContext = St_callContext; 
+ExpParser.St_returnContext = St_returnContext; 
 ExpParser.ArgumentsContext = ArgumentsContext; 
 ExpParser.ComparisonContext = ComparisonContext; 
 ExpParser.ExpressionContext = ExpressionContext; 

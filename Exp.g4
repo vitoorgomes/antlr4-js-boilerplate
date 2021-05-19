@@ -62,7 +62,7 @@ grammar Exp;
           emit(`astore ${index}`, -1);
         }
       } else {
-        console.error(`ERROR: '${variable}' is a ${savedType === 'i' ? 'number' : 'string'}`);
+        console.error(`ERROR: types not matching`);
         process.exit(1);
       }
     }
@@ -76,19 +76,20 @@ grammar Exp;
 COMMENT: '#' ~('\n')*         -> skip ;
 SPACE : (' '|'\t'|'\r'|'\n')+ -> skip ;
 
-PLUS  : '+' ;
-MINUS : '-' ;
-TIMES : '*' ;
-OVER  : '/' ;
-REM   : '%' ;
-OP_PAR: '(' ;
-CL_PAR: ')' ;
-ATTRIB: '=' ;
-COMMA : ',' ;
-OP_CUR: '{' ;
-CL_CUR: '}' ;
-OP_BRA: '[' ;
-CL_BRA: ']' ;
+PLUS  :  '+'  ;
+MINUS :  '-'  ;
+TIMES :  '*'  ;
+OVER  :  '/'  ;
+REM   :  '%'  ;
+OP_PAR:  '('  ;
+CL_PAR:  ')'  ;
+ATTRIB:  '='  ;
+COMMA :  ','  ;
+OP_CUR:  '{'  ;
+CL_CUR:  '}'  ;
+OP_BRA:  '['  ;
+CL_BRA:  ']'  ;
+INT   : 'int' ;
 
 EQ    : '==' ;
 NE    : '!=' ;
@@ -109,6 +110,7 @@ DOT     : '.'       ;
 PUSH    : 'push'    ;
 LENGTH  : 'length'  ;
 DEF     : 'def'     ;
+RETURN  : 'return'  ;
 
 NUMBER: '0'..'9'+ ;
 NAME  : 'a'..'z'+ ;
@@ -133,7 +135,6 @@ program:
 main:
     {
       console.log(".method public static main([Ljava/lang/String;)V\n");
-      // symbolsTable.push('args');
     }
     ( statement )*
     {
@@ -148,10 +149,10 @@ main:
       checkUnusedVars();
     };
 
-statement: st_print | st_attrib | st_if | st_while | st_break | st_continue | st_array_new
-         | st_array_push | st_array_set | st_call ;
+func_return_type: INT;
+parameters: NAME ( COMMA NAME )*;
 
-func: DEF NAME OP_PAR ( p = parameters )? CL_PAR OP_CUR
+func: DEF NAME OP_PAR ( p = parameters )? CL_PAR (frt = func_return_type)? OP_CUR
     {
       const funcName = $NAME.text;
 
@@ -162,46 +163,62 @@ func: DEF NAME OP_PAR ( p = parameters )? CL_PAR OP_CUR
         process.exit(1);
       } else {
         const paramsArray = $p.text ? $p.text.split(',') : [];
+
         if (paramsArray.length !== [...new Set(paramsArray)].length) {
           console.error(`ERROR: parameter names must be unique`);
           process.exit(1);
         } else {
           const repeatable = paramsArray.length > 0 ? 'I'.repeat(paramsArray.length) : '';
 
-          console.log(`.method public static ${funcName}(${repeatable})V\n`);
+          const isVoid = $frt.text ? false : true;
+
+          console.log(`.method public static ${funcName}(${repeatable})${isVoid ? 'V' : 'I'}\n`);
 
           symbolsTable.push(...paramsArray);
           usedTable.push(...paramsArray);
           paramsArray.length > 0 ? paramsArray.map(par => typesTable.push('i')) : typesTable.push('i');
-          funcsTable.push({ funcName, paramsCount: paramsArray.length });
+          funcsTable.push({ funcName, paramsCount: paramsArray.length, isVoid });
         }
       }
     }
-    ( statement )* CL_CUR
+    ( st = statement )* CL_CUR
     {
-      console.log("    return");
-      console.log(`    .limit stack ${maxStack}`);
-      console.log(`    .limit locals ${symbolsTable.length}`);
-      console.log(".end method");
-      console.log("\n; symbolsTable: ", symbolsTable);
-      console.log("\n; typesTable: ", typesTable);
-      console.log("\n");
+      const returnText = $frt.text;
+      const statementText = $st.text;
+      console.log(`; returnText => ${returnText}`);
+      console.log(`; statementText => ${statementText}`);
+      if (returnText && !statementText.includes('return')) {
+        console.error(`ERROR: missing return statement in returning function`);
+        process.exit(1);
+      } else if (!returnText && statementText.includes('return')) {
+        console.error(`ERROR: void function does not return a value`);
+        process.exit(1);
+      } else {
+        console.log("    return");
+        console.log(`    .limit stack ${maxStack}`);
+        console.log(`    .limit locals ${symbolsTable.length}`);
+        console.log(".end method");
+        console.log("\n; symbolsTable: ", symbolsTable);
+        console.log("\n; typesTable: ", typesTable);
+        console.log("\n");
 
-      currentStack = 0;
-      maxStack = 0;
-      ifStack = 0;
-      whileStack = 0;
+        currentStack = 0;
+        maxStack = 0;
+        ifStack = 0;
+        whileStack = 0;
 
-      symbolsTable = [];
-      typesTable = [];
-      usedTable = [];
+        symbolsTable = [];
+        typesTable = [];
+        usedTable = [];
 
-      isWhile = false;
-      isElse = false;
-      whileLocalCounter = 0;
+        isWhile = false;
+        isElse = false;
+        whileLocalCounter = 0;
+      }
     };
 
-parameters: NAME ( COMMA NAME )*;
+statement: st_print | st_attrib | st_if | st_while | st_break | st_continue | st_array_new
+         | st_array_push | st_array_set | st_call | st_return ;
 
 st_if: IF bytecode = comparison
     {
@@ -288,10 +305,10 @@ st_print: PRINT OP_PAR
       emit("invokevirtual java/io/PrintStream/println()V\n", -1);
     };
 
-st_attrib: NAME ATTRIB expression
+st_attrib: NAME ATTRIB exp = expression
     {
       const variable = $NAME.text;
-      const expType = $expression.type;
+      const expType = $exp.type;
 
       if (!symbolsTable.find(symbol => symbol === variable)) {
         symbolsTable.push(variable);
@@ -389,6 +406,9 @@ st_call: NAME OP_PAR ( args = arguments )? CL_PAR
         if (findFunc.paramsCount !== argsArray.length) {
           console.error(`ERROR: wrong number of arguments`);
           process.exit(1);
+        } else if (!findFunc.isVoid) {
+          console.error(`ERROR: return value cannot be ignored`);
+          process.exit(1);
         } else {
           const repeatable = argsArray.length > 0 ? 'I'.repeat(argsArray.length) : '';
           emit(`invokestatic Test/${name}(${repeatable})V \n`, 0);
@@ -396,7 +416,18 @@ st_call: NAME OP_PAR ( args = arguments )? CL_PAR
       }
     };
 
-arguments: e1 = expression 
+st_return: RETURN expression
+    {
+      const eType = $expression.type;
+      if (eType !== 'i') {
+        console.error(`ERROR: return value must be of integer type`);
+        process.exit(1);
+      } else {
+        emit('ireturn', 0);
+      }
+    };
+
+arguments: e1 = expression
     {
       if ($e1.type !== 'i') {
         console.error(`ERROR: all arguments must be integer`);
@@ -407,8 +438,8 @@ arguments: e1 = expression
         usedTable.push(v1);
         typesTable.push('i');
       }
-    } 
-    ( COMMA e2 = expression 
+    }
+    ( COMMA e2 = expression
     {
       if ($e2.type !== 'i') {
         console.error(`ERROR: all arguments must be integer`);
@@ -487,7 +518,7 @@ factor returns [type]: NUMBER
       const variable = $NAME.text;
 
       const index = symbolsTable.findIndex(symbol => symbol === variable);
-      
+
       if (index === -1) {
         console.error(`ERROR: Variable '${variable}' is not defined`);
         process.exit(1);
@@ -557,4 +588,29 @@ factor returns [type]: NUMBER
         console.error(`ERROR: The expression '${$exp.type}' must be a number to access the specific array item`);
         process.exit(1);
       }
-    } CL_BRA ;
+    } CL_BRA
+    | NAME OP_PAR ( args = arguments )?
+    {
+      const fName = $NAME.text;
+
+      const findFunc = funcsTable.find(f => f.funcName === fName);
+
+      if (!findFunc) {
+        console.error(`ERROR: function '${fName}' was not defined `);
+        process.exit(1);
+      } else if (findFunc.isVoid) {
+        console.error(`ERROR: a void function '${fName}' does not return a value `);
+        process.exit(1);
+      } else {
+        const argsArray = $args.text ? $args.text.split(',') : [];
+
+        if (findFunc.paramsCount !== argsArray.length) {
+          console.error(`ERROR: wrong number of arguments`);
+          process.exit(1);
+        } else {
+          const repeatable = 'I'.repeat(findFunc.paramsCount);
+          emit(`invokestatic Test/${fName}(${repeatable})I \n`, 0);
+          $type = 'i';
+        }
+      }
+    } CL_PAR ;

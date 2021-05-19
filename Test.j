@@ -8,26 +8,46 @@
     return
 .end method
 
-.method public static main([Ljava/lang/String;)V
+.method public static product(II)V
 
-    ldc "def"
-    astore 0
+    iload 0
+    iload 1
+    imul
+    istore 2
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    aload 0
-    invokevirtual java/io/PrintStream/print(Ljava/lang/String;)V 
+    iload 2
+    invokevirtual java/io/PrintStream/print(I)V 
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
     invokevirtual java/io/PrintStream/println()V
 
+; returnText => null
+; statementText => print(c)
     return
     .limit stack 2
-    .limit locals 1
+    .limit locals 3
 .end method
 
-; symbolsTable:  [ 'x' ]
+; symbolsTable:  [ 'a', 'b', 'c' ]
 
-; typesTable:  [ 's' ]
+; typesTable:  [ 'i', 'i', 'i' ]
 
-; funcsTable:  []
+
+.method public static main([Ljava/lang/String;)V
+
+    ldc 4
+    ldc 5
+    invokestatic Test/product(II)V 
+
+    return
+    .limit stack 2
+    .limit locals 2
+.end method
+
+; symbolsTable:  [ '4', '5' ]
+
+; typesTable:  [ 'i', 'i' ]
+
+; funcsTable:  [ 'product' ]
 
 
